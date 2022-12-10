@@ -1,0 +1,61 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head" id="html_head" >
+    <meta charset="UTF-8">
+    <title>Leaving System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div th:fragment="menu" id="menu">
+        <nav class="navbar">
+            <a th:href="@{/}">Leaving System</a>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/}">About</a>
+
+            <!-- you need write validation -->
+            <div>
+                <div class="subnav">
+                    <button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a>1</a>
+                        <a>2</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- you need write validation -->
+            <div>
+                <div class="subnav">
+                    <button class="subnavbtn">Staff Menu <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a>1</a>
+                        <a>2</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- you need write validation -->
+            <div>
+                <div class="subnav">
+                    <button class="subnavbtn">Admin Menu <i class="fa fa-caret-down"></i></button>
+                    <div class="subnav-content">
+                        <a>1</a>
+                        <a>2</a>
+                    </div>
+                </div>
+            </div>
+            <a th:href="@{/logout}">Logout</a>
+        </nav>
+    </div>
+
+    <!-- you need to write some validation -->
+    <div th:fragment="header">
+    </div>
+
+
+    <div th:fragment="footer">
+        &copy; 2022 Footer
+    </div>
+</body>
+
+</html>

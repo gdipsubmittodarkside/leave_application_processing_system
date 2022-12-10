@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    <h3>Login</h3>
+    <form action="#">
+        <table class="framed" th:object="${user}">
+            <tr>
+                <td><span>Username</span></td>
+                <td><input type="text"></td>
+                <td><span></span></td>
+            </tr>
+            <tr>
+                <td><span>Password</span></td>
+                <td><input type="text" /></td>
+                <td><span></span></td>
+            </tr>
+            <tr>
+                <td><span>Username</span></td>
+                <td><input type="text" /></td>
+                <td><span></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" />
+                    <input type="reset" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    <!-- for login message -->
+                    <span></span>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>
