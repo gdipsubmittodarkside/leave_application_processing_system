@@ -5,22 +5,17 @@
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
     <h3>Login</h3>
-    <form action="#">
+    <form action="#" th:object="${user}" th:action="@{/login}" method="post">
         <table class="framed" th:object="${user}">
             <tr>
-                <td><span>Username</span></td>
-                <td><input type="text"></td>
-                <td><span></span></td>
+                <td><span th:text="#{fieldLabel.username}">Username</span></td>
+                <td><input type="text" th:field="*{username}"></td>
+                <td><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></td>
             </tr>
             <tr>
-                <td><span>Password</span></td>
-                <td><input type="text" /></td>
-                <td><span></span></td>
-            </tr>
-            <tr>
-                <td><span>Username</span></td>
-                <td><input type="text" /></td>
-                <td><span></span></td>
+                <td><span th:text="#{fieldLabel.password}">Password</span></td>
+                <td><input type="text" th:field="*{password}"></td>
+                <td><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
             </tr>
             <tr>
                 <td></td>
@@ -33,11 +28,12 @@
                 <td></td>
                 <td colspan="2">
                     <!-- for login message -->
-                    <span></span>
+                    <span th:if="${loginMessage != null}" th:text="${loginMessage}"></span>
                 </td>
             </tr>
         </table>
     </form>
+
 
 
 

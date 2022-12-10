@@ -11,4 +11,6 @@ public interface UserService {
     void removeUser(User user);
     User updateUser(User user);
 
+    User login(String username, String password);
+
 }
