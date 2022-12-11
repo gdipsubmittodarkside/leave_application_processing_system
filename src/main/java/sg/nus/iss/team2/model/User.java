@@ -44,8 +44,11 @@ public class User {
     @Column(name = "manager_id")
     private Integer managerId;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Leave> leaves;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CompensationRequest> compensationRequests;
 
     @OneToOne
     @JoinColumn(name = "leave_balance_id")
