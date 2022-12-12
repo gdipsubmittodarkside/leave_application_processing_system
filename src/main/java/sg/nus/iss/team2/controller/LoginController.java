@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.iss.team2.model.User;
+import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.service.UserService;
 import sg.nus.iss.team2.validator.UserValidator;
 
@@ -58,12 +59,13 @@ public class LoginController {
 
         httpSession.setAttribute("userSession",userFromDb);
 
-        if(userFromDb.getRole().equals("admin")){
-            return "redirect:/admin";
-        }
-        if(userFromDb.getRole().equals("manager")){
-            return "redirect:/manager";
-        }
+        //NEED TO RE-IMPLEMENT
+        // if(userFromDb.getRole().equals("admin")){
+        //     return "redirect:/admin";
+        // }
+        // if(userFromDb.getRole().equals("manager")){
+        //     return "redirect:/manager";
+        // }
         return "redirect:/staff";
 
     }

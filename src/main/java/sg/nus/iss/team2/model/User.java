@@ -8,9 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name="user1")
-//cos 'user' is h2 database keyword,
-// cannot use user as table name
+@Table(name="LAPS_User")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,13 +17,8 @@ public class User {
 
     @Id
     @Column(name="user_id")
-    private Integer userId;
-
-    @Column(name="name")
-    private String name;
-
-    @Column(name="role")
-    private String role;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
     @NotBlank(message = "enter your username")
     @Column(name="username")
@@ -38,18 +31,20 @@ public class User {
     @Column(name="join_date")
     private LocalDate joinDate;
 
-    @Column(name="status")
-    private String status;
+    @OneToOne(mappedBy = "user")
+    private Employee employee;
 
-    @Column(name = "manager_id")
-    private Integer managerId;
+    @ManyToMany(targetEntity = Role.class,fetch = FetchType.EAGER)
+    @JoinTable(name="userrole",joinColumns = {
+        @JoinColumn(name="user_id",referencedColumnName = "user_id")
+    }, inverseJoinColumns = {@JoinColumn(name="role_id",referencedColumnName = "role_id")})
+    private List<Role> roles;
 
-    @OneToMany(mappedBy = "user")
-    private List<Leave> leaves;
-
-    @OneToOne
-    @JoinColumn(name = "leave_balance_id")
-    private LeaveBalance leaveBalance;
-
-
+    public User(@NotBlank(message = "enter your username") String username,
+            @NotBlank(message = "enter your password") String password, LocalDate joinDate) {
+        this.username = username;
+        this.password = password;
+        this.joinDate = joinDate;
+    }
+    
 }

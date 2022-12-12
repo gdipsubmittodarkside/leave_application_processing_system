@@ -19,7 +19,8 @@ public class Leave {
 
     @Id
     @Column(name="leave_id")
-    private Integer leaveId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long leaveId;
 
 
     @Column(name = "start_date")
@@ -28,16 +29,43 @@ public class Leave {
     @Column(name="end_date")
     private LocalDate endDate;
 
-    @Column(name="leave_type")
-    private String leaveType;
+    @Column(name = "leave_type", columnDefinition = "ENUM('ANNUAL', 'MEDICAL', 'COMPENSATION')")
+    @Enumerated(EnumType.STRING)
+    private LeaveTypeEnum leaveType;
 
-    @Column(name="reason")
+    @Column(name="reason" )
     private String reason;
-    @Column(name="status")
-    private String status;
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
 
+    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'WITHDRAW', 'APPROVED', 'REJECTED', 'UPDATED', 'PENDING')")
+    @Enumerated(EnumType.STRING)
+    private LeaveStatusEnum status;
+
+    @Column(name="comment" )
+    private String comment;
+
+    @ManyToOne
+    @JoinColumn(name="employee_id", nullable = false)
+    private Employee employee;
+
+    public Leave(LocalDate startDate, LocalDate endDate, LeaveTypeEnum leaveType, String reason,
+            LeaveStatusEnum status) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.leaveType = leaveType;
+        this.reason = reason;
+        this.status = status;
+    }
+
+    public Leave(LocalDate startDate, LocalDate endDate, LeaveTypeEnum leaveType, String reason, LeaveStatusEnum status,
+             Employee employee) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.leaveType = leaveType;
+        this.reason = reason;
+        this.status = status;
+        this.employee = employee;
+    }
+    
+    
 
 }

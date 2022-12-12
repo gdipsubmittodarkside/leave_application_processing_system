@@ -1,5 +1,7 @@
 package sg.nus.iss.team2.controller;
 
+import org.springframework.stereotype.Controller;
+
 /**
  *
  * Admin to manage employees and their leave entitlement
@@ -11,5 +13,10 @@ package sg.nus.iss.team2.controller;
  * View Leave entitlement
  * Form modify / add / delete Leave Entitlement 
  */
+@Controller
 public class AdminController {
+
+
+
+
 }

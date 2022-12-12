@@ -21,7 +21,7 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional
-    public Leave findLeave(Integer lid) {
+    public Leave findLeave(Long lid) {
         return leaveRepository.findById(lid).orElse(null);
     }
 

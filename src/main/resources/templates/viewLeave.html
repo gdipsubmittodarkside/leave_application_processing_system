@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    <h3>Personal Leave Detail</h3>
+    
+        <table class="framed" >
+            <tr>
+                <th>Leave Id</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Leave Type</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Manage Leave</th>
+            </tr>
+            <tr th:each = "leave : ${leaves}" >  
+                <td th:utext = "${leave.leaveId}">Id</td>
+                <td th:utext = "${leave.startDate}">Start Date</td>
+                <td th:utext = "${leave.endDate}">End Date</td>
+                <td th:utext = "${leave.leaveType}">Leave Type</td>
+                <td th:utext = "${leave.reason}">Reason</td>
+                <td th:utext = "${leave.status}">Status</td>
+                
+                <td>
+                    <form th:action="@{/staff/manageLeave}" th:object="${user}" method="POST">
+                        <!-- <input type="hidden" name="id" th:value="${person.id}"/>
+                        <input type="hidden" name="firstName" th:value="${person.firstName}"/>
+                        <input type="hidden" name="lastName" th:value="${person.lastName}"/> 
+                        To Implement-->
+
+                        <input type="submit" value="Manage"/>
+                    </form>
+                    
+                </td>
+
+            </tr>
+            
+        </table>
+
+        <br><br>
+        <h4><a th:href="@{/staff/claimLeave }"> >>>>> Calim compensation Leave <<<<< </a></h4>
+        <br><br>
+    
+
+
+
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>
