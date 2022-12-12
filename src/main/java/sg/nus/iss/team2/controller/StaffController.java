@@ -1,12 +1,5 @@
 package sg.nus.iss.team2.controller;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
-import org.hibernate.cfg.CreateKeySecondPass;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.iss.team2.model.CompensationRequest;
-import sg.nus.iss.team2.model.Leave;
-import sg.nus.iss.team2.model.LeaveBalance;
-import sg.nus.iss.team2.model.User;
+
 
 /**
  * Personal leave details and application

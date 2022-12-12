@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,6 +46,13 @@ public class User {
         this.username = username;
         this.password = password;
         this.joinDate = joinDate;
+    }
+
+    public List<Long> getRoleIds() {
+        List<Long> retList = new ArrayList<>();
+        roles.forEach(role -> retList.add(role.getRoleId()));
+
+        return retList;
     }
     
 }

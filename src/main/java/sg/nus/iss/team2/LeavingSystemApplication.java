@@ -9,13 +9,7 @@ import sg.nus.iss.team2.model.LeaveType;
 import sg.nus.iss.team2.model.LeaveTypeEnum;
 import sg.nus.iss.team2.model.Role;
 import sg.nus.iss.team2.model.User;
-import sg.nus.iss.team2.repository.CompensationRequestRepository;
-import sg.nus.iss.team2.repository.EmployeeRespository;
-import sg.nus.iss.team2.repository.LeaveBalanceRepository;
-import sg.nus.iss.team2.repository.LeaveRepository;
-import sg.nus.iss.team2.repository.LeaveTypeRepository;
-import sg.nus.iss.team2.repository.RoleRepository;
-import sg.nus.iss.team2.repository.UserRepository;
+import sg.nus.iss.team2.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,7 +32,7 @@ public class LeavingSystemApplication {
             CompensationRequestRepository compensationRequestRepository,
             RoleRepository roleRepository,
             LeaveTypeRepository leaveTypeRepo,
-            EmployeeRespository empRepo
+            EmployeeRepository empRepo
     ){
         return(args) ->{
 

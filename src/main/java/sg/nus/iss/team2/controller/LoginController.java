@@ -1,6 +1,8 @@
 package sg.nus.iss.team2.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -15,11 +17,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.model.Employee;
+import sg.nus.iss.team2.model.User;
+import sg.nus.iss.team2.model.UserSession;
+import sg.nus.iss.team2.service.EmployeeService;
 import sg.nus.iss.team2.service.UserService;
 import sg.nus.iss.team2.validator.UserValidator;
-
 
 
 @Controller
@@ -27,6 +30,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @Autowired
     private UserValidator userValidator;
@@ -57,16 +63,30 @@ public class LoginController {
             return "login";
         };
 
-        httpSession.setAttribute("userSession",userFromDb);
+        UserSession userSession = new UserSession();
+        userSession.setUser(userFromDb);
+        userSession.setEmployee(employeeService.findEmployeeById(userFromDb.getEmployee().getEmployeeId()));
 
-        //NEED TO RE-IMPLEMENT
-        // if(userFromDb.getRole().equals("admin")){
-        //     return "redirect:/admin";
-        // }
-        // if(userFromDb.getRole().equals("manager")){
-        //     return "redirect:/manager";
-        // }
-        return "redirect:/staff";
+        List<Employee> employeeList =  employeeService.findSubordinates(userFromDb.getEmployee().getEmployeeId());
+
+        if(employeeList!=null){
+            userSession.setSubordinates(employeeList);
+        }
+
+        httpSession.setAttribute("userSession",userSession);
+
+        List<Long> roleIds = userFromDb.getRoleIds();
+
+        if (roleIds.contains(1L)) {
+            return "redirect:/admin/employee/list";
+        }
+
+        if (roleIds.contains(3L)) {
+            return "redirect:/manager/pending";
+        }
+
+
+        return "redirect:/staff/list";
 
     }
 
