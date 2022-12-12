@@ -22,7 +22,7 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 
     @Override
     @Transactional
-    public LeaveBalance findLeaveBalance(Integer lbid) {
+    public LeaveBalance findLeaveBalance(Long lbid) {
         return leaveBalanceRepository.findById(lbid).orElse(null);
     }
 

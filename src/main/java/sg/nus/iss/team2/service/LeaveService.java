@@ -7,7 +7,7 @@ import java.util.List;
 public interface LeaveService {
     List<Leave> findAllLeaves();
 
-    Leave findLeave(Integer lid);
+    Leave findLeave(Long lid);
 
     Leave createLeave(Leave leave);
 

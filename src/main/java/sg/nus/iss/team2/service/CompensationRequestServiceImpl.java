@@ -25,7 +25,7 @@ public class CompensationRequestServiceImpl implements CompensationRequestServic
 
     @Override
     @Transactional
-    public CompensationRequest findCompensationRequest(Integer compensationRequestId){
+    public CompensationRequest findCompensationRequest(Long compensationRequestId){
         CompensationRequest cReq = crr.findById(compensationRequestId).orElse(null);
         return cReq;
     };

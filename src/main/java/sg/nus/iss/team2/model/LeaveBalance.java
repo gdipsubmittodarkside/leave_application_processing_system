@@ -17,10 +17,11 @@ public class LeaveBalance {
 
     @Id
     @Column(name="leave_balance_id")
-    private Integer leaveBalanceId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long leaveBalanceId;
 
     @OneToOne(mappedBy = "leaveBalance")
-    private User user;
+    private Employee employee;
 
     @Column(name="balance_annual_leave_days")
     private Integer balanceAnnualLeaveDays;
@@ -31,5 +32,13 @@ public class LeaveBalance {
 
     @Column(name="balance_compensation_leave_days")
     private Double balanceCompensationLeaveDays;
+
+
+    public LeaveBalance(Integer balanceAnnualLeaveDays, Integer balanceMedicalLeaveDays,
+            Double balanceCompensationLeaveDays) {
+        this.balanceAnnualLeaveDays = balanceAnnualLeaveDays;
+        this.balanceMedicalLeaveDays = balanceMedicalLeaveDays;
+        this.balanceCompensationLeaveDays = balanceCompensationLeaveDays;
+    }
 
 }

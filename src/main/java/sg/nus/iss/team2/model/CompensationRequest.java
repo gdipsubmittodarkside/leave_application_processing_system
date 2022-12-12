@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +28,8 @@ public class CompensationRequest {
 
     @Id
     @Column(name="Compensation_leave_id")
-    private Integer compensationLeaveId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long compensationLeaveId;
 
 
     @Column(name = "OT_start_time")
@@ -33,14 +38,20 @@ public class CompensationRequest {
     @Column(name="OT_end_time")
     private LocalDateTime OTendTime;
 
-    @Column(name="OT_Period")
-    private long OTPeriod;
-
-    @Column(name="status")
-    private String status;
+    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'WITHDRAW', 'APPROVED', 'REJECTED', 'UPDATED', 'PENDING')")
+    @Enumerated(EnumType.STRING)
+    private LeaveStatusEnum status;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    @JoinColumn(name="employee_id")
+    private Employee employee;
+
+    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, LeaveStatusEnum status) {
+        OTstartTime = oTstartTime;
+        OTendTime = oTendTime;
+        this.status = status;
+    }
+
+    
     
 }

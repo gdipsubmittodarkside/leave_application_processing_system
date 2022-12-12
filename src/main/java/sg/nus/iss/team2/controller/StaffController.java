@@ -31,17 +31,17 @@ import sg.nus.iss.team2.model.User;
 @RequestMapping("/staff")
 public class StaffController {
 
-    @GetMapping(value = "/viewLeave")
-    public String viewLeave(HttpSession httpSession, Model model){
-        User user = (User) httpSession.getAttribute("userSession");
-        model.addAttribute("user", user);
-        List<Leave> leaves = user.getLeaves();
-        model.addAttribute("leaves", leaves);
-        LeaveBalance balance = user.getLeaveBalance();
-        model.addAttribute("balance", balance);
-        return "viewLeave";
+    // @GetMapping(value = "/viewLeave")
+    // public String viewLeave(HttpSession httpSession, Model model){
+    //     User user = (User) httpSession.getAttribute("userSession");
+    //     model.addAttribute("user", user);
+    //     List<Leave> leaves = user.getLeaves();
+    //     model.addAttribute("leaves", leaves);
+    //     LeaveBalance balance = user.getLeaveBalance();
+    //     model.addAttribute("balance", balance);
+    //     return "viewLeave";
  
-    }
+    // }
 
     @GetMapping(value = "/claimLeave")
     public String claimLeave(Model model){

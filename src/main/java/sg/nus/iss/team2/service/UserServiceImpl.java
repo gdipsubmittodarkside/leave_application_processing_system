@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public User findUser(Integer uid) {
+    public User findUser(Long uid) {
         return userRepository.findById(uid).orElse(null);
     }
 

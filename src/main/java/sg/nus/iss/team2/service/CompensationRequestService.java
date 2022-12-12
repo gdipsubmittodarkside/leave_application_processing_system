@@ -8,7 +8,7 @@ public interface CompensationRequestService {
 
     List<CompensationRequest> findAllCompensationRequest();
 
-    CompensationRequest findCompensationRequest(Integer compensationRequestId);
+    CompensationRequest findCompensationRequest(Long compensationRequestId);
 
     CompensationRequest createCompensationRequest(CompensationRequest compensationRequest);
 

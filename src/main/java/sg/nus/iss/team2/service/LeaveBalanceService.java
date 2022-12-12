@@ -8,7 +8,7 @@ public interface LeaveBalanceService {
 
     List<LeaveBalance> findAllLeaveBalance();
 
-    LeaveBalance findLeaveBalance(Integer lbid);
+    LeaveBalance findLeaveBalance(Long lbid);
 
     LeaveBalance createLeaveBalance(LeaveBalance leaveBalance);
 

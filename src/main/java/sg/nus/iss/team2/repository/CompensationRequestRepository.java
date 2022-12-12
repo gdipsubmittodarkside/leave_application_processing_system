@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import sg.nus.iss.team2.model.CompensationRequest;
 
-public interface CompensationRequestRepository extends JpaRepository<CompensationRequest,Integer> {
+public interface CompensationRequestRepository extends JpaRepository<CompensationRequest,Long> {
     
 }
