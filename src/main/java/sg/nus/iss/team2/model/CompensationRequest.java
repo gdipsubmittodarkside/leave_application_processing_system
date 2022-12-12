@@ -1,7 +1,6 @@
 package sg.nus.iss.team2.model;
 
-import java.time.Duration;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="leave")
+@Table(name="Compensation_Request")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,19 +28,19 @@ public class CompensationRequest {
 
 
     @Column(name = "OT_start_time")
-    private LocalDate OTstartTime;
+    private LocalDateTime OTstartTime;
 
     @Column(name="OT_end_time")
-    private LocalDate OTendTime;
+    private LocalDateTime OTendTime;
 
-    @Column(name="status")
-    private long OTPeriod = Duration.between(OTstartTime, OTendTime).toHours();
+    @Column(name="OT_Period")
+    private long OTPeriod;
 
     @Column(name="status")
     private String status;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name="user_id")
     private User user;
     
 }

@@ -1,8 +1,10 @@
 package sg.nus.iss.team2;
 
+import sg.nus.iss.team2.model.CompensationRequest;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.model.LeaveBalance;
 import sg.nus.iss.team2.model.User;
+import sg.nus.iss.team2.repository.CompensationRequestRepository;
 import sg.nus.iss.team2.repository.LeaveBalanceRepository;
 import sg.nus.iss.team2.repository.LeaveRepository;
 import sg.nus.iss.team2.repository.UserRepository;
@@ -12,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -23,7 +26,8 @@ public class LeavingSystemApplication {
     CommandLineRunner loadData(
             UserRepository userRepository,
             LeaveRepository leaveRepository,
-            LeaveBalanceRepository leaveBalanceRepository
+            LeaveBalanceRepository leaveBalanceRepository,
+            CompensationRequestRepository compensationRequestRepository
     ){
         return(args) ->{
             User staffUser = new User();
@@ -117,18 +121,41 @@ public class LeavingSystemApplication {
             mLeaveBalance.setBalanceMedicalLeaveDays(100);
             mLeaveBalance.setBalanceCompensationLeaveDays(10.5);
 
+            CompensationRequest staffCpRq1 = new CompensationRequest();
+            staffCpRq1.setCompensationLeaveId(1);
+            staffCpRq1.setUser(staffUser);
+            staffCpRq1.setOTstartTime(LocalDateTime.parse("2022-12-11T17:00"));
+            staffCpRq1.setOTendTime(LocalDateTime.parse("2022-12-11T22:45"));
+            staffCpRq1.setOTPeriod(150);
+            staffCpRq1.setStatus("Pending");
+            
+
+            CompensationRequest staffCpRq2 = new CompensationRequest();
+            staffCpRq2.setCompensationLeaveId(2);
+            staffCpRq2.setUser(staffUser);
+            staffCpRq2.setOTstartTime(LocalDateTime.parse("2022-12-11T17:45"));
+            staffCpRq2.setOTendTime(LocalDateTime.parse("2022-12-11T22:45"));            
+            staffCpRq2.setOTPeriod(200);
+            staffCpRq2.setStatus("Approved");
+            
+
 
             staffUser.setLeaves(Arrays.asList(sLeave1,sLeave2));
+            staffUser.setCompensationRequests(Arrays.asList(staffCpRq1, staffCpRq2));
             staffUser.setLeaveBalance(sLeaveBalance);
 
             managerUser.setLeaves(Arrays.asList(mLeave1,mLeave2,mLeave3));
             managerUser.setLeaveBalance(mLeaveBalance);
+
+            compensationRequestRepository.saveAllAndFlush(Arrays.asList(staffCpRq1, staffCpRq2));
 
             leaveRepository.saveAllAndFlush(Arrays.asList(sLeave1,sLeave2,mLeave1,mLeave2,mLeave3));
 
             leaveBalanceRepository.saveAllAndFlush(Arrays.asList(sLeaveBalance,mLeaveBalance));
 
             userRepository.saveAllAndFlush(Arrays.asList(staffUser,managerUser,adminUser));
+
+            
 
 
         };
