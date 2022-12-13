@@ -1,6 +1,10 @@
 package sg.nus.iss.team2.controller;
 
 
+import java.util.List;
+import java.util.stream.Stream;
+
+import javax.management.relation.Role;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.iss.team2.model.User;
-import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.service.UserService;
 import sg.nus.iss.team2.validator.UserValidator;
 
@@ -59,13 +62,14 @@ public class LoginController {
 
         httpSession.setAttribute("userSession",userFromDb);
 
-        //NEED TO RE-IMPLEMENT
-        // if(userFromDb.getRole().equals("admin")){
-        //     return "redirect:/admin";
-        // }
-        // if(userFromDb.getRole().equals("manager")){
-        //     return "redirect:/manager";
-        // }
+        List <String> roleNames = userFromDb.getRoles().stream().map(ur->ur.getRoleName()).toList();
+        // RE-IMPLEMENT
+        if(roleNames.contains("admin")){
+            return "redirect:/admin";
+        }
+        if(roleNames.contains("manager")){
+            return "redirect:/manager";
+        }
         return "redirect:/staff";
 
     }
