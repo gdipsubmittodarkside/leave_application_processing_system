@@ -48,9 +48,9 @@ public class User {
         this.joinDate = joinDate;
     }
 
-    public List<Long> getRoleIds() {
-        List<Long> retList = new ArrayList<>();
-        roles.forEach(role -> retList.add(role.getRoleId()));
+    public List<String> getRoleNames() {
+        List<String> retList = new ArrayList<>();
+        roles.forEach(role -> retList.add(role.getRoleName()));
 
         return retList;
     }

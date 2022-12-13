@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.User;
-import sg.nus.iss.team2.model.UserSession;
 import sg.nus.iss.team2.service.EmployeeService;
 import sg.nus.iss.team2.service.UserService;
 import sg.nus.iss.team2.validator.UserValidator;
@@ -63,25 +62,16 @@ public class LoginController {
             return "login";
         };
 
-        UserSession userSession = new UserSession();
-        userSession.setUser(userFromDb);
-        userSession.setEmployee(employeeService.findEmployeeById(userFromDb.getEmployee().getEmployeeId()));
 
-        List<Employee> employeeList =  employeeService.findSubordinates(userFromDb.getEmployee().getEmployeeId());
+        httpSession.setAttribute("userSession",userFromDb);
 
-        if(employeeList!=null){
-            userSession.setSubordinates(employeeList);
-        }
+        List<String> roleNames = userFromDb.getRoleNames();
 
-        httpSession.setAttribute("userSession",userSession);
-
-        List<Long> roleIds = userFromDb.getRoleIds();
-
-        if (roleIds.contains(1L)) {
+        if (roleNames.contains("admin")) {
             return "redirect:/admin/employee/list";
         }
 
-        if (roleIds.contains(3L)) {
+        if (roleNames.contains("manager")) {
             return "redirect:/manager/pending";
         }
 
