@@ -46,10 +46,11 @@ public class CompensationRequest {
     @JoinColumn(name="employee_id")
     private Employee employee;
 
-    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, LeaveStatusEnum status) {
+    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, LeaveStatusEnum status, Employee employee) {
         OTstartTime = oTstartTime;
         OTendTime = oTendTime;
         this.status = status;
+        this.employee = employee;
     }
 
     
