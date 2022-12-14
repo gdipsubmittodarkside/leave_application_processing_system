@@ -34,7 +34,7 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Employee employee;
-
+ 
     @ManyToMany(targetEntity = Role.class,fetch = FetchType.EAGER)
     @JoinTable(name="userrole",joinColumns = {
         @JoinColumn(name="user_id",referencedColumnName = "user_id")

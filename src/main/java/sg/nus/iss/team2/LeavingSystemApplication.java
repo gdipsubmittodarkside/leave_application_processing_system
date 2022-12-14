@@ -109,7 +109,7 @@ public class LeavingSystemApplication {
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.UPDATED, emp4 );
             Leave leave5 = new Leave(LocalDate.parse("2022-09-10"),
             LocalDate.parse("2022-09-11"),
-            LeaveTypeEnum.MEDICAL,"JUST FOR HOT POT",LeaveStatusEnum.WITHDRAW, emp5);
+            LeaveTypeEnum.MEDICAL,"JUST FOR HOT POT",LeaveStatusEnum.CANCELLED, emp5);
             Leave leave6 = new Leave(LocalDate.parse("2022-09-10"),
             LocalDate.parse("2022-09-11"),
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp7 );
@@ -143,19 +143,13 @@ public class LeavingSystemApplication {
             CompensationRequest cr2 = new CompensationRequest( LocalDateTime.parse("2022-12-13T16:30:00"), 
                                         LocalDateTime.parse("2022-12-13T22:30:00"), LeaveStatusEnum.APPROVED,emp4);
             CompensationRequest cr3 = new CompensationRequest( LocalDateTime.parse("2022-12-14T14:30:00"), 
+
                                         LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.PENDING,emp12);
             CompensationRequest cr4 = new CompensationRequest( LocalDateTime.parse("2022-12-15T12:30:00"), 
                                         LocalDateTime.parse("2022-12-15T20:45:00"), LeaveStatusEnum.APPROVED,emp4);
             CompensationRequest cr5 = new CompensationRequest( LocalDateTime.parse("2022-12-16T18:30:00"), 
                                         LocalDateTime.parse("2022-12-16T20:30:00"), LeaveStatusEnum.PENDING,emp12);
             
-            emp1.setCompensationRequests(Arrays.asList(cr1,cr2,cr3));
-            emp2.setCompensationRequests(Arrays.asList(cr2));
-            emp3.setCompensationRequests(Arrays.asList(cr3));
-            emp4.setCompensationRequests(Arrays.asList(cr1));
-            emp5.setCompensationRequests(Arrays.asList(cr2));
-            emp11.setCompensationRequests(Arrays.asList(cr3));
-            emp12.setCompensationRequests(Arrays.asList(cr3));
 
             leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance,admin_balance));
             roleRepository.saveAll(Arrays.asList(admin,staff,manager));

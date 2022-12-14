@@ -9,6 +9,8 @@ public interface CompensationRequestService {
 
     List<CompensationRequest> findAllCompensationRequest();
 
+    List<CompensationRequest> findEmployeeCompensationRequest(Employee employee);
+
     CompensationRequest findCompensationRequest(Long compensationRequestId);
 
     CompensationRequest createCompensationRequest(CompensationRequest compensationRequest);

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-lg-6 col-sm-6 container justify-content-center card">
+                <h2>Edit Leave Application Form</h2>
+                <div class = "card-body">
+                    <form th:action="@{/staff/{id}(id=${targetLeave.leaveId})}" th:object="${targetLeave}" method="post">
+
+                        <div class="form-group">
+                            <label> User ID : </label>
+                            <input type="text" name= user th:field="*{user}" class="form-control" placeholder="Enter userId"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Leave ID : </label>
+                            <input type="text" name= leaveId th:field="*{leaveId}" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Start Date : </label>
+                            <input type="date" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                        </div>
+
+                        <div class="form-group">
+                            <label> End Date : </label>
+                            <input type="date" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                        </div>
+
+                        <div class="form-group">
+                            <lable>Leave Type :</lable>
+                            <select th:field="*{leaveType}" class="form-control" > 
+                                <option value="ANNUAL" th:text="ANNUAL"></option>
+                                <option value="MEDICAL" th:text="MEDICAL"></option>
+                                <option value="COMPENSATION" th:text="COMPENSATION"></option>
+                              </select>
+                            </div>             
+                        
+                        <div class="form-group">                      
+                            <label> Reason: </label>
+                            <textarea th:field="*{reason}" rows= "5" cols="40" class="form-control"></textarea>
+                        </div>
+
+                        <div class="box-footer">
+                          <button type="submit" class = "btn btn-primary btn-sm">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>
