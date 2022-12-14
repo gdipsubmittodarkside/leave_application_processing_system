@@ -17,25 +17,43 @@
                 <th>Manage Leave</th>
             </tr>
             <tr th:each = "leave : ${leaves}" >  
-                <!-- <td th:utext = "${leave.leaveId}">Id</td>
+                <td th:utext = "${leave.leaveId}">Id</td>
                 <td th:utext = "${leave.startDate}">Start Date</td>
                 <td th:utext = "${leave.endDate}">End Date</td>
                 <td th:utext = "${leave.leaveType}">Leave Type</td>
                 <td th:utext = "${leave.reason}">Reason</td>
-                <td th:utext = "${leave.status}">Status</td> -->
+                <td th:utext = "${leave.status}">Status</td>
                 
-                <td>
-                    <form th:action="@{/staff/manageLeave}" th:object="${employee}" method="POST">
-                        <!-- <input type="hidden" name="id" th:value="${person.id}"/>
-                        <input type="hidden" name="firstName" th:value="${person.firstName}"/>
-                        <input type="hidden" name="lastName" th:value="${person.lastName}"/> 
-                        To Implement-->
+            <td>
+                <form th:action="@{/staff/manageLeave}" th:object="${employee}" method="POST">
+                    <!-- <input type="hidden" name="id" th:value="${person.id}"/>
+                    <input type="hidden" name="firstName" th:value="${person.firstName}"/>
+                    <input type="hidden" name="lastName" th:value="${person.lastName}"/> 
+                    To Implement-->
 
-                        <input type="submit" value="Manage"/>
-                    </form>
-                    
-                </td>
+                    <input type="submit" value="Manage"/>
+                </form>
+                
+            </td>
 
+            </tr>
+            
+        </table>
+
+        <h3>Leave Claiming History </h3>
+    
+        <table class="framed" >
+            <tr>
+                <th>Claim Id</th>
+                <th>OT Start Date</th>
+                <th>OT End Date</th>
+                <th>Status</th>
+            </tr>
+            <tr th:each = "cr : ${crReq}" >  
+                <td th:utext = "${cr.compensationLeaveId}">Id</td>
+                <td th:utext = "${cr.OTstartTime}">Start Date</td>
+                <td th:utext = "${cr.OTendTime}">End Date</td>
+                <td th:utext = "${cr.status}">Status</td>
             </tr>
             
         </table>

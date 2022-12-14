@@ -1,5 +1,6 @@
 package sg.nus.iss.team2.service;
 
+import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.repository.LeaveRepository;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,13 @@ public class LeaveServiceImpl implements LeaveService {
     public List<Leave> findAllLeaves() {
         return leaveRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public List<Leave> findEmployeeLeaves(Employee employee){
+        return leaveRepository.findEmployeeLeave(employee);
+    };
+    
 
     @Override
     @Transactional

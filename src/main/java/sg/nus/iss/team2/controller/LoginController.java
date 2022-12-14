@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.User;
-import sg.nus.iss.team2.service.EmployeeService;
+// import sg.nus.iss.team2.service.EmployeeService;
 
 import sg.nus.iss.team2.service.UserService;
 import sg.nus.iss.team2.validator.UserValidator;
@@ -31,11 +29,12 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private EmployeeService employeeService;
+    // @Autowired
+    // private EmployeeService employeeService;
 
     @Autowired
     private UserValidator userValidator;
+    
     @InitBinder
     private void initUserBinder(WebDataBinder binder){
         binder.addValidators(userValidator);

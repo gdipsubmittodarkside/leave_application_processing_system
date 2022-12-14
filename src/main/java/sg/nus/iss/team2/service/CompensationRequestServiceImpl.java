@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import sg.nus.iss.team2.model.CompensationRequest;
+import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.repository.CompensationRequestRepository;
 
 @Service
@@ -20,6 +21,13 @@ public class CompensationRequestServiceImpl implements CompensationRequestServic
     @Transactional
     public List<CompensationRequest> findAllCompensationRequest(){
         List<CompensationRequest> cReq = crr.findAll();
+        return cReq;
+    };
+
+    @Override
+    @Transactional
+    public List<CompensationRequest> findEmployeeCompensationRequest(Employee employee){
+        List<CompensationRequest> cReq = crr.findEmployeeCompensationRequest(employee);
         return cReq;
     };
 
