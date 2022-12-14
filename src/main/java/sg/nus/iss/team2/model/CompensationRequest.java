@@ -1,6 +1,7 @@
 package sg.nus.iss.team2.model;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,11 +47,13 @@ public class CompensationRequest {
     @JoinColumn(name="employee_id")
     private Employee employee;
 
-    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, LeaveStatusEnum status) {
+    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, LeaveStatusEnum status, Employee employee) {
         OTstartTime = oTstartTime;
         OTendTime = oTendTime;
         this.status = status;
+        this.employee = employee;
     }
+
 
     
     

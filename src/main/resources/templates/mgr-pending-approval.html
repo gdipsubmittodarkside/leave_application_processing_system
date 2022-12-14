@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pending Leaves and Claims Request</title>
+</head>
+
+<body>
+    <div>
+        <h2>Pending Leaves and Claims Request</h2>
+    </div>
+
+    <div>
+        <h4>Leave Requests</h4>
+    </div>
+
+    <div th:if="${#lists.isEmpty(leavePendingApproval)}">
+        <p>No pending leave approvals to show.</p>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(leavePendingApproval)}">
+        <table border="1">
+            <tr>
+                <th>Leave Id</th>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Leave Type</th>
+                <th>Reason</th> 
+                <th>Status</th>
+                    <!--Reason may be too long, maybe need click into "Details" button and put reason ther-->
+                <th>Details</th>
+            </tr>
+            <tr th:each="leave:${leavePendingApproval}">
+                <form th:action="@{/manager/leave/display/} + ${leave.leaveId}" method="post">
+                <td th:text="${leave.leaveId}"></td>
+                <td th:text="${leave.employee.name}"></td>
+                <td th:text="${leave.startDate}"></td>
+                <td th:text="${leave.endDate}"></td>
+                <td th:text="${leave.leaveType}"></td>
+                <td th:text="${leave.reason}"></td>
+                <td th:text="${leave.status}"></td>
+                <td><input type="submit" value="Details"></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h4>Compensation Claims</h4>
+    </div>
+    
+    <div th:if="${#lists.isEmpty(compRequests)}">
+        <p>No pending compensation claims to show.</p>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(compRequests)}">
+        <table border="1">
+            <tr>
+                <th>Claim Id</th>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <!-- <th>Duration</th> -->
+                <th>Status</th>
+                <th>Details</th>
+            </tr>
+            <tr th:each="req:${compRequests}">
+                <form th:action="@{/manager/claim/display/} + ${req.compensationLeaveId}" method="post">
+                <td th:text="${req.compensationLeaveId}"></td>
+                <td th:text="${req.employee.name}"></td>
+                <td th:text="${#temporals.format(req.OTstartTime, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(req.OTendTime, 'yyyy-MM-dd HH:mm')}"></td>
+                <!-- <td th:text="${req.reason}"></td> -->
+                <td th:text="${req.status}"></td>
+                <td><input type="submit" value="Details"></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
