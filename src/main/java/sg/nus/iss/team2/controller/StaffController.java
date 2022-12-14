@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,7 +26,6 @@ import sg.nus.iss.team2.model.LocalDateTimeHandler;
 import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.service.CompensationRequestService;
 import sg.nus.iss.team2.service.LeaveService;
-import sg.nus.iss.team2.service.UserService;
 
 
 /**
@@ -95,7 +95,52 @@ public class StaffController {
         return "redirect:/staff/viewLeave";
     }
 
+    @GetMapping(value= "/new")
+    public String  createLeaveForm(Model model){
+        Leave newleave = new Leave();
+        model.addAttribute("leave", newleave);
+        return "createLeave";
+        
+    }
 
+    @PostMapping(value= "/submitLeave")
+    public String submitLeave(@ModelAttribute Leave leave, BindingResult result,
+    HttpSession httpSession){
+
+        if (result.hasErrors()) {
+            return "createLeave";
+          }
+          User user = (User) httpSession.getAttribute("userSession");
+          Employee emp = user.getEmployee();
+
+        leave.setEmployee(emp);
+        leave.setStatus(LeaveStatusEnum.APPLIED);
+        leaveService.createLeave(leave);
+        
+        return "redirect:/staff/viewLeave";
+    }
+
+
+    @GetMapping(value={"/edit/{id}"})
+    public String editLeaveForm(@PathVariable Long id, Model model){
+        Leave targetLeave = leaveService.findLeave(id);
+        model.addAttribute("targetLeave", leaveService.updateLeave(targetLeave));
+        return "editLeave";
+    }
+
+
+    @PostMapping(value={"/{id}"})
+    public String updateLeave(@PathVariable Long id,@ModelAttribute("leave") Leave leave, Model model){
+     
+        Leave exitingLeave = leaveService.findLeave(id);
+        exitingLeave.setStartDate(leave.getStartDate());
+        exitingLeave.setEndDate(leave.getEndDate());
+        exitingLeave.setLeaveType(leave.getLeaveType());
+        exitingLeave.setReason(leave.getReason());
+
+        leaveService.updateLeave(exitingLeave);
+        return "redirect:/staff/list";
+    }
     
 
 

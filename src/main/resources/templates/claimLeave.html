@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
-    <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
+
 <head th:replace="fragments/layout.html :: html_head" />
 <body>
     <div th:replace="fragments/layout.html :: header" />
@@ -25,12 +24,6 @@
                 <!-- <td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td> -->
             </tr>
 
-            <!-- <tr>
-                <th>Test Text</th>
-                <td><input type="text" th:field="*{kaung}" /></td>
-                
-            </tr> -->
-
             <tr><td>
                 <input type="submit" value="Create" class="blcass" />
                 <input type="reset" value="Reset" class="blcass" />
@@ -39,16 +32,6 @@
         </table>
 
     </form>
-
-    <!-- <script>
-        $('.input-group.date').datepicker({
-            autoclose: true,
-            todayHighlight: true,
-            format: 'dd/MM/yyyy hh:mm a'
-        });
-    </script> -->
-
-
 
     <div th:replace="fragments/layout.html :: footer" />
 </body>
