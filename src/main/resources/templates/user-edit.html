@@ -1,0 +1,43 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Edit Employees</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h2>Edit Employee</h2>
+		<hr/>
+		<form th:action="@{/admin/user/edit/'+user.userId'}" th:object="${user}" method="POST">
+			<input type="text" th:field="*{username}" class="form-control col-4 mb-4" placeholder="Enter UserName" />
+            <span th:if="${#fields.hasErrors('username')}"
+            th:errors="*{username}"></span>
+			<input type="text" th:field="*{password}" class="form-control col-4 mb-4" placeholder="Enter Password" />
+            <span th:if="${#fields.hasErrors('password')}"
+            th:errors="*{password}"></span>
+			<input type="date" th:field="*{joinDate}" class="form-control col-4 mb-4" 
+            placeholder="Select JoinDate"  readonly/>
+            <span th:if="${#fields.hasErrors('joinDate')}"
+            th:errors="*{joinDate}"></span>
+            <label>Emp: </label>
+                <input th:each="emp:${user.employee}" th:value="${emp.employeeId}" readonly/>
+              <div></div>
+              <label >User roles (multiple select):</label>
+            <select size="3" multiple="multiple" name="roleSet" id="roleSet">
+              <option th:each="role:${allRoles}" 
+              th:value="${role.roleId}" 
+              th:text="${role.roleName}"
+              th:selected ="${user.roles.contains(role)}">Roles</option>
+            </select>
+
+            <br/>
+			<button class="btn btn-primary" type="submit">Save</button>
+			<button class="btn btn-dangerous" type="reset">Reset</button>
+			<input type="hidden" th:field="*{userId}"/>
+		</form>
+		<hr/>
+		<a th:href="@{/admin/user/list}">Back To List</a>
+	</div>
+</body>
+</html>

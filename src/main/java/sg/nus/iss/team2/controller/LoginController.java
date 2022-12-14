@@ -68,6 +68,7 @@ public class LoginController {
 
         List<String> roleNames = userFromDb.getRoleNames();
 
+
         if (roleNames.contains("admin")) {
             return "redirect:/admin/employee/list";
         }
