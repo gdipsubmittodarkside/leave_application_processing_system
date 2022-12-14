@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Edit Leave Type</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h2>Edit Leave Type</h2>
+		<hr/>
+		<form th:action="@{/admin/leavetype/edit/} + ${leavetype.leaveTypeName}" th:object="${leavetype}" method="POST">
+			<input type="text" th:field="*{leaveTypeName}" class="form-control col-4 mb-4" placeholder="Enter Leave Type Name" readonly />
+            <span th:if="${#fields.hasErrors('leaveTypeName')}"
+            th:errors="*{leaveTypeName}"></span>
+			<input type="number" th:field="*{leavePeriod}" class="form-control col-4 mb-4" placeholder="Enter Leave Type Period" />
+            <span th:if="${#fields.hasErrors('leavePeriod')}"
+            th:errors="*{leavePeriod}"></span>
+			<input type="text" th:field="*{description}" class="form-control col-4 mb-4" placeholder="Enter Description" />
+            <span th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}"></span>
+            
+
+            <br/>
+			<button class="btn btn-primary" type="submit">Save</button>
+			<button class="btn btn-dangerous" type="reset">Reset</button>
+			<input type="hidden" th:field="*{leaveTypeName}"/>
+		</form>
+		<hr/>
+		<a th:href="@{/admin/leavetype/list}">Back To List</a>
+	</div>
+</body>
+</html>

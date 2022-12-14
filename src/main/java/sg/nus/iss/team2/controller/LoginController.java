@@ -78,7 +78,7 @@ public class LoginController {
         List<Long> roleIds = userFromDb.getRoleIds();
 
         if (roleIds.contains(1L)) {
-            return "redirect:/admin/employee/list";
+            return "redirect:/admin/leavetype/list";
         }
 
         if (roleIds.contains(3L)) {
