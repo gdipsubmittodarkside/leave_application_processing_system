@@ -3,7 +3,6 @@
  import org.springframework.stereotype.Component;
  import org.springframework.web.servlet.HandlerInterceptor;
  import sg.nus.iss.team2.model.User;
- import sg.nus.iss.team2.model.UserSession;
 
  import javax.servlet.http.HttpServletRequest;
  import javax.servlet.http.HttpServletResponse;
@@ -30,20 +29,19 @@
          }
 
          HttpSession session = request.getSession();
-         UserSession userSession = (UserSession) session.getAttribute("userSession");
-         if ( userSession == null) {
+         User userFromSession = (User) session.getAttribute("userSession");
+         if ( userFromSession == null) {
              // No username, meaning not logged in yet
              // Redirect to login page
              response.sendRedirect("/login");
              return false;
          }
 
-         User userFromSession = userSession.getUser();
-         if (uri.startsWith("/admin") && !userFromSession.getRoleIds().contains(1L)) {
+         if (uri.startsWith("/admin") && !userFromSession.getRoleNames().contains("admin")) {
               throw new Exception();
           }
 
-          if (uri.startsWith("/manager") && !userFromSession.getRoleIds().contains(3L)) {
+          if (uri.startsWith("/manager") && !userFromSession.getRoleNames().contains("manager")) {
               throw new Exception();
           }
 

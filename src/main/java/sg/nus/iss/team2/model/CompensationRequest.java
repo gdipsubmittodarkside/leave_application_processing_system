@@ -1,6 +1,7 @@
 package sg.nus.iss.team2.model;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,12 +36,14 @@ public class CompensationRequest {
 
 
     @Column(name = "OT_start_time")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime OTstartTime;
 
     @Column(name="OT_end_time")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime OTendTime;
 
-    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'WITHDRAW', 'APPROVED', 'REJECTED', 'UPDATED', 'PENDING')")
+    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'CANCELLED', 'APPROVED', 'REJECTED', 'UPDATED')")
     @Enumerated(EnumType.STRING)
     private LeaveStatusEnum status;
 
@@ -46,11 +51,21 @@ public class CompensationRequest {
     @JoinColumn(name="employee_id")
     private Employee employee;
 
-    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, LeaveStatusEnum status) {
+    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, LeaveStatusEnum status, Employee employee) {
         OTstartTime = oTstartTime;
         OTendTime = oTendTime;
         this.status = status;
+        this.employee = employee;
     }
+
+    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, Employee employee) {
+        OTstartTime = oTstartTime;
+        OTendTime = oTendTime;
+        this.employee = employee;
+
+    }
+    
+
 
     
     

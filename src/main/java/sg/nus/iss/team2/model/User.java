@@ -36,10 +36,12 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Employee employee;
 
+
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "userrole", joinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     }, inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "role_id") })
+
     private List<Role> roles;
 
     public User(@NotBlank(message = "enter your username") String username,
@@ -49,9 +51,9 @@ public class User {
         this.joinDate = joinDate;
     }
 
-    public List<Long> getRoleIds() {
-        List<Long> retList = new ArrayList<>();
-        roles.forEach(role -> retList.add(role.getRoleId()));
+    public List<String> getRoleNames() {
+        List<String> retList = new ArrayList<>();
+        roles.forEach(role -> retList.add(role.getRoleName()));
 
         return retList;
     }
