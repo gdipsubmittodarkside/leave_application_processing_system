@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Team's Leave History</title>
+</head>
+
+<body>
+    <div th:if="${#lists.isEmpty(teamLeaves)}">
+        <p>No team leave history to show.</p>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(teamLeaves)}">
+        <table border="1">
+            <tr>
+                <th>Leave Id</th>
+                <th>Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Leave Type</th>
+                <th>Reason</th> 
+                <th>Status</th>
+                    <!--Reason may be too long, maybe need click into "Details" button and put reason there-->
+            </tr>
+            <tr th:each="leave:${teamLeaves}">
+                <td th:text="${leave.leaveId}"></td>
+                <td th:text="${leave.employee.name}"></td>
+                <td th:text="${leave.startDate}"></td>
+                <td th:text="${leave.endDate}"></td>
+                <td th:text="${leave.leaveType}"></td>
+                <td th:text="${leave.reason}"></td>
+                <td th:text="${leave.status}"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
