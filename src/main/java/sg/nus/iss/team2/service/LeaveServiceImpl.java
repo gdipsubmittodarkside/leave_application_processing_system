@@ -93,8 +93,14 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     @Transactional
     public void updateLeaveAndLeaveBalance(Leave leave, String decision){
+
+        Employee emp = leave.getEmployee();
+        LeaveBalance LB1 = emp.getLeaveBalance();
+        String typeOfLeave = leave.getLeaveType().toString();
+        int durationInDays = 5;
         
-        if (decision.equalsIgnoreCase(LeaveStatusEnum.REJECTED.toString()))
+
+        if (LB1.getBalanceAnnualLeaveDays() < durationInDays)
         {
             leave.setStatus(LeaveStatusEnum.REJECTED);
         }
@@ -103,11 +109,11 @@ public class LeaveServiceImpl implements LeaveService {
             // update Leave item with new status
             leave.setStatus(LeaveStatusEnum.APPROVED);
 
-            // update "LeaveBalance" DB with new (decreased) leave balance
-            Employee emp = leave.getEmployee();
-            LeaveBalance LB1 = emp.getLeaveBalance();
-            String typeOfLeave = leave.getLeaveType().toString();
-            int durationInDays = 2;
+            // // update "LeaveBalance" DB with new (decreased) leave balance
+            // Employee emp = leave.getEmployee();
+            // LeaveBalance LB1 = emp.getLeaveBalance();
+            // String typeOfLeave = leave.getLeaveType().toString();
+            // int durationInDays = 10;
 
             if (typeOfLeave.equals("ANNUAL")){
                 

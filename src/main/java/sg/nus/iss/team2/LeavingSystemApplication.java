@@ -49,8 +49,8 @@ public class LeavingSystemApplication {
             Employee emp11 = new Employee("Kaung11", "exsiting", 2);
             Employee emp12 = new Employee("Kaung12", "exsiting", 1);
 
-            User staff1 = new User("Kaung","a123",LocalDate.now());
-            User staff2 = new User("Yun","a123",LocalDate.now().plusDays(1));
+            User staff1 = new User("Kaung","a123",LocalDate.now()); //manager whose managerId =1
+            User staff2 = new User("Yun","a123",LocalDate.now().plusDays(1)); //manager whose managerId =2
             User staff3 = new User("Joey","a123",LocalDate.now().plusDays(2));
             User staff4 = new User("YIKAI","a123",LocalDate.now().minusMonths(2));
             User staff5 = new User("pearl","a123",LocalDate.now().minusDays(7));
@@ -65,8 +65,6 @@ public class LeavingSystemApplication {
             Role admin = new Role("admin");
             Role staff = new Role("staff");
             Role manager = new Role("manager");
-
-
             
 
             emp1.setUser(staff1);
@@ -116,6 +114,27 @@ public class LeavingSystemApplication {
             Leave leave7 = new Leave(LocalDate.parse("2022-09-10"),
             LocalDate.parse("2022-09-11"),
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp4 );
+
+            //Joey Testing
+
+            Leave leave8 = new Leave(LocalDate.parse("2022-09-10"),
+            LocalDate.parse("2022-09-11"),
+            LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+            Leave leave9 = new Leave(LocalDate.parse("2022-09-10"),
+            LocalDate.parse("2022-09-11"),
+            LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+            Leave leave10 = new Leave(LocalDate.parse("2022-09-10"),
+            LocalDate.parse("2022-09-11"),
+            LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+            Leave leave11 = new Leave(LocalDate.parse("2022-09-10"),
+            LocalDate.parse("2022-09-11"),
+            LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+            Leave leave12 = new Leave(LocalDate.parse("2022-09-10"),
+            LocalDate.parse("2022-09-11"),
+            LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+            Leave leave13 = new Leave(LocalDate.parse("2022-09-10"),
+            LocalDate.parse("2022-09-11"),
+            LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
             
             LeaveType annual_admin = new LeaveType("annual_admin",14,"This is admin break time");
             LeaveType medical = new LeaveType("medical",60,"This is sick for rest");
@@ -163,7 +182,7 @@ public class LeavingSystemApplication {
             userRepository.saveAllAndFlush(Arrays.asList(staff1,staff2,staff3,staff4,staff5,staff6,staff7,staff8,staff9,staff10,staff11,staff12));
             empRepo.saveAllAndFlush(Arrays.asList(emp1,emp2,emp3,emp4,emp5,emp6,emp7,emp8,emp9,emp10,emp11,emp12));
             compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1,cr2,cr3,cr4,cr5));
-            leaveRepository.saveAllAndFlush(Arrays.asList(leave1,leave2,leave3,leave4,leave5,leave6,leave7));
+            leaveRepository.saveAllAndFlush(Arrays.asList(leave1,leave2,leave3,leave4,leave5,leave6,leave7,leave8,leave9,leave10,leave11,leave12,leave13));
 
             
             

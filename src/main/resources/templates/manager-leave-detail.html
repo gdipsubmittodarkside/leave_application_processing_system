@@ -37,23 +37,29 @@
         </tr>
 
         <form action="#" th:action="@{/manager/leave/edit/}+${leave.leaveId}" th:object="${approve}" method="post">
-            <table>
+          <table>
+            <tr>
+              <td>
+                <fieldset>
+                  <input type="radio" th:field="*{decision}" value="APPROVED" />
+                  <label>approve</label> &nbsp;&nbsp; 
+                  <input type="radio" th:field="*{decision}" value="REJECTED" /> <label>reject</label>
+                </fieldset>
+              </td>
+
               <tr>
-                <td>
-                  <fieldset>
-                    <input type="radio" th:field="*{decision}" value="APPROVED" />
-                    <label>approve</label> &nbsp;&nbsp; 
-                    <input type="radio" th:field="*{decision}" value="REJECTED" /> <label>reject</label>
-                  </fieldset>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <fieldset>
-                    <input th:type="submit" th:value="Update" class="blcass" />
-                  </fieldset>
-                </td>
-              </tr>
+
+              <td>
+                <fieldset>
+                  <input th:type="submit" th:value="Update" class="blcass" />
+                </fieldset>
+              </td>
+            </tr>
+
+
+
+
+    
 
     </table>
     
