@@ -144,11 +144,11 @@ public class LeavingSystemApplication {
                                         LocalDateTime.parse("2022-12-13T22:30:00"), LeaveStatusEnum.APPROVED,emp4);
             CompensationRequest cr3 = new CompensationRequest( LocalDateTime.parse("2022-12-14T14:30:00"), 
 
-                                        LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.PENDING,emp12);
+                                        LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.UPDATED,emp12);
             CompensationRequest cr4 = new CompensationRequest( LocalDateTime.parse("2022-12-15T12:30:00"), 
                                         LocalDateTime.parse("2022-12-15T20:45:00"), LeaveStatusEnum.APPROVED,emp4);
             CompensationRequest cr5 = new CompensationRequest( LocalDateTime.parse("2022-12-16T18:30:00"), 
-                                        LocalDateTime.parse("2022-12-16T20:30:00"), LeaveStatusEnum.PENDING,emp12);
+                                        LocalDateTime.parse("2022-12-16T20:30:00"), LeaveStatusEnum.UPDATED,emp12);
             
 
             leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance,admin_balance));
