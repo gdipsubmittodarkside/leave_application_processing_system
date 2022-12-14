@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+    <div th:replace="fragments/layout.html :: header"/>
+    <div th:replace="fragments/layout.html :: menu"/>
+    <h3>Compensation Request Details</h3>
+    <table>
+        <tr>
+            <th align="right"><span>Request ID</span></th>
+            <td colspan="3" th:text="${compRequest.compensationLeaveId}">Id</td>
+        </tr>
+        <tr>
+            <th align="right"><span>Employee Name</span></th>
+            <td colspan="3" th:text="${compRequest.employee.name}">Leave type</td>
+        </tr>
+        <tr>
+            <th align="right"><span>Start Date</span></th>
+            <td colspan="3" th:text="${#temporals.format(compRequest.OTstartTime, 'yyyy-MM-dd HH:mm')}">Start Date</td>
+        </tr>
+        <tr>
+            <th align="right"><span>End Date</span></th>
+            <td colspan="3" th:text="${#temporals.format(compRequest.OTendTime, 'yyyy-MM-dd HH:mm')}">End Date</td>
+        </tr>
+        <tr>
+            <th align="right"><span>Status</span></th>
+            <td colspan="3" th:text="${compRequest.status}">status</td>
+        </tr>
+
+        <form action="#" th:action="@{/manager/claim/edit/}+${compRequest.compensationLeaveId}" th:object="${approve}" method="post">
+            <table>
+              <tr>
+                <td>
+                  <fieldset>
+                    <input type="radio" th:field="*{decision}" value="APPROVED" />
+                    <label>approve</label> &nbsp;&nbsp; 
+                    <input type="radio" th:field="*{decision}" value="REJECTED" /> <label>reject</label>
+                  </fieldset>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <fieldset>
+                    <input th:type="submit" th:value="Update" class="blcass" />
+                  </fieldset>
+                </td>
+              </tr>
+
+    </table>
+    
+</body>
+</html>
