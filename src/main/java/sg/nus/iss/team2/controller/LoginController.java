@@ -73,7 +73,7 @@ public class LoginController {
         }
 
 
-        return "redirect:/staff/list";
+        return "redirect:/staff/viewLeave";
 
 
     }
