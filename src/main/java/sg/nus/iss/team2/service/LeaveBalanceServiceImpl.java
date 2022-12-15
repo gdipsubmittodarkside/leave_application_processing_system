@@ -66,7 +66,7 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 
     @Override
     @Transactional
-    public void minusCompensationLeaveBalance(LeaveBalance leaveBalance, int days){
+    public void minusCompensationLeaveBalance(LeaveBalance leaveBalance, double days){
         double curr_compBalance = leaveBalance.getBalanceCompensationLeaveDays();
         double new_compBalance = curr_compBalance - days;
         leaveBalance.setBalanceCompensationLeaveDays(new_compBalance);

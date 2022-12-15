@@ -57,8 +57,4 @@ public class CompensationRequest {
         this.status = status;
         this.employee = employee;
     }
-
-
-    
-    
 }

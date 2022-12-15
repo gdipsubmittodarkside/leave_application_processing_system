@@ -21,7 +21,7 @@ public interface LeaveBalanceService {
 
     void minusMedicalLeaveBalance(LeaveBalance leaveBalance, int days);
 
-    void minusCompensationLeaveBalance(LeaveBalance leaveBalance, int days);
+    void minusCompensationLeaveBalance(LeaveBalance leaveBalance, double days);
 
     // After Manager approve compensation request. Increase compensation leave balance.
     void addCompensationLeaveBalance(LeaveBalance leaveBalance, double days);
