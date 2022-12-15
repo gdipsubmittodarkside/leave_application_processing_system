@@ -8,19 +8,19 @@
     <h3>Compensational Leave Claiming Form</h3>
     
     <form action="#" th:action="@{/staff/claimLeave}"
-        th:object="${compen}" method="post">
+        th:object="${compensation}" method="post">
 
         <table class="framed" >
            
             <tr>
                 <th>OT Start Time</th>
-                <td><input type="datetime-local" th:field="*{startTime}" /></td>
+                <td><input type="datetime-local" th:field="*{OTstartTime}" /></td>
                 <!-- <td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td> -->
             </tr>
 
             <tr>
                 <th>OT End Time</th>
-                <td><input type="datetime-local" th:field="*{endTime}" /></td>
+                <td><input type="datetime-local" th:field="*{OTendTime}" /></td>
                 <!-- <td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td> -->
             </tr>
 

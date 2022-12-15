@@ -68,25 +68,25 @@ public class StaffController {
 
     @GetMapping(value = "/claimLeave")
     public String claimLeave(Model model){
-        model.addAttribute("compen", new LocalDateTimeHandler());
+        model.addAttribute("compensation", new CompensationRequest());
 
         return "claimLeave";
     }
 
     @PostMapping(value = "/claimLeave")
-    public String claimCompensation(@ModelAttribute LocalDateTimeHandler compen, BindingResult result,
+    public String claimCompensation(@ModelAttribute CompensationRequest compensation, BindingResult result,
     HttpSession httpSession){
         if (result.hasErrors()) {
             return "claimLeave";
           }
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        //   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
           User user = (User) httpSession.getAttribute("userSession");
           Employee emp = user.getEmployee();
-          CompensationRequest compensation = new CompensationRequest();
+        //   CompensationRequest compensation = new CompensationRequest();
           compensation.setEmployee(emp);
           compensation.setStatus(LeaveStatusEnum.APPLIED);
-          compensation.setOTstartTime(LocalDateTime.parse(compen.getStartTime(), formatter));
-          compensation.setOTendTime(LocalDateTime.parse(compen.getEndTime(), formatter));
+        //   compensation.setOTstartTime(LocalDateTime.parse(compen.getStartTime(), formatter));
+        //   compensation.setOTendTime(LocalDateTime.parse(compen.getEndTime(), formatter));
 
         crService.createCompensationRequest(compensation);
         String message = "New Compensation Leave Request " + compensation.getCompensationLeaveId() + " was successfully created.";
