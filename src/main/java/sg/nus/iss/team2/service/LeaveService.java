@@ -4,6 +4,7 @@ import sg.nus.iss.team2.model.Approve;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface LeaveService {
@@ -20,10 +21,10 @@ public interface LeaveService {
     // For Manager Controller
     List<Leave> findTeamLeaveHistory(List<Employee> team);
 
+    List<Leave> findApprovedTeamLeaveHistory(List<Employee> team, LocalDate theLeaveStartDate, LocalDate theLeaveEndDate);
+
     List<Leave> findLeavePendingApproval(List<Employee> team);
 
-    void updateLeaveAndLeaveBalance(Leave leave, String decision);
-
-
+    void updateLeaveAndLeaveBalance(Leave leave, String decision, String comment);
 
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -40,7 +41,8 @@ public class Leave {
     @Enumerated(EnumType.STRING)
     private LeaveStatusEnum status;
 
-    @Column(name="comment" )
+
+    @Column(name="comment")
     private String comment;
 
     @ManyToOne

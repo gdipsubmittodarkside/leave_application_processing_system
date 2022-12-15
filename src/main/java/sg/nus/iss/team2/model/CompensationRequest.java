@@ -39,6 +39,10 @@ public class CompensationRequest {
     @Column(name="OT_end_time")
     private LocalDateTime OTendTime;
 
+    private String description;
+    
+    private String comment;
+
     @Column(name="status", columnDefinition = "ENUM('APPLIED', 'WITHDRAW', 'APPROVED', 'REJECTED', 'UPDATED', 'PENDING')")
     @Enumerated(EnumType.STRING)
     private LeaveStatusEnum status;

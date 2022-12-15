@@ -117,20 +117,20 @@ public class LeavingSystemApplication {
 
             //Joey Testing
 
-            Leave leave8 = new Leave(LocalDate.parse("2022-09-10"),
+            Leave leave8 = new Leave(LocalDate.parse("2022-08-10"),
             LocalDate.parse("2022-09-11"),
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
-            Leave leave9 = new Leave(LocalDate.parse("2022-09-10"),
-            LocalDate.parse("2022-09-11"),
+            Leave leave9 = new Leave(LocalDate.parse("2022-08-10"),
+            LocalDate.parse("2022-08-11"),
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
-            Leave leave10 = new Leave(LocalDate.parse("2022-09-10"),
-            LocalDate.parse("2022-09-11"),
+            Leave leave10 = new Leave(LocalDate.parse("2022-09-15"),
+            LocalDate.parse("2022-10-11"),
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
-            Leave leave11 = new Leave(LocalDate.parse("2022-09-10"),
-            LocalDate.parse("2022-09-11"),
+            Leave leave11 = new Leave(LocalDate.parse("2022-09-16"),
+            LocalDate.parse("2022-10-10"),
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
-            Leave leave12 = new Leave(LocalDate.parse("2022-09-10"),
-            LocalDate.parse("2022-09-11"),
+            Leave leave12 = new Leave(LocalDate.parse("2022-10-10"),
+            LocalDate.parse("2022-10-11"),
             LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
             Leave leave13 = new Leave(LocalDate.parse("2022-09-10"),
             LocalDate.parse("2022-09-11"),

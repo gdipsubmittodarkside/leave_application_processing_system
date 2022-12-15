@@ -2,15 +2,31 @@ package sg.nus.iss.team2.model;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotNull;
+
 public class Approve {
 
-    private String decision;
+  @NotNull(message = "Decision is required")  
+  private String decision;
+
+    private String comment;
 
     public Approve(){}
 
     public Approve(String decision, String comment)
     {
         this.decision = decision;
+        this.comment = comment;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public String setComment(String comment)
+    {
+        return this.comment = comment;
     }
 
     public String getDecision()
