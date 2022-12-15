@@ -1,12 +1,11 @@
 package sg.nus.iss.team2.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +21,6 @@ import sg.nus.iss.team2.model.CompensationRequest;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.model.LeaveStatusEnum;
-import sg.nus.iss.team2.model.LocalDateTimeHandler;
 import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.service.CompensationRequestService;
 import sg.nus.iss.team2.service.LeaveService;
@@ -68,25 +66,21 @@ public class StaffController {
 
     @GetMapping(value = "/claimLeave")
     public String claimLeave(Model model){
-        model.addAttribute("compen", new LocalDateTimeHandler());
+        model.addAttribute("compensation", new CompensationRequest());
 
         return "claimLeave";
     }
 
     @PostMapping(value = "/claimLeave")
-    public String claimCompensation(@ModelAttribute LocalDateTimeHandler compen, BindingResult result,
+    public String claimCompensation(@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @ModelAttribute CompensationRequest compensation, BindingResult result,
     HttpSession httpSession){
         if (result.hasErrors()) {
             return "claimLeave";
           }
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
           User user = (User) httpSession.getAttribute("userSession");
           Employee emp = user.getEmployee();
-          CompensationRequest compensation = new CompensationRequest();
           compensation.setEmployee(emp);
           compensation.setStatus(LeaveStatusEnum.APPLIED);
-          compensation.setOTstartTime(LocalDateTime.parse(compen.getStartTime(), formatter));
-          compensation.setOTendTime(LocalDateTime.parse(compen.getEndTime(), formatter));
 
         crService.createCompensationRequest(compensation);
         String message = "New Compensation Leave Request " + compensation.getCompensationLeaveId() + " was successfully created.";
@@ -124,12 +118,12 @@ public class StaffController {
     @GetMapping(value={"/edit/{id}"})
     public String editLeaveForm(@PathVariable Long id, Model model){
         Leave targetLeave = leaveService.findLeave(id);
-        model.addAttribute("targetLeave", leaveService.updateLeave(targetLeave));
+        model.addAttribute("targetLeave", targetLeave);
         return "editLeave";
     }
 
 
-    @PostMapping(value={"/{id}"})
+    @PostMapping(value={"/edit/{id}"})
     public String updateLeave(@PathVariable Long id,@ModelAttribute("leave") Leave leave, Model model){
      
         Leave exitingLeave = leaveService.findLeave(id);
@@ -139,10 +133,16 @@ public class StaffController {
         exitingLeave.setReason(leave.getReason());
 
         leaveService.updateLeave(exitingLeave);
-        return "redirect:/staff/list";
+        return "redirect:/staff/viewLeave";
     }
     
-
+    @GetMapping(value={"/delete/{id}"})
+    public String cancelLeave(@PathVariable Long id, Model model){
+        Leave targetLeave = leaveService.findLeave(id);
+        targetLeave.setStatus(LeaveStatusEnum.CANCELLED);
+        leaveService.updateLeave(targetLeave);
+        return "redirect:/staff/viewLeave";
+    }
 
 
 }

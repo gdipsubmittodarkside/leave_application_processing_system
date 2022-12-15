@@ -15,6 +15,7 @@
                 <th>Reason</th>
                 <th>Status</th>
                 <th>Manage Leave</th>
+                <th>Leave Details</th>
             </tr>
             <tr th:each = "leave : ${leaves}" >  
                 <td th:utext = "${leave.leaveId}">Id</td>
@@ -25,8 +26,14 @@
                 <td th:utext = "${leave.status}">Status</td>
                 
             <td>
+                <span th:if="${leave.status.name() != 'CANCELLED'}">
                 <a th:href="@{/staff/edit/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
                 <a th:href="@{/staff/delete/{id}(id=${leave.leaveId})}" class="btn btn-danger btn-sm mb-1">Cancel</a>
+                </span>
+            </td>
+
+            <td>
+                <a th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
             </td>
 
             </tr>
