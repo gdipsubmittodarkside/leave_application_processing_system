@@ -11,7 +11,7 @@
             <div class = "col-lg-6 col-sm-6 container justify-content-center card">
                 <h2>Leave Application Form</h2>
                 <div class = "card-body">
-                    <form th:action="@{/staff/submitLeave}" th:object="${leave}" method="post">
+                    <form th:action="@{/staff/leave/submitLeave}" th:object="${leave}" method="post">
 
                         <div class="form-group" hidden>
                             <label> Leave ID : </label>
@@ -20,21 +20,19 @@
 
                         <div class="form-group">
                             <label> Start Date : </label>
-                            <input type="date" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                            <input type="date" id="takeLeaveStartDate" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                            <script type="text/javascript">takeLeaveStartDate.min=new Date().toISOString().split("T")[0];</script>
                             <td th:if="${#fields.hasErrors('startDate')}"
                                 th:errors="*{startDate}"></td>
                         </div>
 
                         <div class="form-group">
                             <label> End Date : </label>
-                            <input type="date" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                            <input type="date" id="takeLeaveEndDate" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                            <script type="text/javascript">takeLeaveEndDate.min=new Date().toISOString().split("T")[0];</script>
+                            <td th:if="${#fields.hasErrors('endDate')}"
+                                th:errors="*{endDate}"></td>
                         </div>
-
-                        
-                        <!-- <div class="form-group">
-                            <label> Leave Type : </label>
-                            <input type="text" name= leaveType th:field="*{leaveType}" class="form-control" placeholder="Enter Leave Type"/>
-                        </div> -->
 
                         <div class="form-group">
                         <lable>Leave Type :</lable>
@@ -45,12 +43,11 @@
                           </select>
                         </div> 
 
-           
-
-                        
                         <div class="form-group">
                             <label> Reason : </label>
                             <textarea lass="form-control" name= reason th:field="*{reason}">Please Enter Your Reason</textarea>
+                            <td th:if="${#fields.hasErrors('reason')}"
+                                th:errors="*{reason}"></td>
                         </div>
 
                         <div class="box-footer">
@@ -61,12 +58,11 @@
                 </div>
             </div>
         </div>
-
-    
-
-
-
-
     <div th:replace="fragments/layout.html :: footer" />
+
 </body>
+
+
+
 </html>
+

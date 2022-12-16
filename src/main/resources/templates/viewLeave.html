@@ -27,20 +27,20 @@
                 
             <td>
                 <span th:if="${leave.status.name() != 'CANCELLED'}">
-                <a th:href="@{/staff/edit/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
+                <a th:href="@{/staff/leave/edit/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
                 <a th:href="@{/staff/delete/{id}(id=${leave.leaveId})}" class="btn btn-danger btn-sm mb-1">Cancel</a>
                 </span>
             </td>
 
             <td>
-                <a th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
+                <a th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Detail</a>
             </td>
 
             </tr>
             
         </table>
         <br><br>
-        <h4><a th:href="@{/staff/new }"> >>>>> Take Leave <<<<< </a></h4>
+        <h4><a th:href="@{/staff/leave/new }"> >>>>> Take Leave <<<<< </a></h4>
         <br><br>
 
         <h3>Leave Claiming History </h3>
@@ -51,18 +51,22 @@
                 <th>OT Start Date</th>
                 <th>OT End Date</th>
                 <th>Status</th>
+                <th>Detail</th>
             </tr>
             <tr th:each = "cr : ${crReq}" >  
                 <td th:utext = "${cr.compensationLeaveId}">Id</td>
                 <td th:utext = "${cr.OTstartTime}">Start Date</td>
                 <td th:utext = "${cr.OTendTime}">End Date</td>
                 <td th:utext = "${cr.status}">Status</td>
+                <td>
+                    <a th:href="@{/staff/compensationRequestDetail/{id}(id=${cr.compensationLeaveId})}" class="btn btn-primary btn-sm mb-1">Detail</a>
+                </td>
             </tr>
             
         </table>
 
         <br><br>
-        <h4><a th:href="@{/staff/claimLeave }"> >>>>> Calim compensation Leave <<<<< </a></h4>
+        <h4><a th:href="@{/staff/compensation/claimLeave }"> >>>>> Calim compensation Leave <<<<< </a></h4>
         <br><br>
     
 

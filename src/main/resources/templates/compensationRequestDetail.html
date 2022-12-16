@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    <h3>compensation Request Detail</h3>
+
+    <table class="framed" th:object = "${compensationRequestDetail}">
+        <tr>
+            <td>Compensation Request Id</td>
+            <td th:utext = "*{compensationLeaveId}"></td>
+        </tr>
+        <tr>
+            <td>OT Start Time</td>
+            <td th:utext = "*{OTstartTime}"></td>
+        </tr>
+        <tr>
+            <td>OT End Date</td>
+            <td th:utext = "*{OTendTime}"></td>
+        </tr>
+        <br>
+        <tr>
+            <td>Description</td>
+            <td th:utext = "*{description}" ></td>
+        </tr>
+        <tr>
+            <td>Comment</td>
+            <td th:utext = "*{comment}"></td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td th:utext = "*{status}"></td>
+        </tr>
+
+    </table>
+    
+   
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>

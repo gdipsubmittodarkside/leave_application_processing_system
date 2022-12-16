@@ -35,12 +35,16 @@ public class CompensationRequest {
 
 
     @Column(name = "OT_start_time")
-    // @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime OTstartTime;
 
     @Column(name="OT_end_time")
-    // @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime OTendTime;
+
+    private String description;
+
+    private String comment;
 
     @Column(name="status", columnDefinition = "ENUM('APPLIED', 'CANCELLED', 'APPROVED', 'REJECTED', 'UPDATED')")
     @Enumerated(EnumType.STRING)

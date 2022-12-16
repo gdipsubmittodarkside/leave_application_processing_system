@@ -11,7 +11,7 @@
             <div class = "col-lg-6 col-sm-6 container justify-content-center card">
                 <h2>Edit Leave Application Form</h2>
                 <div class = "card-body">
-                    <form th:action="@{/staff/edit/{id}(id=${targetLeave.leaveId})}" th:object="${targetLeave}" method="post">
+                    <form th:action="@{/staff/leave/edit/{id}(id=${leave.leaveId})}" th:object="${leave}" method="post">
                         
                         <div class="form-group">
                             <label> Leave ID : </label>
@@ -21,11 +21,15 @@
                         <div class="form-group">
                             <label> Start Date : </label>
                             <input type="date" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                            <span th:if="${#fields.hasErrors('startDate')}" 
+                            th:errors="*{startDate}"></span>
                         </div>
 
                         <div class="form-group">
                             <label> End Date : </label>
                             <input type="date" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                            <span th:if="${#fields.hasErrors('endDate')}"
+                            th:errors="*{endDate}"></span>
                         </div>
 
                         <div class="form-group">
@@ -34,12 +38,14 @@
                                 <option value="ANNUAL" th:text="ANNUAL"></option>
                                 <option value="MEDICAL" th:text="MEDICAL"></option>
                                 <option value="COMPENSATION" th:text="COMPENSATION"></option>
-                              </select>
-                            </div>             
+                            </select>
+                        </div>             
                         
                         <div class="form-group">                      
                             <label> Reason: </label>
                             <textarea th:field="*{reason}" rows= "5" cols="40" class="form-control"></textarea>
+                            <span th:if="${#fields.hasErrors('reason')}"
+                            th:errors="*{reason}" ></span>
                         </div>
 
                         <div class="box-footer">

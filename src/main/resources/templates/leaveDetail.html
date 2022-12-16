@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    <h3>Leave Details</h3>
+
+    <table class="framed" th:object = "${leaveDetail}">
+        <tr>
+            <td>Leave Id</td>
+            <td th:utext = "*{leaveId}"></td>
+        </tr>
+        <tr>
+            <td>Start Date</td>
+            <td th:utext = "*{startDate}"></td>
+        </tr>
+        <tr>
+            <td>End Date</td>
+            <td th:utext = "*{endDate}"></td>
+        </tr>
+        <br>
+        <tr>
+            <td>Leave Type</td>
+            <td th:utext = "*{leaveType}"></td>
+        </tr>
+        <tr>
+            <td>Reason</td>
+            <td th:utext = "*{reason}"></td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td th:utext = "*{status}"></td>
+        </tr>
+        <tr>
+            <td>Comment</td>
+            <td th:utext = "*{comment}"></td>
+        </tr>
+
+    </table>
+    
+   
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>
