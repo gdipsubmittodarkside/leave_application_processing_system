@@ -23,7 +23,13 @@ public class ApproveValidator implements Validator {
         
         String decision = approve.getDecision();
 
-        if (decision != null)
+        if (decision == null)
+        {
+            errors.rejectValue("decision","error.decision","Please make a decision");
+
+        }
+
+        else
         {
             if (decision.equalsIgnoreCase(LeaveStatusEnum.REJECTED.toString()))
             {
@@ -34,10 +40,8 @@ public class ApproveValidator implements Validator {
                 }
                 
             }
-
         }
-
-
+        
     }
 }
     

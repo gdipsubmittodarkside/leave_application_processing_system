@@ -2,11 +2,9 @@ package sg.nus.iss.team2.model;
 
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
 
 public class Approve {
-
-  @NotNull(message = "Decision is required")  
+ 
   private String decision;
 
     private String comment;
