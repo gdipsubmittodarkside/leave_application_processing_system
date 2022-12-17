@@ -1,8 +1,10 @@
 package sg.nus.iss.team2.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import sg.nus.iss.team2.configuration.PublicHolidayApi;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.LeaveType;
+import sg.nus.iss.team2.model.PublicHoliday;
 import sg.nus.iss.team2.model.Role;
 import sg.nus.iss.team2.model.User;
+import sg.nus.iss.team2.reporting.FilesExporter;
 import sg.nus.iss.team2.service.EmployeeService;
 import sg.nus.iss.team2.service.LeaveTypeService;
+import sg.nus.iss.team2.service.PublicHolidayService;
 import sg.nus.iss.team2.service.RoleService;
 import sg.nus.iss.team2.service.UserService;
 import sg.nus.iss.team2.validator.LeaveTypeValidator;
@@ -72,9 +78,23 @@ public class AdminController {
         binder.addValidators(ltValidator);
     }
 
+    @Autowired
+    private FilesExporter export;
+
+    @Autowired
+    private PublicHolidayApi api;
+
+    @Autowired
+    private PublicHolidayService pubService;
+
     /*
      * >>>>>>>>>>>>>>>>>>>>>>>>>>>>MANAGE EMPLOYEE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
      */
+    @GetMapping("/employee/export/csv")
+    public void EmployeeExportReport(HttpServletResponse response) throws IOException {
+        List<Employee> employee = empService.findAllEmployee();
+        export.exportEmployeeToCSV(employee, response);
+    }
 
     @RequestMapping("/employee/list")
     public String EmloyeeList(Model model) {
@@ -90,6 +110,7 @@ public class AdminController {
         Page<Employee> page = empService.findPaginated(pageNo, pageSize, sortField,
                 sortDir);
         List<Employee> employees = page.getContent();
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -105,7 +126,7 @@ public class AdminController {
     public String newEmployeePage(Model model) {
 
         model.addAttribute("employee", new Employee());
-        model.addAttribute("eidlist", empService.findAllUserIDs());
+        model.addAttribute("eidlist", empService.findAllEmployee());
         return "employee-new";
     }
 
@@ -114,7 +135,7 @@ public class AdminController {
             BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("eidlist", empService.findAllUserIDs());
+            model.addAttribute("eidlist", empService.findAllEmployee());
             return "employee-new";
         }
         empService.createEmployee(employee);
@@ -149,9 +170,36 @@ public class AdminController {
     /*
      * >>>>>>>>>>>>>>>>>>>>>>>>>>>>MANAGE User<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
      */
+    @GetMapping("/user/export/csv")
+    public void UserExportReport(HttpServletResponse response) throws IOException {
+        List<User> users = userService.findAllUsers();
+        export.exportUserToCSV(users, response);
+    }
+
     @RequestMapping("/user/list")
     public String getUserList(Model model) {
-        model.addAttribute("userList", userService.findAllUsers());
+        return findPaginatedUser(1,
+                "userId", "asc", 5, model);
+    }
+
+    @GetMapping("/user/list/page/{pageNo}")
+    public String findPaginatedUser(@PathVariable(value = "pageNo") int pageNo,
+            @RequestParam("sortField") String sortField,
+            @RequestParam("sortDir") String sortDir,
+            @RequestParam("pageSize") int pageSize,
+            Model model) {
+        Page<User> page = userService.findPaginated(pageNo, pageSize, sortField,
+                sortDir);
+        List<User> users = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("userList", users);
         return "user-list";
     }
 
@@ -219,9 +267,14 @@ public class AdminController {
         return "redirect:/admin/user/list";
     }
 
-    /*
-     * >>>>>>>>>>>>>>>>>>>>>>>>>>>>MANAGE LeaveType<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-     */
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>MANAGE
+    // LeaveType<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    @GetMapping("/leavetype/export/csv")
+    public void LeaveTypeExportReport(HttpServletResponse response) throws IOException {
+        List<LeaveType> lts = leTyService.findAllLeaveType();
+        export.exportLeaveTypeToCSV(lts, response);
+    }
 
     @GetMapping("/leavetype/list")
     public String LeaveTypeList(Model model) {
@@ -237,7 +290,7 @@ public class AdminController {
     }
 
     @PostMapping("/leavetype/create")
-    public String createLeaveTypePage(@ModelAttribute @Valid LeaveType leaveType , BindingResult result) {
+    public String createLeaveTypePage(@ModelAttribute @Valid LeaveType leaveType, BindingResult result) {
         if (result.hasErrors()) {
             return "leavetype-new";
         }
@@ -258,7 +311,7 @@ public class AdminController {
         if (result.hasErrors()) {
             return "leavetype-edit";
         }
-        leTyService.updateLeaveType(leTyService.findLeaveType(leaveTypeName));
+        leTyService.updateLeaveType(leaveType);
         return "redirect:/admin/leavetype/list";
     }
 
@@ -267,6 +320,53 @@ public class AdminController {
         LeaveType leaveType = leTyService.findLeaveType(name);
         leTyService.removeLeaveType(leaveType);
         return "redirect:/admin/leavetype/list";
+    }
+
+    // >>>>>>>>>>>>>>>>>>>>>>>Manage Public
+    // Holidays<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    @RequestMapping("/holidays/list")
+    public String holiday(Model model) {
+        model.addAttribute("pubs", pubService.findAllPublicHolidays());
+        return "holiday-list";
+    }
+
+    @GetMapping("/holidays/create")
+    public String createHoliday(Model model) {
+        model.addAttribute("pubs", new PublicHoliday());
+        return "holiday-new";
+    }
+
+    @PostMapping("/holidays/create")
+    public String saveHoliday(@ModelAttribute @Valid PublicHoliday holiday, BindingResult result) {
+        if (result.hasErrors()) {
+            return "holiday-new";
+        }
+        pubService.createHoliday(holiday);
+        return "redirect:/admin/holidays/list";
+    }
+
+    @RequestMapping("/holidays/edit/{id}")
+    public String updateHoliday(@PathVariable Long id, Model model) {
+        PublicHoliday holiday = pubService.findPublicHolidaysById(id);
+        model.addAttribute("holid", holiday);
+        return "holiday-edit";
+    }
+
+    @PostMapping("/holidays/edit/{id}")
+    public String updateSaveHoli(@ModelAttribute @Valid PublicHoliday holiday, Model model,
+            BindingResult result, @PathVariable Long id) {
+        if (result.hasErrors()) {
+            return "holiday-edit";
+        }
+        pubService.updateHoliday(holiday);
+        return "redirect:/admin/holidays/list";
+    }
+
+    @RequestMapping("/holidays/delete/{id}")
+    public String deleteHoliday(@PathVariable Long id) {
+        pubService.deleteHoliday(id);
+        return "redirect:/admin/holidays/list";
     }
 
 }

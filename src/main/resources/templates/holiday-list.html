@@ -10,31 +10,31 @@ crossorigin="anonymous">
   <div th:replace="fragments/layout.html :: menu"/>
   <div th:replace="fragments/layout.html :: header"/> 
 <div align="left" class="container my-2">
-  <h3>Leave Type List page</h3>
-  <a th:href="@{/admin/leavetype/create}" class="btn btn-primary">Add Leave Type</a>
-  <a th:href="@{/admin/leavetype/export/csv}"><i class=" btn btn-dark px-4">Generate Report</i></a>
-  <div th:if="${not #lists.isEmpty(leaveType)}">
+  <h3>Public Holiday page</h3>
+  <a th:href="@{/admin/holidays/create}" class="btn btn-primary">Add Public Holiday</a>
+  <a th:href="@{/admin/holidays/export/csv}"><i class=" btn btn-dark px-4">Generate Report</i></a>
+  <div th:if="${not #lists.isEmpty(pubs)}">
 
     <table style="border: 1" class="table table-striped table-responsive-md">
       <thead>
         <tr class="listHeading">
-          <th><span th:text="#{fieldLabel.leaveType}"></span></th>
-          <th><span th:text="#{fieldLabel.leavePeriod}"></span></th>
-          <th><span th:text="#{fieldLabel.description}"></span></th>
+          <th><span th:text="#{fieldLabel.localName}"></span></th>
+          <th><span th:text="#{fieldLabel.holidayName}"></span></th>
+          <th><span th:text="#{fieldLabel.holidayDate}"></span></th>
           <th><span>Action</span></th>
           
         </tr>
       </thead>
       <tbody>
 
-        <tr th:each="leavetype : ${leaveType}" class="listRecord">
-          <td th:text="${leavetype.leaveTypeName}">LeaveTypeName</td>
-          <td th:text="${leavetype.leavePeriod}">LeavePeriod</td>
-          <td th:text="${leavetype.description}">Description</td>
+        <tr th:each="holid : ${pubs}" class="listRecord">
+          <td th:text="${holid.localName}">LocalName</td>
+          <td th:text="${holid.name}">Name</td>
+          <td th:text="${holid.date}">Date</td>
 
-          <td><a th:href="@{/admin/leavetype/edit/}+${leavetype.leaveTypeName}"
+          <td><a th:href="@{/admin/holidays/edit/}+${holid.id}"
             class="btn btn-info"><span th:text="#{caption.edit}"></span></a>
-          <a th:href="@{/admin/leavetype/delete/}+${leavetype.leaveTypeName}"
+          <a th:href="@{/admin/holidays/delete/}+${holid.id}"
             class="btn btn-danger"><span th:text="#{caption.delete}"></span></a></td>
         </tr>
       </tbody>

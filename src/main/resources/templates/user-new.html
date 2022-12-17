@@ -26,7 +26,7 @@ crossorigin="anonymous">
               </select>
               <div></div>
               <label for="roles">User roles (multiple select):</label>
-            <select size="2" multiple="multiple" name="roleSet" id="roleSet">
+            <select size="3" multiple="multiple" name="roles" id="roles">
               <option th:each="role:${roles}" th:value="${role.roleId}" th:text="${role.roleName}">Roles</option>
             </select>
 
