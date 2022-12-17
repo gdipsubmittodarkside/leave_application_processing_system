@@ -33,14 +33,16 @@ public class LeaveValidator implements Validator{
     @Override
     public void validate (Object target, Errors errors){
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "startDate","Start Date is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endDate", "endDate", "End Date is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "reason", "reason", "Reason is required");
-
         Leave leave = (Leave) target;
 
         LocalDate startDate = leave.getStartDate();
         LocalDate endDate = leave.getEndDate();
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "startDate","Start Date is required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endDate", "endDate", "End Date is required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "reason", "reason", "Reason is required");
+
+       
 
         if (startDate!=null && startDate.compareTo(LocalDate.now()) < 0){
 
@@ -52,11 +54,11 @@ public class LeaveValidator implements Validator{
             errors.rejectValue("startDate","error.startDate","StartDate cannot be later than endDate.");
         }
 
-        if ((startDate.getDayOfWeek().toString().equals("SUNDAY") || startDate.getDayOfWeek().toString().equals("SATURDAY"))){
+        if (startDate!=null && (startDate.getDayOfWeek().toString().equals("SUNDAY") || startDate.getDayOfWeek().toString().equals("SATURDAY"))){
             errors.rejectValue("startDate","error.startDate2","Please choose working date only!");
         }
 
-        if ((endDate.getDayOfWeek().toString().equals("SUNDAY") || endDate.getDayOfWeek().toString().equals("SATURDAY"))){
+        if (startDate!=null && (endDate.getDayOfWeek().toString().equals("SUNDAY") || endDate.getDayOfWeek().toString().equals("SATURDAY"))){
             errors.rejectValue("endDate","error.endDate2","Please choose working date only!");
         }
         

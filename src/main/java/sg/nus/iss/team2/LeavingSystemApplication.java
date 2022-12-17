@@ -1,5 +1,6 @@
 package sg.nus.iss.team2;
 
+import sg.nus.iss.team2.configuration.PublicHolidayApi;
 import sg.nus.iss.team2.model.CompensationRequest;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
@@ -10,6 +11,9 @@ import sg.nus.iss.team2.model.LeaveTypeEnum;
 import sg.nus.iss.team2.model.Role;
 import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.repository.*;
+import sg.nus.iss.team2.service.PublicHolidayService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +28,12 @@ public class LeavingSystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(LeavingSystemApplication.class);
     }
+
+    @Autowired
+    private PublicHolidayApi api;
+    @Autowired
+    private PublicHolidayService pubService;
+
     @Bean
     CommandLineRunner loadData(
             UserRepository userRepository,
@@ -145,7 +155,7 @@ public class LeavingSystemApplication {
             CompensationRequest cr3 = new CompensationRequest( LocalDateTime.parse("2022-12-14T14:30:00"), 
                                         LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.APPLIED,emp1);
             CompensationRequest cr4 = new CompensationRequest( LocalDateTime.parse("2022-12-15T12:30:00"), 
-                                        LocalDateTime.parse("2022-12-15T20:45:00"), LeaveStatusEnum.APPROVED,emp1);
+                                        LocalDateTime.parse("2022-12-15T20:45:00"), LeaveStatusEnum.REJECTED,emp1);
             CompensationRequest cr5 = new CompensationRequest( LocalDateTime.parse("2022-12-16T18:30:00"), 
                                         LocalDateTime.parse("2022-12-16T20:30:00"), LeaveStatusEnum.APPLIED,emp1);
 
@@ -159,6 +169,9 @@ public class LeavingSystemApplication {
             empRepo.saveAllAndFlush(Arrays.asList(emp1,emp2,emp3,emp4,emp5,emp6,emp7,emp8,emp9,emp10,emp11,emp12));
             compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1,cr2,cr3,cr4,cr5));
             leaveRepository.saveAllAndFlush(Arrays.asList(leave1,leave2,leave3,leave4,leave5,leave6,leave7));
+
+            pubService.saveAll(api.getPublicHoliday("2022"));
+            pubService.saveAll(api.getPublicHoliday("2023"));
 
             
             

@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             <label> End Date : </label>
-                            <input type="date" id="takeLeaveEndDate" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                            <input type="date" id="takeLeaveEndDate" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose End Date"/>
                             <script type="text/javascript">takeLeaveEndDate.min=new Date().toISOString().split("T")[0];</script>
                             <td th:if="${#fields.hasErrors('endDate')}"
                                 th:errors="*{endDate}"></td>
