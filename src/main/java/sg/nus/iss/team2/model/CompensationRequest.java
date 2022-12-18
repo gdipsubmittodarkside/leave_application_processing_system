@@ -1,6 +1,7 @@
 package sg.nus.iss.team2.model;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,8 +66,10 @@ public class CompensationRequest {
         OTstartTime = oTstartTime;
         OTendTime = oTendTime;
         this.employee = employee;
+
     }
     
+
 
     
     

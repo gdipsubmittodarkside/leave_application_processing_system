@@ -50,4 +50,44 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
     public void remove(LeaveBalance leaveBalance) {
         leaveBalanceRepository.delete(leaveBalance);
     }
+
+    @Override
+    @Transactional
+    public void minusAnnualLeaveBalance(LeaveBalance leaveBalance, int days){
+        int curr_annualBalance = leaveBalance.getBalanceAnnualLeaveDays();
+        int new_annualBalance = curr_annualBalance - days;
+        leaveBalance.setBalanceAnnualLeaveDays(new_annualBalance);
+        
+        updateLeaveBalance(leaveBalance);
+    }
+
+    @Override
+    @Transactional
+    public void minusMedicalLeaveBalance(LeaveBalance leaveBalance, int days){
+        int curr_medicalBalance = leaveBalance.getBalanceMedicalLeaveDays();
+        int new_medicalBalance = curr_medicalBalance - days;
+        leaveBalance.setBalanceMedicalLeaveDays(new_medicalBalance);
+        
+        updateLeaveBalance(leaveBalance);
+    }
+
+    @Override
+    @Transactional
+    public void minusCompensationLeaveBalance(LeaveBalance leaveBalance, int days){
+        double curr_compBalance = leaveBalance.getBalanceCompensationLeaveDays();
+        double new_compBalance = curr_compBalance - days;
+        leaveBalance.setBalanceCompensationLeaveDays(new_compBalance);
+
+        updateLeaveBalance(leaveBalance);
+    }
+
+    @Override
+    @Transactional
+    public void addCompensationLeaveBalance(LeaveBalance leaveBalance, double days){
+        double curr_compBalance = leaveBalance.getBalanceCompensationLeaveDays();
+        double new_compBalance = curr_compBalance + days;
+        leaveBalance.setBalanceCompensationLeaveDays(new_compBalance);
+
+        updateLeaveBalance(leaveBalance);
+    }
 }

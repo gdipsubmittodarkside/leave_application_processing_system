@@ -37,5 +37,4 @@ public class PublicHoliday {
     @JsonIgnore
     private boolean global;
 
-
 }

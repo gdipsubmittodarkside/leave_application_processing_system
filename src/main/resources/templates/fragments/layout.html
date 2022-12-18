@@ -1,7 +1,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="html_head" id="html_head" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+    >
     <meta charset="UTF-8">
     <title>Leaving System</title>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
@@ -42,8 +47,15 @@
                 <div class="subnav">
                     <button class="subnavbtn">Admin Menu <i class="fa fa-caret-down"></i></button>
                     <div class="subnav-content">
-                        <a>1</a>
-                        <a>2</a>
+                        <a th:href="@{/admin/leavetype/list}" 
+                        th:utext="#{menu.admin.leavetypelist}">Manage LeaveType</a>
+                        <a th:href="@{/admin/employee/list}"
+                        th:utext="#{menu.admin.emplist}">Manage Employee</a>
+                        <a th:href="@{/admin/user/list}"
+                        th:utext="#{menu.admin.ulist}">Manage User</a>
+                        <a th:href="@{/admin/holidays/list}"
+                        th:utext="#{menu.admin.publist}">Manage Public Holiday</a>
+
                     </div>
                 </div>
             </div>
