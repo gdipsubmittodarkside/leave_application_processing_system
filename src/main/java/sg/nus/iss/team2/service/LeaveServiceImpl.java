@@ -23,6 +23,9 @@ public class LeaveServiceImpl implements LeaveService {
     @Autowired
     Calculate calculate;
 
+    @Autowired
+    LeaveBalanceService leaveBalanceService;
+
     @Override
     @Transactional
     public List<Leave> findAllLeaves() {
@@ -62,12 +65,13 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional
-    public Boolean isOutOfLeave(Leave leave, LeaveBalance lb){
+    public Boolean isOutOfLeave(Leave leave, Employee emp){
         String leaveType = leave.getLeaveType().toString();
         LocalDate startDate = leave.getStartDate();
         LocalDate endDate = leave.getEndDate();
-
         double leaveDuration = calculate.numOfDaysMinusPHAndWeekend(startDate, endDate);
+
+        LeaveBalance lb = leaveBalanceService.findEmployeeLeaveBalance(emp);
         int annualBalance = lb.getBalanceAnnualLeaveDays();
         int medicalBalance = lb.getBalanceMedicalLeaveDays();
         double compensationBalance = lb.getBalanceCompensationLeaveDays();

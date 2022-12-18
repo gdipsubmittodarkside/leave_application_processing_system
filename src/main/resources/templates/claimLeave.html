@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="fragments/layout.html :: html_head" />
 <body>
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
+    
     <h3>Compensational Leave Claiming Form</h3>
     
     <form action="#" th:action="@{/staff/compensation/claimLeave}"

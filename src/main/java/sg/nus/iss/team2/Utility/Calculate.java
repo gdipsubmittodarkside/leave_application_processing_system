@@ -1,21 +1,13 @@
 package sg.nus.iss.team2.Utility;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sg.nus.iss.team2.model.PublicHoliday;
 import sg.nus.iss.team2.service.PublicHolidayService;
@@ -29,14 +21,7 @@ public class Calculate {
     public long durationInHours(LocalDateTime startTime, LocalDateTime endTime){
         return ChronoUnit.HOURS.between(startTime, endTime);
     }
-    // Tested method "numOfDaysMinusPHAndWeekend"
-        /*
-        LocalDateTime start = LocalDateTime.of(2022, Month.DECEMBER, 29, 19, 00, 00);
-        LocalDateTime end = LocalDateTime.of(2023, Month.JANUARY, 3, 19, 00 ,00);
-        double days = calculator.numOfDaysMinusPHAndWeekend(start, end);
-            
-        System.out.println(days); // prints 3.0 (correct)
-         */
+
     public double numOfDaysMinusPHAndWeekend(LocalDate startDate, LocalDate endDate)
     {
         // int numOfDays = Period.between(startDate, endDate).getDays() + 1;

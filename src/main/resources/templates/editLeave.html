@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/layout.html :: html_head" />
-<body>
+<body onload="set_time()">
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
     
@@ -20,14 +20,16 @@
 
                         <div class="form-group">
                             <label> Start Date : </label>
-                            <input type="date" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                            <input type="date" id="editLeaveStartDate" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                            <script type="text/javascript">editLeaveStartDate.min=new Date().toISOString().split("T")[0];</script>
                             <span th:if="${#fields.hasErrors('startDate')}" 
                             th:errors="*{startDate}"></span>
                         </div>
 
                         <div class="form-group">
                             <label> End Date : </label>
-                            <input type="date" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                            <input type="date" id="editLeaveEndDate" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                            <!-- <script type="text/javascript">editLeaveEndDate.min=new Date().toISOString().split("T")[0];</script> -->
                             <span th:if="${#fields.hasErrors('endDate')}"
                             th:errors="*{endDate}"></span>
                         </div>
@@ -57,6 +59,19 @@
         </div>
 
     </div>
+
+    <script>
+        var myDate = document.getElementById('editLeaveStartDate');
+        function set_time(){
+            // myDate2.valueAsDate = myDate;
+            document.getElementById("editLeaveEndDate").setAttribute("min",myDate.value);
+        }
+        
+        myDate.onchange = function(){
+            var x = this.value;
+          document.getElementById("editLeaveEndDate").setAttribute("min", x);
+        }
+    </script>
 
     <div th:replace="fragments/layout.html :: footer" />
 </body>

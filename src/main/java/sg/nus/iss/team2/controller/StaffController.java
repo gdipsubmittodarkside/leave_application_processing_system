@@ -21,11 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sg.nus.iss.team2.model.CompensationRequest;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
-import sg.nus.iss.team2.model.LeaveBalance;
 import sg.nus.iss.team2.model.LeaveStatusEnum;
 import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.service.CompensationRequestService;
-import sg.nus.iss.team2.service.LeaveBalanceService;
 import sg.nus.iss.team2.service.LeaveService;
 import sg.nus.iss.team2.validator.CompensationRequestValidator;
 import sg.nus.iss.team2.validator.LeaveValidator;
@@ -49,9 +47,6 @@ public class StaffController {
 
     @Autowired
     private CompensationRequestService crService;
-
-    @Autowired
-    private LeaveBalanceService lbService;
 
     @Autowired
     private LeaveValidator leaveValidator;
@@ -178,9 +173,8 @@ public class StaffController {
 
         User user = (User) httpSession.getAttribute("userSession");
         Employee emp = user.getEmployee();
-        LeaveBalance lb = lbService.findEmployeeLeaveBalance(emp);
 
-        if(leaveService.isOutOfLeave(leave,lb)){
+        if(leaveService.isOutOfLeave(leave,emp)){
             return "outOfLeave";
         }
         leave.setEmployee(emp);
@@ -202,11 +196,18 @@ public class StaffController {
     }
 
     @PostMapping(value={"/leave/edit/{id}"})
-    public String updateLeave(@PathVariable Long id, @Valid @ModelAttribute Leave leave, BindingResult bindingResult, Model model){
+    public String updateLeave(@PathVariable Long id, @Valid @ModelAttribute Leave leave, BindingResult bindingResult, Model model, HttpSession httpSession){
        
         if (bindingResult.hasErrors()) {
             return "editLeave";
           }
+          
+        User user = (User) httpSession.getAttribute("userSession");
+        Employee emp = user.getEmployee();
+        
+        if(leaveService.isOutOfLeave(leave,emp)){
+            return "outOfLeave";
+        }
 
         Leave exitingLeave = leaveService.findLeave(id);
         exitingLeave.setStartDate(leave.getStartDate());

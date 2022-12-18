@@ -1,51 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head" />
-<body>
+<body onload="openView('view-leave')">
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
-    <h3>Personal Leave Detail</h3>
     
-        <table class="framed" >
-            <tr>
-                <th>Leave Id</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Leave Type</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Manage Leave</th>
-                <th>Leave Details</th>
-            </tr>
-            <tr th:each = "leave : ${leaves}" >  
-                <td th:utext = "${leave.leaveId}">Id</td>
-                <td th:utext = "${leave.startDate}">Start Date</td>
-                <td th:utext = "${leave.endDate}">End Date</td>
-                <td th:utext = "${leave.leaveType}">Leave Type</td>
-                <td th:utext = "${leave.reason}">Reason</td>
-                <td th:utext = "${leave.status}">Status</td>
+    <div class="nav-tab">
+        <button class="nav-tab-button" onclick="openView('view-leave')"><b>Leave History</b></button>
+        <button class="nav-tab-button" onclick="openView('view-claim')"><b>Claim History</b></button>
+      </div>
+
+    <div id="view-leave" class="staff-view">
+        <h3>Personal Leave Detail</h3>
+        
+            <table class="framed" >
+                <tr>
+                    <th>Leave Id</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Leave Type</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Manage Leave</th>
+                    <th>Leave Details</th>
+                </tr>
+                <tr th:each = "leave : ${leaves}" >  
+                    <td th:utext = "${leave.leaveId}">Id</td>
+                    <td th:utext = "${leave.startDate}">Start Date</td>
+                    <td th:utext = "${leave.endDate}">End Date</td>
+                    <td th:utext = "${leave.leaveType}">Leave Type</td>
+                    <td th:utext = "${leave.reason}">Reason</td>
+                    <td th:utext = "${leave.status}">Status</td>
+                    
+                <td>
+                    <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.status.name() != 'APPROVED'} and ${leave.startDate.isAfter(todayDate)}">
+                        <a th:href="@{/staff/leave/edit/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
+                    </span>
+                    <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.startDate.isAfter(todayDate)}">
+                        <a th:href="@{/staff/delete/{id}(id=${leave.leaveId})}" class="btn btn-danger btn-sm mb-1">Cancel</a>
+                    </span>
+                </td>
+
+                <td>
+                    <a th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Detail</a>
+                </td>
+
+                </tr>
                 
-            <td>
-                <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.status.name() != 'APPROVED'} and ${leave.startDate.isAfter(todayDate)}">
-                    <a th:href="@{/staff/leave/edit/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
-                </span>
-                <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.startDate.isAfter(todayDate)}">
-                    <a th:href="@{/staff/delete/{id}(id=${leave.leaveId})}" class="btn btn-danger btn-sm mb-1">Cancel</a>
-                </span>
-            </td>
+                
+            </table>
+            <br><br>
+            <h4><a th:href="@{/staff/leave/new }"> >>>>> Take Leave <<<<< </a></h4>
+            <br><br>
+    </div>
 
-            <td>
-                <a th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Detail</a>
-            </td>
-
-            </tr>
-            
-            
-        </table>
-        <br><br>
-        <h4><a th:href="@{/staff/leave/new }"> >>>>> Take Leave <<<<< </a></h4>
-        <br><br>
-
+    <div id="view-claim" class="staff-view">
         <h3>Leave Claiming History </h3>
     
         <table class="framed" >
@@ -78,8 +87,19 @@
         <br><br>
         <h4><a th:href="@{/staff/compensation/claimLeave }"> >>>>> Calim compensation Leave <<<<< </a></h4>
         <br><br>
-    
+    </div>
 
+    <script>
+
+        function openView(view) {
+          var i;
+          var x = document.getElementsByClassName("staff-view");
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+          }
+          document.getElementById(view).style.display = "block";  
+        }
+    </script>
 
 
 

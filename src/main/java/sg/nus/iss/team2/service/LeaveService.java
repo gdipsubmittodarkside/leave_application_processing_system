@@ -19,7 +19,7 @@ public interface LeaveService {
 
     void removeLeave(Leave leave);
 
-    Boolean isOutOfLeave(Leave leave, LeaveBalance lb);
+    Boolean isOutOfLeave(Leave leave, Employee emp);
 
 
 
