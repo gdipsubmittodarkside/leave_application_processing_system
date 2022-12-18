@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import sg.nus.iss.team2.model.Employee;
+import sg.nus.iss.team2.model.EmployeeModel;
 import sg.nus.iss.team2.repository.EmployeeRepository;
 
 @Service
@@ -70,5 +71,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Long> findAllUserIDs() {
         // TODO Auto-generated method stub
         return employeeRepository.findAllEmployeeIDs();
+    }
+
+    @Override
+    public boolean deleteEmployee(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).get();
+        employee.setStatus("resigned");
+        return true;
+    }
+
+    @Override
+    public EmployeeModel updateEmployeeMol(Long employeeId, EmployeeModel empMol) {
+        Employee emp = employeeRepository.findEmployeeByEmployeeId(employeeId);
+        emp.setName(empMol.getName());
+        emp.setManagerId(empMol.getManagerId());
+        employeeRepository.save(emp);
+        empMol.setEmployeeId(employeeId);
+        return empMol;
     }
 }

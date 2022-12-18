@@ -5,6 +5,8 @@
     >
     <meta charset="UTF-8">
     <title>Leaving System</title>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
@@ -50,6 +52,9 @@
                         th:utext="#{menu.admin.emplist}">Manage Employee</a>
                         <a th:href="@{/admin/user/list}"
                         th:utext="#{menu.admin.ulist}">Manage User</a>
+                        <a th:href="@{/admin/holidays/list}"
+                        th:utext="#{menu.admin.publist}">Manage Public Holiday</a>
+
                     </div>
                 </div>
             </div>
