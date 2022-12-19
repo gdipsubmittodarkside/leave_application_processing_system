@@ -2,7 +2,6 @@ package sg.nus.iss.team2.service;
 
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
-import sg.nus.iss.team2.model.LeaveBalance;
 
 import java.util.List;
 
