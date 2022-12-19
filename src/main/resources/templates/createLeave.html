@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">>   
 <head th:replace="fragments/layout.html :: html_head" />
-<body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">>   
+
+<body onload="set_time()">
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
     
@@ -11,7 +12,7 @@
             <div class = "col-lg-6 col-sm-6 container justify-content-center card">
                 <h2>Leave Application Form</h2>
                 <div class = "card-body">
-                    <form th:action="@{/staff/submitLeave}" th:object="${leave}" method="post">
+                    <form th:action="@{/staff/leave/submitLeave}" th:object="${leave}" method="post">
 
                         <div class="form-group" hidden>
                             <label> Leave ID : </label>
@@ -20,21 +21,19 @@
 
                         <div class="form-group">
                             <label> Start Date : </label>
-                            <input type="date" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                            <input type="date" id="takeLeaveStartDate" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" />
+                            <script type="text/javascript">takeLeaveStartDate.min=new Date().toISOString().split("T")[0];</script>
                             <td th:if="${#fields.hasErrors('startDate')}"
                                 th:errors="*{startDate}"></td>
                         </div>
 
                         <div class="form-group">
                             <label> End Date : </label>
-                            <input type="date" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/>
+                            <input type="date" id="takeLeaveEndDate" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose End Date"/>
+                            <script type="text/javascript">takeLeaveEndDate.min=new Date().toISOString().split("T")[0];</script>
+                            <td th:if="${#fields.hasErrors('endDate')}"
+                                th:errors="*{endDate}"></td>
                         </div>
-
-                        
-                        <!-- <div class="form-group">
-                            <label> Leave Type : </label>
-                            <input type="text" name= leaveType th:field="*{leaveType}" class="form-control" placeholder="Enter Leave Type"/>
-                        </div> -->
 
                         <div class="form-group">
                         <lable>Leave Type :</lable>
@@ -45,12 +44,11 @@
                           </select>
                         </div> 
 
-           
-
-                        
                         <div class="form-group">
                             <label> Reason : </label>
                             <textarea lass="form-control" name= reason th:field="*{reason}">Please Enter Your Reason</textarea>
+                            <td th:if="${#fields.hasErrors('reason')}"
+                                th:errors="*{reason}"></td>
                         </div>
 
                         <div class="box-footer">
@@ -62,11 +60,26 @@
             </div>
         </div>
 
-    
+    <script>
 
+        var myDate = document.getElementById('takeLeaveStartDate');
+        var myDate2 = document.getElementById("takeLeaveEndDate");
+        myDate.valueAsDate=new Date();
 
-
+        function set_time(){
+           myDate2.setAttribute("min",myDate.value);
+        }
+        
+        myDate.onchange = function(){
+            var x = this.value;
+            myDate2.setAttribute("min", x);
+        }
+    </script>
 
     <div th:replace="fragments/layout.html :: footer" />
 </body>
+
+
+
 </html>
+

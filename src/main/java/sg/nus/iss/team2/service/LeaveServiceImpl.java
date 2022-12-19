@@ -1,10 +1,22 @@
 package sg.nus.iss.team2.service;
 
+import sg.nus.iss.team2.Utility.Calculate;
+import sg.nus.iss.team2.model.Employee;
+import sg.nus.iss.team2.model.Leave;
+import sg.nus.iss.team2.model.LeaveBalance;
+import sg.nus.iss.team2.repository.LeaveRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+
+
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +27,21 @@ import sg.nus.iss.team2.model.LeaveBalance;
 import sg.nus.iss.team2.model.LeaveStatusEnum;
 import sg.nus.iss.team2.repository.LeaveRepository;
 
+
 @Service
 public class LeaveServiceImpl implements LeaveService {
     @Resource
     private LeaveRepository leaveRepository;
 
     @Autowired
+
+    Calculate calculate;
+
+    @Autowired
+    LeaveBalanceService leaveBalanceService;
+
     private LeaveBalanceService LBservice;
+
 
     @Override
     public List<Leave> findAllLeaves() {
@@ -59,7 +79,44 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    @Transactional
+
+    public Boolean isOutOfLeave(Leave leave, Employee emp){
+        String leaveType = leave.getLeaveType().toString();
+        LocalDate startDate = leave.getStartDate();
+        LocalDate endDate = leave.getEndDate();
+        double leaveDuration = calculate.numOfDaysMinusPHAndWeekend(startDate, endDate);
+
+        LeaveBalance lb = leaveBalanceService.findEmployeeLeaveBalance(emp);
+        int annualBalance = lb.getBalanceAnnualLeaveDays();
+        int medicalBalance = lb.getBalanceMedicalLeaveDays();
+        double compensationBalance = lb.getBalanceCompensationLeaveDays();
+
+        if (leaveType.equals("ANNUAL")){
+                
+            int duration = (int) leaveDuration;
+            if(duration > annualBalance){
+                return true;
+            }
+            
+        }
+        else if (leaveType.equals("MEDICAL"))
+        {
+            int duration = (int) leaveDuration;
+            if(duration > medicalBalance){
+                return true;
+            }
+        }
+        else if (leaveType.equals("COMPENSATION"))
+        {
+            if(leaveDuration > compensationBalance){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     public List<Leave> findTeamLeaveHistory(List<Employee> team) {
         // Method 1
         List<Leave> teamLeaves = new ArrayList<Leave>();
@@ -122,4 +179,5 @@ public class LeaveServiceImpl implements LeaveService {
 
         updateLeave(leave);
     }
+
 }

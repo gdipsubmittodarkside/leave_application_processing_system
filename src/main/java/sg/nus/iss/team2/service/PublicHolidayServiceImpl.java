@@ -23,13 +23,13 @@ public class PublicHolidayServiceImpl implements PublicHolidayService {
 
     @Override
     public List<PublicHoliday> findAllPublicHolidays() {
-        // TODO Auto-generated method stub
+
         return repo.findAll();
     }
 
     @Override
     public PublicHoliday findPublicHolidaysById(Long id) {
-        // TODO Auto-generated method stub
+
         return repo.findById(id).get();
     }
 

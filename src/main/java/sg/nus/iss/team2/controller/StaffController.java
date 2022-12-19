@@ -1,10 +1,10 @@
 package sg.nus.iss.team2.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +22,11 @@ import sg.nus.iss.team2.model.CompensationRequest;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.model.LeaveStatusEnum;
-import sg.nus.iss.team2.model.LocalDateTimeHandler;
 import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.service.CompensationRequestService;
 import sg.nus.iss.team2.service.LeaveService;
+import sg.nus.iss.team2.validator.CompensationRequestValidator;
+import sg.nus.iss.team2.validator.LeaveValidator;
 
 
 /**
@@ -47,11 +48,23 @@ public class StaffController {
     @Autowired
     private CompensationRequestService crService;
 
-    @InitBinder("compensation")
-  private void initCourseBinder(WebDataBinder binder) {
-    // binder.addValidators(courseValidator);
-  }
+    @Autowired
+    private LeaveValidator leaveValidator;
     
+    @Autowired
+    private CompensationRequestValidator crValidator;
+
+    @InitBinder("compensation")
+    private void initcrBinder(WebDataBinder binder){
+        binder.addValidators(crValidator);
+    }
+
+    @InitBinder("leave")
+    private void initLeaveBinder(WebDataBinder binder){
+        binder.addValidators(leaveValidator);
+    }
+
+     //<<<View Section>>>
 
     @GetMapping(value = "/viewLeave")
     public String viewLeave(HttpSession httpSession, Model model){
@@ -61,41 +74,89 @@ public class StaffController {
         model.addAttribute("leaves", leaves);
         List<CompensationRequest> crReq = crService.findEmployeeCompensationRequest(emp);
         model.addAttribute("crReq", crReq);
+        LocalDate today = LocalDate.now();
+        model.addAttribute("todayDate", today);
 
         return "viewLeave";
  
     }
 
-    @GetMapping(value = "/claimLeave")
+    @GetMapping(value={"/leaveDetail/{id}"})
+    public String showLeaveDetail(@PathVariable Long id, Model model){
+        Leave targetLeave = leaveService.findLeave(id);
+        model.addAttribute("leaveDetail", targetLeave);
+        return "leaveDetail";
+    }
+    
+    @GetMapping(value={"/compensationRequestDetail/{id}"})
+    public String showCompensationLeaveDetail(@PathVariable Long id, Model model){
+        CompensationRequest target = crService.findCompensationRequest(id);
+        model.addAttribute("compensationRequestDetail", target);
+        return "compensationRequestDetail";
+    }
+
+    //<<<Compensation Request Section>>>
+
+    @GetMapping(value = "compensation/claimLeave")
     public String claimLeave(Model model){
-        model.addAttribute("compen", new LocalDateTimeHandler());
+        model.addAttribute("compensation", new CompensationRequest());
 
         return "claimLeave";
     }
 
-    @PostMapping(value = "/claimLeave")
-    public String claimCompensation(@ModelAttribute LocalDateTimeHandler compen, BindingResult result,
+    @PostMapping(value = "compensation/claimLeave")
+    public String claimCompensation( @Valid @ModelAttribute(value="compensation") CompensationRequest compensationRequest, BindingResult result,
     HttpSession httpSession){
         if (result.hasErrors()) {
             return "claimLeave";
           }
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
           User user = (User) httpSession.getAttribute("userSession");
           Employee emp = user.getEmployee();
-          CompensationRequest compensation = new CompensationRequest();
-          compensation.setEmployee(emp);
-          compensation.setStatus(LeaveStatusEnum.APPLIED);
-          compensation.setOTstartTime(LocalDateTime.parse(compen.getStartTime(), formatter));
-          compensation.setOTendTime(LocalDateTime.parse(compen.getEndTime(), formatter));
+          compensationRequest.setEmployee(emp);
+          compensationRequest.setStatus(LeaveStatusEnum.APPLIED);
 
-        crService.createCompensationRequest(compensation);
-        String message = "New Compensation Leave Request " + compensation.getCompensationLeaveId() + " was successfully created.";
+        crService.createCompensationRequest(compensationRequest);
+        String message = "New Compensation Leave Request " + compensationRequest.getCompensationLeaveId() + " was successfully created.";
         System.out.println(message);
 
         return "redirect:/staff/viewLeave";
     }
 
-    @GetMapping(value= "/new")
+    @GetMapping(value={"/compensation/edit/{id}"})
+    public String editCompensationRequest(@PathVariable Long id, Model model){
+        CompensationRequest targetRequest = crService.findCompensationRequest(id);
+        model.addAttribute("compensation", targetRequest);
+        return "editClaimLeave";
+    }
+
+    @PostMapping(value={"/compensation/edit/{id}"})
+    public String updateCompensationRequest(@PathVariable Long id, @Valid @ModelAttribute(value="compensation") CompensationRequest compensation, BindingResult bindingResult, Model model){
+       
+        if (bindingResult.hasErrors()) {
+            return "editClaimLeave";
+          }
+
+          CompensationRequest exitingRequest = crService.findCompensationRequest(id);
+          exitingRequest.setOTstartTime(compensation.getOTstartTime());
+          exitingRequest.setOTendTime(compensation.getOTendTime());
+          exitingRequest.setDescription(compensation.getDescription());
+          exitingRequest.setStatus(LeaveStatusEnum.UPDATED);
+
+        crService.updCompensationRequest(exitingRequest);
+        return "redirect:/staff/viewLeave";
+    }
+
+    @GetMapping(value={"/compensation/cancel/{id}"})
+    public String cancelCompensationRequest(@PathVariable Long id){
+        CompensationRequest targetCompensationRequest = crService.findCompensationRequest(id);
+        targetCompensationRequest.setStatus(LeaveStatusEnum.CANCELLED);
+        crService.updCompensationRequest(targetCompensationRequest);
+        return "redirect:/staff/viewLeave";
+    }
+
+    //<<<Leave Section>>>
+
+    @GetMapping(value= "/leave/new")
     public String  createLeaveForm(Model model){
         Leave newleave = new Leave();
         model.addAttribute("leave", newleave);
@@ -103,16 +164,19 @@ public class StaffController {
         
     }
 
-    @PostMapping(value= "/submitLeave")
-    public String submitLeave(@ModelAttribute Leave leave, BindingResult result,
+    @PostMapping(value= "/leave/submitLeave")
+    public String submitLeave(@Valid @ModelAttribute Leave leave, BindingResult result,
     HttpSession httpSession){
-
         if (result.hasErrors()) {
             return "createLeave";
-          }
-          User user = (User) httpSession.getAttribute("userSession");
-          Employee emp = user.getEmployee();
+        }
 
+        User user = (User) httpSession.getAttribute("userSession");
+        Employee emp = user.getEmployee();
+
+        if(leaveService.isOutOfLeave(leave,emp)){
+            return "outOfLeave";
+        }
         leave.setEmployee(emp);
         leave.setStatus(LeaveStatusEnum.APPLIED);
         leaveService.createLeave(leave);
@@ -121,17 +185,30 @@ public class StaffController {
     }
 
 
-    @GetMapping(value={"/edit/{id}"})
+    @GetMapping(value={"/leave/edit/{id}"})
     public String editLeaveForm(@PathVariable Long id, Model model){
         Leave targetLeave = leaveService.findLeave(id);
-        model.addAttribute("targetLeave", leaveService.updateLeave(targetLeave));
+        if(LocalDate.now().isAfter(targetLeave.getStartDate())){
+            return "OutDated";
+        }
+        model.addAttribute("leave", targetLeave);
         return "editLeave";
     }
 
+    @PostMapping(value={"/leave/edit/{id}"})
+    public String updateLeave(@PathVariable Long id, @Valid @ModelAttribute Leave leave, BindingResult bindingResult, Model model, HttpSession httpSession){
+       
+        if (bindingResult.hasErrors()) {
+            return "editLeave";
+          }
+          
+        User user = (User) httpSession.getAttribute("userSession");
+        Employee emp = user.getEmployee();
+        
+        if(leaveService.isOutOfLeave(leave,emp)){
+            return "outOfLeave";
+        }
 
-    @PostMapping(value={"/{id}"})
-    public String updateLeave(@PathVariable Long id,@ModelAttribute("leave") Leave leave, Model model){
-     
         Leave exitingLeave = leaveService.findLeave(id);
         exitingLeave.setStartDate(leave.getStartDate());
         exitingLeave.setEndDate(leave.getEndDate());
@@ -139,10 +216,19 @@ public class StaffController {
         exitingLeave.setReason(leave.getReason());
 
         leaveService.updateLeave(exitingLeave);
-        return "redirect:/staff/list";
+        return "redirect:/staff/viewLeave";
     }
     
-
+    @GetMapping(value={"/delete/{id}"})
+    public String cancelLeave(@PathVariable Long id){
+        Leave targetLeave = leaveService.findLeave(id);
+        if(LocalDate.now().isAfter(targetLeave.getStartDate())){
+            return "OutDated";
+        }
+        targetLeave.setStatus(LeaveStatusEnum.CANCELLED);
+        leaveService.updateLeave(targetLeave);
+        return "redirect:/staff/viewLeave";
+    }
 
 
 }

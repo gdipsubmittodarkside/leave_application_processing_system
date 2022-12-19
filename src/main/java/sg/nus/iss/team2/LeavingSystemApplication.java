@@ -1,25 +1,3 @@
-package sg.nus.iss.team2;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import sg.nus.iss.team2.configuration.PublicHolidayApi;
-import sg.nus.iss.team2.model.CompensationRequest;
-import sg.nus.iss.team2.model.Employee;
-import sg.nus.iss.team2.model.Leave;
-import sg.nus.iss.team2.model.LeaveBalance;
-import sg.nus.iss.team2.model.LeaveStatusEnum;
-import sg.nus.iss.team2.model.LeaveType;
-import sg.nus.iss.team2.model.LeaveTypeEnum;
-import sg.nus.iss.team2.model.Role;
-import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.reporting.FilesExporter;
 import sg.nus.iss.team2.repository.CompensationRequestRepository;
 import sg.nus.iss.team2.repository.EmployeeRepository;
@@ -191,7 +169,5 @@ public class LeavingSystemApplication {
                         pubService.saveAll(api.getPublicHoliday("2022"));
 
                 };
-
-        }
-
+}
 }
