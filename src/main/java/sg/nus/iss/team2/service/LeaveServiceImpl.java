@@ -92,10 +92,6 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional
-    public List<Leave> findTeamLeaveHistory(List<Employee> team){
-        
-
-
     public Boolean isOutOfLeave(Leave leave, Employee emp){
         String leaveType = leave.getLeaveType().toString();
         LocalDate startDate = leave.getStartDate();
@@ -132,14 +128,15 @@ public class LeaveServiceImpl implements LeaveService {
         return false;
     }
 
-
+    @Override
+    @Transactional
     public List<Leave> findTeamLeaveHistory(List<Employee> team) {
         // Method 1
 
         List<Leave> teamLeaves = new ArrayList<Leave>();
 
         for (Employee e : team) {
-            Long emp_id = e.getEmployeeId();
+            Long emp_id = e.getEmployeeId(); 
             for (Leave l : leaveRepository.findLeaveHistoryByEmloyeeId(emp_id)) {
                 teamLeaves.add(l);
             }

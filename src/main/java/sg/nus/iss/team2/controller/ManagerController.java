@@ -131,6 +131,7 @@ public class ManagerController {
         Leave leave = leaveService.findLeave(leave_id);
         String decision = approve.getDecision();
         String comment = approve.getComment();
+        
  
         leaveService.updateLeaveAndLeaveBalance(leave, decision, comment);
 
