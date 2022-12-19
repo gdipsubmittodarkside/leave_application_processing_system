@@ -1,6 +1,8 @@
 package sg.nus.iss.team2.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,12 +21,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PublicHoliday {
-   
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @JsonProperty(value = "localName")
     private String localName;
     @JsonProperty(value = "name")
     private String name;
-    @Id
+    
     @JsonProperty(value = "date")
     private String date;
     @JsonProperty(value = "countryCode")
