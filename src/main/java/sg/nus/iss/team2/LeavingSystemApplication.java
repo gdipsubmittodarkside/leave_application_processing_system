@@ -192,6 +192,7 @@ public class LeavingSystemApplication {
                         leaveRepository.saveAllAndFlush(
                                         Arrays.asList(leave1, leave2, leave3, leave4, leave5, leave6, leave7));
                         pubService.saveAll(api.getPublicHoliday("2022"));
+                        pubService.saveAll(api.getPublicHoliday("2023"));
                 };
         }
 

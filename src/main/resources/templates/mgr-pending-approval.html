@@ -72,8 +72,8 @@
                 <form th:action="@{/manager/claim/display/} + ${req.compensationLeaveId}" method="post">
                 <td th:text="${req.compensationLeaveId}"></td>
                 <td th:text="${req.employee.name}"></td>
-                <td th:text="${#temporals.format(req.OTstartTime, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${#temporals.format(req.OTendTime, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${req.OTstartTime}"></td>
+                <td th:text="${req.OTendTime}"></td>
                 <!-- <td th:text="${req.reason}"></td> -->
                 <td th:text="${req.status}"></td>
                 <td><input type="submit" value="Details"></td>

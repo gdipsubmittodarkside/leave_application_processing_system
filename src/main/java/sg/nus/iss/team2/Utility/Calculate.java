@@ -1,104 +1,38 @@
 package sg.nus.iss.team2.Utility;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import sg.nus.iss.team2.model.PublicHoliday;
+import sg.nus.iss.team2.service.PublicHolidayService;
 
 @Component("Calculate")
 public class Calculate {
+    
+    @Autowired
+    PublicHolidayService phService;
     
     public long durationInHours(LocalDateTime startTime, LocalDateTime endTime){
         return ChronoUnit.HOURS.between(startTime, endTime);
     }
 
-
-    public List<String> GetSGPublicHolsByYear(Integer year) throws IOException, InterruptedException
-    {
-        HttpRequest request = HttpRequest.newBuilder()
-		.uri(URI.create("https://public-holiday.p.rapidapi.com/" + year.toString() + "/SG"))
-		.header("X-RapidAPI-Key", "33cbf0e762msh3a277500450f53fp1dcdacjsncd18182b0dbc")
-		.header("X-RapidAPI-Host", "public-holiday.p.rapidapi.com")
-		.method("GET", HttpRequest.BodyPublishers.noBody())
-		.build();
-
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        
-        String responseString = response.body();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<SGPublicHolidays> PHlist = Arrays.asList(
-            objectMapper.readValue(responseString, SGPublicHolidays[].class));
-        
-        // System.out.println(ph2022.size()); // 11
-        
-        List<String> phDates = new ArrayList<String>();
-        
-        for (SGPublicHolidays ph : PHlist){
-            phDates.add(ph.getDate());
-        }
-        
-        // System.out.println(phDates.size()); // 11 (correct)
-
-        return phDates;
-    }
-    
-    // Tested method "numOfDaysMinusPHAndWeekend"
-        /*
-        LocalDateTime start = LocalDateTime.of(2022, Month.DECEMBER, 29, 19, 00, 00);
-        LocalDateTime end = LocalDateTime.of(2023, Month.JANUARY, 3, 19, 00 ,00);
-        double days = calculator.numOfDaysMinusPHAndWeekend(start, end);
-            
-        System.out.println(days); // prints 3.0 (correct)
-         */
     public double numOfDaysMinusPHAndWeekend(LocalDate startDate, LocalDate endDate)
     {
-        long numOfDays = Duration.between(startDate.atTime(0, 0), endDate.atTime(0, 0)).toDays() + 1;
-            // last day exclusive
-            // startDate.atTime(0,0) because Duration.between requires LocalDateTime / seconds field
+        // int numOfDays = Period.between(startDate, endDate).getDays() + 1;
+        int numOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate)+1;
+            // 6 (period.between does not include last day)
 
-        Integer startYear = startDate.getYear();
-        Integer endYear = endDate.getYear();
+       List<PublicHoliday> publicHolidays = phService.findAllPublicHolidays();
 
-        List<String> phStartYear = new ArrayList<String>();
-        List<String> phEndYear = new ArrayList<String>();
-
-        // Method "GetSGPublicHolsByYear(year)" throws exception. to solve later.
-        try
-        {
-            
-            phStartYear = GetSGPublicHolsByYear(startYear);
-            phEndYear = GetSGPublicHolsByYear(endYear);
-            
-        }
-        catch (Exception e)
-        {
-            e.getMessage();
-        }
 
         // the total list of PH dates for both years
-        List<String> totalPHs = new ArrayList<String>();
-
-        if (!startYear.equals(endYear)){
-            totalPHs.addAll(phStartYear);
-            totalPHs.addAll(phEndYear);
-        }
-        else{
-            totalPHs.addAll(phStartYear);
-        }
+        List<String> totalPHs = publicHolidays.stream().map(ph->ph.getDate().toString()).toList();
 
         // date string format: "2019-02-18"
         List<LocalDate> formattedTotalPH = totalPHs.stream().map(d -> LocalDate.parse(d)).collect(Collectors.toList());
@@ -122,9 +56,7 @@ public class Calculate {
             }
         }
         
-        return (double) numOfDays;
+        return numOfDays;
     }
 
-
 }
-

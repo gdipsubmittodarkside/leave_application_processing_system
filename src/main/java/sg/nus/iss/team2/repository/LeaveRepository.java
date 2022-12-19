@@ -16,7 +16,7 @@ public interface LeaveRepository extends JpaRepository<Leave, Long> {
     @Query("Select l from Leave l where l.employee = :emp")
     List<Leave> findEmployeeLeave(@Param("emp") Employee emp);
 
-    @Query("SELECT l FROM Leave l WHERE l.employee.employeeId = :emp_id AND l.status IN ('APPROVED', 'WITHDRAW', 'REJECTED')")
+    @Query("SELECT l FROM Leave l WHERE l.employee.employeeId = :emp_id AND l.status IN ('APPROVED', 'CANCELLED', 'REJECTED')")
     public List<Leave> findLeaveHistoryByEmloyeeId(Long emp_id);
 
     @Query("SELECT l FROM Leave l WHERE l.employee.employeeId = :emp_id AND l.status IN ('APPROVED') AND (l.startDate <= :theLeaveStartDate AND l.endDate >= :theLeaveStartDate OR l.startDate <= :theLeaveEndDate AND l.startDate >= :theLeaveStartDate OR l.startDate <= :theLeaveStartDate AND l.endDate >= :theLeaveEndDate) ")

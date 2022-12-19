@@ -23,11 +23,11 @@
         </tr>
         <tr>
             <th align="right"><span>Start Date</span></th>
-            <td colspan="3" th:text="${#temporals.format(compRequest.OTstartTime, 'yyyy-MM-dd HH:mm')}">Start Date</td>
+            <td colspan="3" th:text="${compRequest.OTstartTime}">Start Date</td>
         </tr>
         <tr>
             <th align="right"><span>End Date</span></th>
-            <td colspan="3" th:text="${#temporals.format(compRequest.OTendTime, 'yyyy-MM-dd HH:mm')}">End Date</td>
+            <td colspan="3" th:text="${compRequest.OTendTime}">End Date</td>
         </tr>
         <tr>
             <th align="right"><span>Status</span></th>

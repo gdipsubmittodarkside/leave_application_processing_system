@@ -43,16 +43,13 @@ public class LeaveServiceImpl implements LeaveService {
     private LeaveRepository leaveRepository;
 
     @Autowired
-
-    Calculate calculate;
+    private Calculate calculate;
 
     @Autowired
     LeaveBalanceService leaveBalanceService;
 
-    private LeaveBalanceService LBservice;
-
     @Autowired
-    private Calculate calculator;
+    private LeaveBalanceService LBservice;
 
 
     @Override
@@ -207,7 +204,7 @@ public class LeaveServiceImpl implements LeaveService {
             
             LocalDate startDate = leave.getStartDate();
             LocalDate endDate = leave.getEndDate();
-            double durationInDays = calculator.numOfDaysMinusPHAndWeekend(startDate, endDate);
+            double durationInDays = calculate.numOfDaysMinusPHAndWeekend(startDate, endDate);
 
 
             if (typeOfLeave.equals("ANNUAL")){
