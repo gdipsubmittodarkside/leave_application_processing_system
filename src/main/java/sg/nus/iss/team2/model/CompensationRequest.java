@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,12 +35,15 @@ public class CompensationRequest {
 
 
     @Column(name = "OT_start_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime OTstartTime;
 
     @Column(name="OT_end_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime OTendTime;
 
     private String description;
+
     
     private String comment;
 
@@ -56,4 +61,17 @@ public class CompensationRequest {
         this.status = status;
         this.employee = employee;
     }
+
+    public CompensationRequest(LocalDateTime oTstartTime, LocalDateTime oTendTime, Employee employee) {
+        OTstartTime = oTstartTime;
+        OTendTime = oTendTime;
+        this.employee = employee;
+
+    }
+    
+
+
+    
+    
+
 }

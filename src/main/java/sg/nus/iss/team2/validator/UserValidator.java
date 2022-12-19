@@ -1,5 +1,7 @@
 package sg.nus.iss.team2.validator;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -17,7 +19,8 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         System.out.println(target);
-        ValidationUtils.rejectIfEmpty(errors,"username","error.user.username.empty");
-        ValidationUtils.rejectIfEmpty(errors,"password","error.user.password.empty");
+        ValidationUtils.rejectIfEmpty(errors, "username", "error.user.username.empty");
+        ValidationUtils.rejectIfEmpty(errors, "password", "error.user.password.empty");
+
     }
 }

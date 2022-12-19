@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head"/>
 <body>
+
     <div th:replace="fragments/layout.html :: header"/>
     <div th:replace="fragments/layout.html :: menu"/>
 <head>
@@ -12,49 +13,43 @@
     <div>
         <h2>Personal Leave Detail</h2>
     </div>
+
     
+    <h3>Compensational Leave Claiming Form</h3>
+    
+    <form action="#" th:action="@{/staff/compensation/claimLeave}"
+        th:object="${compensation}" method="post">
+
         <table class="framed" >
+           
             <tr>
-                <th>Leave Id</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Leave Type</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Manage Leave</th>
+                <th>OT Start Time</th>
+                <td><input type="datetime-local" th:field="*{OTstartTime}" /></td>
+                <td th:if="${#fields.hasErrors('OTstartTime')}" th:errors="*{OTstartTime}"></td>
             </tr>
-            <tr th:each = "leave : ${leaves}" >  
-                <td th:utext = "${leave.leaveId}">Id</td>
-                <td th:utext = "${leave.startDate}">Start Date</td>
-                <td th:utext = "${leave.endDate}">End Date</td>
-                <td th:utext = "${leave.leaveType}">Leave Type</td>
-                <td th:utext = "${leave.reason}">Reason</td>
-                <td th:utext = "${leave.status}">Status</td>
-                
-                <td>
-                    <form th:action="@{/staff/manageLeave}" th:object="${user}" method="POST">
-                        <!-- <input type="hidden" name="id" th:value="${person.id}"/>
-                        <input type="hidden" name="firstName" th:value="${person.firstName}"/>
-                        <input type="hidden" name="lastName" th:value="${person.lastName}"/> 
-                        To Implement-->
 
-                        <input type="submit" value="Manage"/>
-                    </form>
-                    
-                </td>
-
+            <tr>
+                <th>OT End Time</th>
+                <td><input type="datetime-local" th:field="*{OTendTime}" /></td>
+                <td th:if="${#fields.hasErrors('OTendTime')}" th:errors="*{OTendTime}"></td>
             </tr>
+
+            <tr>
+                <th>Description</th>
+                <td><textarea maxlength="200" type="uText" th:field="*{description}" placeholder="Please write your description here"/></textarea>
+                <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>
+            </tr>
+            
+            <tr><td>
+                <input type="submit" value="Create" class="blcass" />
+                <input type="reset" value="Reset" class="blcass" />
+            </td></tr>
             
         </table>
 
-        <br><br>
-        <h4><a th:href="@{/staff/claimLeave }"> >>>>> Calim compensation Leave <<<<< </a></h4>
-        <br><br>
-    
-
-
-
+    </form>
 
     <div th:replace="fragments/layout.html :: footer" />
 </body>
 </html>
+

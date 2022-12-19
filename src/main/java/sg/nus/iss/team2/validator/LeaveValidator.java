@@ -1,5 +1,6 @@
 package sg.nus.iss.team2.validator;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -10,6 +11,7 @@ import sg.nus.iss.team2.Utility.Calculate;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.model.LeaveBalance;
+
 
 @Component
 public class LeaveValidator implements Validator {
@@ -55,5 +57,6 @@ public class LeaveValidator implements Validator {
         if (leaveDuration !=0 && (leaveDuration > maxLeaveDays)){
             errors.rejectValue("endDate", "error.Leave.endDate", String.format("Invalid end date. Max {0} leave days available is {1}.", leaveType.toLowerCase(), maxLeaveDays));
         }
+
     }
 }

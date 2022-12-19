@@ -25,6 +25,7 @@ public class Calculate {
         return ChronoUnit.HOURS.between(startTime, endTime);
     }
 
+
     public List<String> GetSGPublicHolsByYear(Integer year) throws IOException, InterruptedException
     {
         HttpRequest request = HttpRequest.newBuilder()
@@ -123,6 +124,7 @@ public class Calculate {
         
         return (double) numOfDays;
     }
+
 
 }
 

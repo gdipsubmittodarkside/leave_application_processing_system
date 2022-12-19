@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    <h3>Compensational Leave Claiming Form</h3>
+    
+    <form action="#" th:action="@{/staff/compensation/edit/{id}(id=${compensation.compensationLeaveId})}"
+        th:object="${compensation}" method="post">
+
+        <table class="framed" >
+
+            
+            <tr>
+                <th>Request Id</th>
+                <td><input type="text" name= compensationLeaveId th:value="*{compensationLeaveId}" class="form-control" readonly/></td>
+            </tr>
+
+            <tr>
+                <th>OT Start Time</th>
+                <td><input type="datetime-local" th:field="*{OTstartTime}" /></td>
+                <td th:if="${#fields.hasErrors('OTstartTime')}" th:errors="*{OTstartTime}"></td>
+            </tr>
+
+            <tr>
+                <th>OT End Time</th>
+                <td><input type="datetime-local" th:field="*{OTendTime}" /></td>
+                <td th:if="${#fields.hasErrors('OTendTime')}" th:errors="*{OTendTime}"></td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td><textarea maxlength="200" type="uText" th:field="*{description}" placeholder="Please write your description here"/></textarea>
+                <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>
+            </tr>
+            
+            <tr><td>
+                <input type="submit" value="Update" class="blcass" />
+                <input type="reset" value="Reset" class="blcass" />
+            </td></tr>
+            
+        </table>
+
+    </form>
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>
+
