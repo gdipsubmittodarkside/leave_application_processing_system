@@ -15,10 +15,6 @@ public interface UserService {
     User updateUser(User user);
 
     User login(String username, String password);
-<<<<<<< HEAD
     Page<User> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
-=======
     Boolean existsUserByUsername(String username);
-
->>>>>>> 58e73a3 (all)
 }

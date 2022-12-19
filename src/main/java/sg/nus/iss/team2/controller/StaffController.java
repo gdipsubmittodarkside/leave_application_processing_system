@@ -104,32 +104,16 @@ public class StaffController {
         return "claimLeave";
     }
 
-<<<<<<< HEAD
-    @PostMapping(value = "/claimLeave")
-    public String claimCompensation(@ModelAttribute CompensationRequest compensation, BindingResult result,
-=======
     @PostMapping(value = "compensation/claimLeave")
     public String claimCompensation( @Valid @ModelAttribute(value="compensation") CompensationRequest compensationRequest, BindingResult result,
->>>>>>> d02592517ac733020fd5663a7ed47a581d857a04
     HttpSession httpSession){
         if (result.hasErrors()) {
             return "claimLeave";
           }
-<<<<<<< HEAD
-        //   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-          User user = (User) httpSession.getAttribute("userSession");
-          Employee emp = user.getEmployee();
-        //   CompensationRequest compensation = new CompensationRequest();
-          compensation.setEmployee(emp);
-          compensation.setStatus(LeaveStatusEnum.APPLIED);
-        //   compensation.setOTstartTime(LocalDateTime.parse(compen.getStartTime(), formatter));
-        //   compensation.setOTendTime(LocalDateTime.parse(compen.getEndTime(), formatter));
-=======
           User user = (User) httpSession.getAttribute("userSession");
           Employee emp = user.getEmployee();
           compensationRequest.setEmployee(emp);
           compensationRequest.setStatus(LeaveStatusEnum.APPLIED);
->>>>>>> d02592517ac733020fd5663a7ed47a581d857a04
 
         crService.createCompensationRequest(compensationRequest);
         String message = "New Compensation Leave Request " + compensationRequest.getCompensationLeaveId() + " was successfully created.";
