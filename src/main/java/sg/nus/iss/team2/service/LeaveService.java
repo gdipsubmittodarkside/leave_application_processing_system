@@ -1,8 +1,5 @@
 package sg.nus.iss.team2.service;
 
-
-import sg.nus.iss.team2.model.Approve;
-
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 
