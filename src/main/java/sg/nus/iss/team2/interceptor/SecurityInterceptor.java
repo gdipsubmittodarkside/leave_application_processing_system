@@ -1,23 +1,28 @@
 package sg.nus.iss.team2.interceptor;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
-import sg.nus.iss.team2.model.User;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Component
-public class SecurityInterceptor implements HandlerInterceptor {
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
-        System.out.println("Intercepting " + request.getRequestURI());
-        String uri = request.getRequestURI();
-        if (uri.startsWith("/css/") || uri.startsWith("/image/")) {
-            return true;
-        }
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import sg.nus.iss.team2.model.User;
+
+
+ @Component
+ public class SecurityInterceptor implements HandlerInterceptor {
+     @Override
+     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+         System.out.println("Intercepting " + request.getRequestURI());
+         String uri = request.getRequestURI();
+         if (uri.startsWith("/css/") || uri.startsWith("/image/")) {
+             return true;
+         }
+         if (uri.startsWith("/register")){
+             return true;
+         }
+
 
         if (uri.equalsIgnoreCase("/") || uri.equalsIgnoreCase("/home")
                 || uri.equalsIgnoreCase("/login")
@@ -25,12 +30,14 @@ public class SecurityInterceptor implements HandlerInterceptor {
             return true;
         }
 
+
         if (uri.startsWith("/api/v1/")) {
             return true;
         }
         if (uri.startsWith("/home/")) {
             return true;
         }
+
 
         HttpSession session = request.getSession();
         User userFromSession = (User) session.getAttribute("userSession");

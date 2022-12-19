@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+<<<<<<< HEAD
     public Page<User> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
 
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
@@ -63,5 +64,12 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return userRepository.findAll(pageable);
     }
+=======
+    @Transactional
+    public Boolean existsUserByUsername(String username) {
+        return userRepository.existsUserByUsername(username);
+    }
+
+>>>>>>> 58e73a3 (all)
 
 }

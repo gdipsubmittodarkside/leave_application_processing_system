@@ -1,3 +1,13 @@
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import sg.nus.iss.team2.configuration.PublicHolidayApi;
 import sg.nus.iss.team2.reporting.FilesExporter;
 import sg.nus.iss.team2.repository.CompensationRequestRepository;
 import sg.nus.iss.team2.repository.EmployeeRepository;
@@ -7,6 +17,7 @@ import sg.nus.iss.team2.repository.LeaveTypeRepository;
 import sg.nus.iss.team2.repository.RoleRepository;
 import sg.nus.iss.team2.repository.UserRepository;
 import sg.nus.iss.team2.service.PublicHolidayService;
+
 
 @SpringBootApplication
 public class LeavingSystemApplication {
@@ -168,6 +179,20 @@ public class LeavingSystemApplication {
                                         Arrays.asList(leave1, leave2, leave3, leave4, leave5, leave6, leave7));
                         pubService.saveAll(api.getPublicHoliday("2022"));
 
-                };
-}
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedMethods("*")
+                        .allowCredentials(true)
+                        .allowedHeaders("*")
+                        .allowedOrigins("http://localhost:3000");
+            }
+        };
+    }
+
+
 }

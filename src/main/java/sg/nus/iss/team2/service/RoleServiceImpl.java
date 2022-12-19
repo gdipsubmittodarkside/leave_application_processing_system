@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import sg.nus.iss.team2.model.Role;
 import sg.nus.iss.team2.repository.RoleRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -54,6 +56,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> findRoleByName(String name) {
         return repo.findRoleByName(name);
+    }
+
+    @Override
+    @Transactional
+    public Role findRoleByRoleName(String name) {
+        return repo.findRoleByRoleName(name);
     }
 
 }

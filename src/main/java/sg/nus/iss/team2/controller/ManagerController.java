@@ -49,9 +49,7 @@ public class ManagerController {
         User manager = (User)session.getAttribute("userSession");
         Long managerId = manager.getUserId();
 
-        List<Employee> team = empService.findSubordinates(managerId);
-
-        return team;
+        return empService.findSubordinates(managerId);
     }
 
     // View Employees' Leave History
