@@ -144,23 +144,45 @@ public class LeavingSystemApplication {
 
                         LeaveType annual_staff = new LeaveType("annual_staff", 18, "This is staff breaking time");
 
-                        LeaveBalance staff_balance = new LeaveBalance(annual_staff.getLeavePeriod(),
+                        LeaveBalance staff_balance_1 = new LeaveBalance(annual_staff.getLeavePeriod(),
                                         medical.getLeavePeriod(), 0.0);
-                        LeaveBalance admin_balance = new LeaveBalance(annual_admin.getLeavePeriod(),
+                        LeaveBalance admin_balance_1 = new LeaveBalance(annual_admin.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_2 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance admin_balance_2 = new LeaveBalance(annual_admin.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_3 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance admin_balance_3 = new LeaveBalance(annual_admin.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_4 = new LeaveBalance(annual_staff.getLeavePeriod(),
                                         medical.getLeavePeriod(), 0.0);
 
-                        emp1.setLeaveBalance(staff_balance);
-                        emp2.setLeaveBalance(staff_balance);
-                        emp3.setLeaveBalance(staff_balance);
-                        emp4.setLeaveBalance(staff_balance);
-                        emp5.setLeaveBalance(staff_balance);
-                        emp6.setLeaveBalance(staff_balance);
-                        emp7.setLeaveBalance(staff_balance);
-                        emp8.setLeaveBalance(staff_balance);
-                        emp9.setLeaveBalance(staff_balance);
-                        emp10.setLeaveBalance(admin_balance);
-                        emp11.setLeaveBalance(admin_balance);
-                        emp12.setLeaveBalance(admin_balance);
+                        LeaveBalance staff_balance_5 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_6 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_7 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_8 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_9 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+
+
+                        emp1.setLeaveBalance(staff_balance_1);
+                        emp2.setLeaveBalance(staff_balance_2);
+                        emp3.setLeaveBalance(staff_balance_3);
+                        emp4.setLeaveBalance(staff_balance_4);
+                        emp5.setLeaveBalance(staff_balance_5);
+                        emp6.setLeaveBalance(staff_balance_6);
+                        emp7.setLeaveBalance(staff_balance_7);
+                        emp8.setLeaveBalance(staff_balance_8);
+                        emp9.setLeaveBalance(staff_balance_9);
+                        emp10.setLeaveBalance(admin_balance_1);
+                        emp11.setLeaveBalance(admin_balance_2);
+                        emp12.setLeaveBalance(admin_balance_3);
 
                         CompensationRequest cr1 = new CompensationRequest(LocalDateTime.parse("2022-12-12T17:30:00"),
                                         LocalDateTime.parse("2022-12-12T21:30:00"), LeaveStatusEnum.APPLIED, emp2);
@@ -181,7 +203,18 @@ public class LeavingSystemApplication {
                         emp11.setCompensationRequests(Arrays.asList(cr3));
                         emp12.setCompensationRequests(Arrays.asList(cr3));
 
-                        leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance, admin_balance));
+                        leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance_1, 
+                        staff_balance_2,
+                        staff_balance_3,
+                        staff_balance_4,
+                        staff_balance_5,
+                        staff_balance_6,
+                        staff_balance_7,
+                        staff_balance_8,
+                        staff_balance_9,
+                        admin_balance_1,
+                        admin_balance_2,
+                        admin_balance_3));
                         roleRepository.saveAll(Arrays.asList(admin, staff, manager));
                         leaveTypeRepo.saveAllAndFlush(Arrays.asList(annual_admin, annual_staff, medical));
                         userRepository.saveAllAndFlush(Arrays.asList(staff1, staff2, staff3, staff4, staff5, staff6,

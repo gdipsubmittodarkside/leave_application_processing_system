@@ -21,6 +21,7 @@ public class LeaveBalance {
     private Long leaveBalanceId;
 
     @OneToOne(mappedBy = "leaveBalance")
+    // @ManyToOne
     private Employee employee;
 
     @Column(name="balance_annual_leave_days")
