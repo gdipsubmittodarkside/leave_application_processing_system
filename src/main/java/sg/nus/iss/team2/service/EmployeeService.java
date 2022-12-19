@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import sg.nus.iss.team2.model.Employee;
+import sg.nus.iss.team2.model.EmployeeModel;
 
 public interface EmployeeService {
     Employee findEmployeeById(Long id);
@@ -22,5 +23,11 @@ public interface EmployeeService {
     void resignedEmployee(Employee employee);
 
     List<Long> findAllUserIDs();
+
+    boolean deleteEmployee(Long employeeId);
+
+    EmployeeModel updateEmployeeMol(Long employeeId, EmployeeModel empMol);
+
+    
 
 }

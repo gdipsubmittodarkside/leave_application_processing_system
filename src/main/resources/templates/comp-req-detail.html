@@ -4,7 +4,14 @@
 <body>
     <div th:replace="fragments/layout.html :: header"/>
     <div th:replace="fragments/layout.html :: menu"/>
-    <h3>Compensation Request Details</h3>
+<head>
+    <title>Compensation Request Detail</title>
+</head>
+
+<body>
+    <div>
+        <h2>Compensation Request Detail</h2>
+    </div>
     <table>
         <tr>
             <th align="right"><span>Request ID</span></th>
@@ -35,8 +42,15 @@
                     <input type="radio" th:field="*{decision}" value="APPROVED" />
                     <label>approve</label> &nbsp;&nbsp; 
                     <input type="radio" th:field="*{decision}" value="REJECTED" /> <label>reject</label>
+                    <td><b style='color:red'><span th:if="${#fields.hasErrors('decision')}" th:errors="*{decision}"></span></b></td>
                   </fieldset>
                 </td>
+              </tr>
+              <tr>
+                <td><span>Comment</span></td> 
+                <td><textarea th:field="*{comment}" th:rows="*{comment}" cols="40"></textarea></td>
+                <td><b style='color:red'><span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span></b></td>
+                    
               </tr>
               <tr>
                 <td>

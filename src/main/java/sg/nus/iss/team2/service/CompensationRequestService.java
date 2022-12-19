@@ -21,6 +21,6 @@ public interface CompensationRequestService {
 
     List<CompensationRequest> findRequestByTeam(List<Employee> team);
 
-    void updateCompReqAndLeaveBalance(CompensationRequest compensationRequest, String decision);
+    void updateCompReqAndLeaveBalance(CompensationRequest compensationRequest, String decision, String comment);
 
 }

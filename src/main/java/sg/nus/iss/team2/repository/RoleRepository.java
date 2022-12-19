@@ -11,4 +11,6 @@ import sg.nus.iss.team2.model.Role;
 public interface RoleRepository extends JpaRepository<Role, Long> {
     @Query("SELECT r FROM Role r WHERE r.roleName = :name")
     List<Role> findRoleByName(@Param("name") String name);
+
+    Role findRoleByRoleName(String name);
 }

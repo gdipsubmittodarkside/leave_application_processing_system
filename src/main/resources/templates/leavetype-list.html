@@ -12,6 +12,7 @@ crossorigin="anonymous">
 <div align="left" class="container my-2">
   <h3>Leave Type List page</h3>
   <a th:href="@{/admin/leavetype/create}" class="btn btn-primary">Add Leave Type</a>
+  <a th:href="@{/admin/leavetype/export/csv}"><i class=" btn btn-dark px-4">Generate Report</i></a>
   <div th:if="${not #lists.isEmpty(leaveType)}">
 
     <table style="border: 1" class="table table-striped table-responsive-md">

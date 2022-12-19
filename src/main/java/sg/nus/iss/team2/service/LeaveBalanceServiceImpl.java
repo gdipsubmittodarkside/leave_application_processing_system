@@ -1,5 +1,6 @@
 package sg.nus.iss.team2.service;
 
+import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.LeaveBalance;
 import sg.nus.iss.team2.repository.LeaveBalanceRepository;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,12 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
     @Transactional
     public LeaveBalance findLeaveBalance(Long lbid) {
         return leaveBalanceRepository.findById(lbid).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public LeaveBalance findEmployeeLeaveBalance(Employee emp) {
+        return leaveBalanceRepository.findEmployeeLeaveBalance(emp);
     }
 
     @Override
@@ -66,7 +73,7 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 
     @Override
     @Transactional
-    public void minusCompensationLeaveBalance(LeaveBalance leaveBalance, int days){
+    public void minusCompensationLeaveBalance(LeaveBalance leaveBalance, double days){
         double curr_compBalance = leaveBalance.getBalanceCompensationLeaveDays();
         double new_compBalance = curr_compBalance - days;
         leaveBalance.setBalanceCompensationLeaveDays(new_compBalance);

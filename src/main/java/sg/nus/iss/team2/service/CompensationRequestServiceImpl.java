@@ -88,25 +88,35 @@ public class CompensationRequestServiceImpl implements CompensationRequestServic
 
     @Override
     @Transactional
-    public void updateCompReqAndLeaveBalance(CompensationRequest compensationRequest, String decision){
+    public void updateCompReqAndLeaveBalance(CompensationRequest compensationRequest, String decision, String comment){
         
-        if (decision.equalsIgnoreCase(LeaveStatusEnum.REJECTED.toString()))
+        if (comment!=null)
         {
-            compensationRequest.setStatus(LeaveStatusEnum.REJECTED);
+            compensationRequest.setComment(comment);
         }
-        else
+        if (decision!=null)
         {
-            // update Compensation item with new status
-            compensationRequest.setStatus(LeaveStatusEnum.APPROVED);
+            if (decision.equalsIgnoreCase(LeaveStatusEnum.REJECTED.toString()))
+            {
+                compensationRequest.setStatus(LeaveStatusEnum.REJECTED);
+            }
+            else
+            {
+                // update Compensation item with new status
+                compensationRequest.setStatus(LeaveStatusEnum.APPROVED);
+    
+                // update "LeaveBalance" DB with new (increased) compensation leave balance
+                Employee emp = compensationRequest.getEmployee();
+                LeaveBalance LB1 = emp.getLeaveBalance();
+                double durationInDays = 2;
+    
+                LBservice.addCompensationLeaveBalance(LB1, durationInDays);
+            }
+    
+            updCompensationRequest(compensationRequest);
 
-            // update "LeaveBalance" DB with new (increased) compensation leave balance
-            Employee emp = compensationRequest.getEmployee();
-            LeaveBalance LB1 = emp.getLeaveBalance();
-            double durationInDays = 2;
-
-            LBservice.addCompensationLeaveBalance(LB1, durationInDays);
         }
 
-        updCompensationRequest(compensationRequest);
     }
+
 }

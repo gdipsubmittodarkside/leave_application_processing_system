@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+    <div th:replace="fragments/layout.html :: header"/>
+    <div th:replace="fragments/layout.html :: menu"/>
 <head>
-    <title>My Team's Leave History</title>
+    <title>My Team Leave Detail</title>
 </head>
 
 <body>
+    <div>
+        <h2>My Team Leave Detail</h2>
+    </div>
+
     <div th:if="${#lists.isEmpty(teamLeaves)}">
         <p>No team leave history to show.</p>
     </div>

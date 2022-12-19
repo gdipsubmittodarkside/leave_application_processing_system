@@ -12,15 +12,25 @@ crossorigin="anonymous">
 <div align="left" class="container my-2">
   <h3>User List page</h3>
   <a th:href="@{/admin/user/create}" class="btn btn-primary">Add User</a>
+  <a th:href="@{/admin/user/export/csv}"><i class=" btn btn-dark px-4">Generate Report</i></a>
   <div th:if="${not #lists.isEmpty(userList)}">
 
     <table style="border: 1" class="table table-striped table-responsive-md">
       <thead>
         <tr class="listHeading">
-          <th><span th:text="#{fieldLabel.userId}"></span></th>
-          <th><span th:text="#{fieldLabel.username}"></span></th>
-          <th><span th:text="#{fieldLabel.password}"></span></th>
-          <th><span th:text="#{fieldLabel.JoinDate}"></span></th>
+          <th><a th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=userId&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+          <span th:text="#{fieldLabel.userId}"></span></a></th>
+          <th><a th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=username&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+             <span th:text="#{fieldLabel.username}"></span>
+          </a>
+           </th>
+          <th><a th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=password&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+            <span th:text="#{fieldLabel.password}"></span></th>
+          </a>
+            
+          <th><a th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=joinDate&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+            <span th:text="#{fieldLabel.JoinDate}"></span></th>
+          </a>
           <th><span>Action</span></th>
           
         </tr>
@@ -28,10 +38,10 @@ crossorigin="anonymous">
       <tbody>
 
         <tr th:each="user : ${userList}" class="listRecord">
-          <td th:text="${user.userId}">Id</td>
-          <td th:text="${user.username}">Name</td>
-          <td th:text="${user.password}">Password</td>
-          <td th:text="${user.JoinDate}">Employee</td>
+          <td th:text="${user.userId}"></td>
+          <td th:text="${user.username}"></td>
+          <td th:text="${user.password}"></td>
+          <td th:text="${user.JoinDate}"></td>
 
           <td><a th:href="@{/admin/user/edit/}+${user.userId}"
             class="btn btn-info"><span th:text="#{caption.edit}"></span></a>
@@ -40,6 +50,35 @@ crossorigin="anonymous">
         </tr>
       </tbody>
     </table>
+
+    <div th:if = "${totalPages > 1}">
+      <div class = "row col-sm-10">
+          <div class="col-sm-2">Total rows: [[${totalItems}]]</div>
+          <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}"> 
+              <a th:if="${currentPage != i}" th:href="@{'/admin/user/list/page/' + ${i} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">[[${i}]]</a>
+              <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+          </div>
+          <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{'/admin/user/list/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+          </div>
+          <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{'/admin/user/list/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+          </div>
+          <div class="col-sm-1">
+            <!-- th:onchange="'window.location.href = \'' + @{/admin/employee/list/page/1?sortField=employeeId&sortDir=asc} + '&pageSize=\' + this.value '" -->
+            <select 
+            th:onchange="'window.location.href = \'' + @{/admin/user/list/page/1?sortField=userId&sortDir=asc} + '&pageSize=\' + this.value '"
+            >
+              <option th:each="i:${ {5,10,15,20} }" th:value="${i}" 
+              th:text="${i}" th:selected="${i == pageSize}"
+              >
+            </option>
+            </select>
+          </div>
   </div>
 </div>
 </body>

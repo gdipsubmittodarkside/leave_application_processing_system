@@ -1,7 +1,6 @@
 package sg.nus.iss.team2.model;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +42,12 @@ public class CompensationRequest {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime OTendTime;
 
-    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'CANCELLED', 'APPROVED', 'REJECTED', 'UPDATED')")
+    private String description;
+
+    
+    private String comment;
+
+    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'WITHDRAW', 'APPROVED', 'REJECTED', 'UPDATED', 'PENDING')")
     @Enumerated(EnumType.STRING)
     private LeaveStatusEnum status;
 
@@ -69,4 +73,5 @@ public class CompensationRequest {
 
     
     
+
 }

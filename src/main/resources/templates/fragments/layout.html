@@ -4,7 +4,9 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     >
     <meta charset="UTF-8">
-    <title>Leaving System</title>
+
+    <title>Employee Leave System</title>
+
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
@@ -13,7 +15,7 @@
 <body>
     <div th:fragment="menu" id="menu">
         <nav class="navbar">
-            <a th:href="@{/staff/viewLeave}">Leave System</a>
+            <a th:href="@{/staff/viewLeave}">Employee Leave System</a>
             <a th:href="@{/}">Home</a>
             <a th:href="@{/}">About</a>
 
@@ -22,8 +24,8 @@
                 <div class="subnav">
                     <button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
                     <div class="subnav-content">
-                        <a>1</a>
-                        <a>2</a>
+                        <a th:href="@{/manager/pending}">Pending Leaves & Claims</a>
+                        <a th:href="@{/manager/team-leave}">Past Approvals</a>
                     </div>
                 </div>
             </div>
@@ -33,8 +35,9 @@
                 <div class="subnav">
                     <button class="subnavbtn">Staff Menu <i class="fa fa-caret-down"></i></button>
                     <div class="subnav-content">
-                        <a>1</a>
-                        <a>2</a>
+                        <a th:href="@{/staff/leave/new }">Take Leave</a>
+                        <a th:href="@{/staff/compensation/claimLeave }">Calim compensation Leave</a>
+                        <a th:href="@{/staff/viewLeave }">Leave & Claim History</a>
                     </div>
                 </div>
             </div>
@@ -50,6 +53,9 @@
                         th:utext="#{menu.admin.emplist}">Manage Employee</a>
                         <a th:href="@{/admin/user/list}"
                         th:utext="#{menu.admin.ulist}">Manage User</a>
+                        <a th:href="@{/admin/holidays/list}"
+                        th:utext="#{menu.admin.publist}">Manage Public Holiday</a>
+
                     </div>
                 </div>
             </div>

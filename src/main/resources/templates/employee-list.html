@@ -4,6 +4,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
   crossorigin="anonymous">
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
 <head th:replace="fragments/layout.html :: html_head"/>
 
@@ -15,16 +17,17 @@
 <div align="left" class="container my-2">
   <h3>Employee List page</h3>
   <a th:href="@{/admin/employee/create}" class="btn btn-primary">Add Employee</a>
+  <a th:href="@{/admin/employee/export/csv}"><i class=" btn btn-dark px-4">Generate Report</i></a>
 
   <div th:if="${not #lists.isEmpty(employees)}" >
     
     <table style="border: 1" class="table table-striped table-responsive-md">
       <tr class="listHeading">
-        <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
-        </a><span th:text="#{fieldLabel.employeeName}">
+        <th><a th:href="@{'/admin/employee/list/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+        <span th:text="#{fieldLabel.employeeName}">
         </span></a></th>
-        <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=managerId&sortDir=' + ${reverseSortDir}}">
-        </a><span th:text="#{fieldLabel.managerId}">
+        <th><a th:href="@{'/admin/employee/list/page/' + ${currentPage} + '?sortField=managerId&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+        <span th:text="#{fieldLabel.managerId}">
         </span></a></th>
         <th><span th:text="#{fieldLabel.status}"></span></th>
         <th><span>Action</span></th>
@@ -58,11 +61,14 @@
             <span th:unless="${currentPage < totalPages}">Last</span>
           </div>
           <div class="col-sm-1">
-            <select th:onchange="'window.location.href = \'' + @{/admin/employee/list/page/1?sortField=employeeId&sortDir=asc} + '&pageSize=\' + this.value '">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
+            <!-- th:onchange="'window.location.href = \'' + @{/admin/employee/list/page/1?sortField=employeeId&sortDir=asc} + '&pageSize=\' + this.value '" -->
+            <select 
+            th:onchange="'window.location.href = \'' + @{/admin/employee/list/page/1?sortField=employeeId&sortDir=asc} + '&pageSize=\' + this.value '"
+            >
+              <option th:each="i:${ {5,10,15,20} }" th:value="${i}" 
+              th:text="${i}" th:selected="${i == pageSize}"
+              >
+            </option>
             </select>
           </div>
   

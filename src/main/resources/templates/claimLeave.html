@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="fragments/layout.html :: html_head" />
+<head th:replace="fragments/layout.html :: html_head"/>
 <body>
-    <div th:replace="fragments/layout.html :: header" />
-    <div th:replace="fragments/layout.html :: menu" />
+
+    <div th:replace="fragments/layout.html :: header"/>
+    <div th:replace="fragments/layout.html :: menu"/>
+<head>
+    <title>Personal Leave Detail</title>
+</head>
+
+<body>
+    <div>
+        <h2>Personal Leave Detail</h2>
+    </div>
+
+    
     <h3>Compensational Leave Claiming Form</h3>
     
+<<<<<<< HEAD
     <form action="#" th:action="@{/staff/claimLeave}"
+=======
+    <form action="#" th:action="@{/staff/compensation/claimLeave}"
+>>>>>>> d02592517ac733020fd5663a7ed47a581d857a04
         th:object="${compensation}" method="post">
 
         <table class="framed" >
@@ -15,15 +29,29 @@
             <tr>
                 <th>OT Start Time</th>
                 <td><input type="datetime-local" th:field="*{OTstartTime}" /></td>
+<<<<<<< HEAD
                 <!-- <td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td> -->
+=======
+                <td th:if="${#fields.hasErrors('OTstartTime')}" th:errors="*{OTstartTime}"></td>
+>>>>>>> d02592517ac733020fd5663a7ed47a581d857a04
             </tr>
 
             <tr>
                 <th>OT End Time</th>
                 <td><input type="datetime-local" th:field="*{OTendTime}" /></td>
+<<<<<<< HEAD
                 <!-- <td th:if="${#fields.hasErrors('toDate')}" th:errors="*{toDate}"></td> -->
+=======
+                <td th:if="${#fields.hasErrors('OTendTime')}" th:errors="*{OTendTime}"></td>
+>>>>>>> d02592517ac733020fd5663a7ed47a581d857a04
             </tr>
 
+            <tr>
+                <th>Description</th>
+                <td><textarea maxlength="200" type="uText" th:field="*{description}" placeholder="Please write your description here"/></textarea>
+                <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>
+            </tr>
+            
             <tr><td>
                 <input type="submit" value="Create" class="blcass" />
                 <input type="reset" value="Reset" class="blcass" />
@@ -36,3 +64,4 @@
     <div th:replace="fragments/layout.html :: footer" />
 </body>
 </html>
+

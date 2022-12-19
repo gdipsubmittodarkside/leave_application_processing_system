@@ -10,7 +10,8 @@ crossorigin="anonymous">
 		<h2>Edit Leave Type</h2>
 		<hr/>
 		<form th:action="@{/admin/leavetype/edit/} + ${leavetype.leaveTypeName}" th:object="${leavetype}" method="POST">
-			<input type="text" th:field="*{leaveTypeName}" class="form-control col-4 mb-4" placeholder="Enter Leave Type Name" readonly />
+			<input type="text" th:field="*{leaveTypeName}" class="form-control col-4 mb-4" 
+			placeholder="Enter Leave Type Name" readonly />
             <span th:if="${#fields.hasErrors('leaveTypeName')}"
             th:errors="*{leaveTypeName}"></span>
 			<input type="number" th:field="*{leavePeriod}" class="form-control col-4 mb-4" placeholder="Enter Leave Type Period" />
@@ -24,7 +25,7 @@ crossorigin="anonymous">
             <br/>
 			<button class="btn btn-primary" type="submit">Save</button>
 			<button class="btn btn-dangerous" type="reset">Reset</button>
-			<input type="hidden" th:field="*{leaveTypeName}"/>
+			
 		</form>
 		<hr/>
 		<a th:href="@{/admin/leavetype/list}">Back To List</a>
