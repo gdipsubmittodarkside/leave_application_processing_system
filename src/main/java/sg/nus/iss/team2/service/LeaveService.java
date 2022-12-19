@@ -4,7 +4,11 @@ import java.util.List;
 
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
-import sg.nus.iss.team2.model.LeaveBalance;
+
+
+import java.time.LocalDate;
+import java.util.List;
+
 
 public interface LeaveService {
     List<Leave> findAllLeaves();
@@ -24,8 +28,17 @@ public interface LeaveService {
     List<Leave> findTeamLeaveHistory(List<Employee> team);
 
 
+    List<Leave> findApprovedTeamLeaveHistory(List<Employee> team, LocalDate theLeaveStartDate, LocalDate theLeaveEndDate);
+
+    List<Leave> findLeavePendingApproval(List<Employee> team);
+
+    void updateLeaveAndLeaveBalance(Leave leave, String decision, String comment);
+
+
+
     List<Leave> findLeavePendingApproval(List<Employee> team);
 
     void updateLeaveAndLeaveBalance(Leave leave, String decision);
+
 
 }
