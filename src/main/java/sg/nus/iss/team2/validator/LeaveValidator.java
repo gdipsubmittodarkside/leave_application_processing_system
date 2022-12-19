@@ -1,8 +1,5 @@
 package sg.nus.iss.team2.validator;
 
-import java.time.LocalDate;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,54 +11,52 @@ import sg.nus.iss.team2.Utility.Calculate;
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.model.LeaveBalance;
-import sg.nus.iss.team2.service.LeaveBalanceService;
+
 
 @Component
-public class LeaveValidator implements Validator{
+public class LeaveValidator implements Validator {
 
     @Autowired
-    Calculate calculate;
-
-    @Autowired
-    LeaveBalanceService lbService;
+    Calculate calculator;
     
     @Override
-    public boolean supports (Class<?> clazz){
-        return Leave.class.isAssignableFrom(clazz);      
-    } 
+    public boolean supports(Class<?> clazz){
+        return Leave.class.isAssignableFrom(clazz);
+    }
 
     @Override
     public void validate (Object target, Errors errors){
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "reason", "error.leaveReason","A reason is required");
 
         Leave leave = (Leave) target;
-
-        LocalDate startDate = leave.getStartDate();
-        LocalDate endDate = leave.getEndDate();
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "startDate","Start Date is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endDate", "endDate", "End Date is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "reason", "reason", "Reason is required");
-
-       
-
-        if (startDate!=null && startDate.compareTo(LocalDate.now()) < 0){
-
-            errors.rejectValue("startDate","error.startDate","Start Date cannot be ealier than today");
-        }
-
-        if(startDate!=null && endDate!=null &&  startDate.compareTo(endDate) > 0){
-
-            errors.rejectValue("startDate","error.startDate","StartDate cannot be later than endDate.");
-        }
-
-        if (startDate!=null && (startDate.getDayOfWeek().toString().equals("SUNDAY") || startDate.getDayOfWeek().toString().equals("SATURDAY"))){
-            errors.rejectValue("startDate","error.startDate2","Please choose working date only, Saturday and Sunday are not working date!");
-        }
-
-        if (startDate!=null && (endDate.getDayOfWeek().toString().equals("SUNDAY") || endDate.getDayOfWeek().toString().equals("SATURDAY"))){
-            errors.rejectValue("endDate","error.endDate2","Please choose working date only, Saturday and Sunday are not working date!");
-        }
         
-       
+        // if start date is after (greater than) end date
+        if ((leave.getStartDate() != null && leave.getEndDate() != null) &&
+        (leave.getStartDate().compareTo(leave.getEndDate()) > 0)){
+            errors.reject("endDate", "Leave end date should be greater than start date.");
+        }
+
+        // if leave duration is more than existing leave balance
+        double leaveDuration = calculator.numOfDaysMinusPHAndWeekend(leave.getStartDate(), leave.getEndDate());
+        double maxLeaveDays = 0;
+        String leaveType = leave.getLeaveType().toString();
+
+        Employee emp = leave.getEmployee();
+        LeaveBalance leaveBalance = emp.getLeaveBalance();
+
+        if (leaveType.equalsIgnoreCase("annual")){
+            maxLeaveDays = leaveBalance.getBalanceAnnualLeaveDays();
+        }
+        else if (leaveType.equalsIgnoreCase("medical")){
+            maxLeaveDays = leaveBalance.getBalanceMedicalLeaveDays();
+        }
+        else if (leaveType.equalsIgnoreCase("compensation")){
+            maxLeaveDays = leaveBalance.getBalanceCompensationLeaveDays();
+        }
+
+        if (leaveDuration !=0 && (leaveDuration > maxLeaveDays)){
+            errors.rejectValue("endDate", "error.Leave.endDate", String.format("Invalid end date. Max {0} leave days available is {1}.", leaveType.toLowerCase(), maxLeaveDays));
+        }
+
     }
 }

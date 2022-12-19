@@ -22,7 +22,9 @@ public class SGPublicHolidays {
     private String type;
 
     /* Sample JSON
-        date:"2019-02-18" ("yyyy-MM-dd")
+
+        date:"2019-02-18"
+
         localName:"Washington's Birthday"
         name:"Presidents' Day"
         countryCode:"US"

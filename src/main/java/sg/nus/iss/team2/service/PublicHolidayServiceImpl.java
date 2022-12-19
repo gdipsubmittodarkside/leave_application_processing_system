@@ -23,11 +23,13 @@ public class PublicHolidayServiceImpl implements PublicHolidayService {
 
     @Override
     public List<PublicHoliday> findAllPublicHolidays() {
+
         return repo.findAll();
     }
 
     @Override
     public PublicHoliday findPublicHolidaysById(Long id) {
+
         return repo.findById(id).get();
     }
 

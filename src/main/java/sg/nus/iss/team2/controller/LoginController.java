@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.iss.team2.model.User;
-// import sg.nus.iss.team2.service.EmployeeService;
-
 import sg.nus.iss.team2.service.UserService;
 import sg.nus.iss.team2.validator.UserValidator;
 
@@ -29,8 +26,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    // @Autowired
-    // private EmployeeService employeeService;
 
     @Autowired
     private UserValidator userValidator;
@@ -68,6 +63,7 @@ public class LoginController {
 
         List<String> roleNames = userFromDb.getRoleNames();
 
+
         if (roleNames.contains("admin")) {
             return "redirect:/admin/employee/list";
         }
@@ -77,12 +73,12 @@ public class LoginController {
         }
 
 
-        return "redirect:/staff/list";
+        return "redirect:/staff/viewLeave";
 
 
     }
 
-    @RequestMapping("/logout")
+    @PostMapping ("/logout")
     public String Logout(HttpSession session){
         session.invalidate();
         return "login";

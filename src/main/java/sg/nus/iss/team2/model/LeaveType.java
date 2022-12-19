@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="LeaveType")
+@Table(name = "LeaveType")
 public class LeaveType {
+    
     @Id
     @Column(name = "leave_type")
     private String leaveTypeName;
@@ -24,7 +26,5 @@ public class LeaveType {
 
     @Column(name = "leave_description")
     private String description;
-
-    
     
 }

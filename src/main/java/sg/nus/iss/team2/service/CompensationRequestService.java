@@ -19,4 +19,8 @@ public interface CompensationRequestService {
 
     void removeCompensationRequest(CompensationRequest compensationRequest);
 
+    List<CompensationRequest> findRequestByTeam(List<Employee> team);
+
+    void updateCompReqAndLeaveBalance(CompensationRequest compensationRequest, String decision, String comment);
+
 }

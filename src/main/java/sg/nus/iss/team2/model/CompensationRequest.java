@@ -44,9 +44,10 @@ public class CompensationRequest {
 
     private String description;
 
+    
     private String comment;
 
-    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'CANCELLED', 'APPROVED', 'REJECTED', 'UPDATED')")
+    @Column(name="status", columnDefinition = "ENUM('APPLIED', 'WITHDRAW', 'APPROVED', 'REJECTED', 'UPDATED', 'PENDING')")
     @Enumerated(EnumType.STRING)
     private LeaveStatusEnum status;
 
@@ -65,9 +66,12 @@ public class CompensationRequest {
         OTstartTime = oTstartTime;
         OTendTime = oTendTime;
         this.employee = employee;
+
     }
     
 
+
     
     
+
 }
