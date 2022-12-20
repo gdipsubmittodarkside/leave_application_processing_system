@@ -1,27 +1,151 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout.html :: html_head" />
-<body>
-    <div th:replace="fragments/layout.html :: header" />
-    <div th:replace="fragments/layout.html :: menu" />
-    <h3>Login</h3>
+<style>
+   
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
+
+input {
+  caret-color: #338;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #ecf0f3;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  place-items: center;
+  overflow: hidden;
+  font-family: poppins;
+}
+
+.container {
+    position: relative;
+    width: 350px;
+    height: 500px;
+    border-radius: 20px;
+    padding: 40px;
+    background: #ecf0f3;
+    /* box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white; */
+  }
+  
+  .brand-title {
+    margin-top: 10px;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: #338;
+    letter-spacing: 1px;
+    font-family: poppins;
+  }
+  
+  .inputs {
+    text-align: left;
+    margin-top: 30px;
+  }
+  
+  label, input, button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+  }
+  
+  label {
+    margin-bottom: 4px;
+  }
+  
+  label:nth-of-type(2) {
+    margin-top: 12px;
+  }
+  
+  input::placeholder {
+    color: gray;
+  }
+  
+  input {
+    background: #ecf0f3;
+    padding: 10px;
+    padding-left: 20px;
+    height: 50px;
+    font-size: 14px;
+    border-radius: 50px;
+    box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+  }
+  
+  button {
+    color: white;
+    margin-top: 20px;
+    background: #338;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 900;
+    box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+    transition: 0.5s;
+  }
+  
+  button:hover {
+    box-shadow: none;
+  }
+  
+  a {
+    position: absolute;
+    font-size: 8px;
+    bottom: 4px;
+    right: 4px;
+    text-decoration: none;
+    color: black;
+    background: yellow;
+    border-radius: 10px;
+    padding: 2px;
+  }
+  
+  h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+
+
+</style>
+
+
+
+<div class="container">
+    <div class="brand-title">Welcome back</div>
     <form action="#" th:object="${user}" th:action="@{/login}" method="post">
-        <table class="framed" th:object="${user}">
+        <table class="inputs" th:object="${user}">
             <tr>
                 <td><span th:text="#{fieldLabel.username}">Username</span></td>
-                <td><input type="text" th:field="*{username}"></td>
-                <td><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></td>
+                <td><input type="text" th:field="*{username}"></td>              
             </tr>
+
+            <tr>
+                <td></td>
+                <td><p style='color:red'><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></p></td>
+                
+            </tr>
+
             <tr>
                 <td><span th:text="#{fieldLabel.password}">Password</span></td>
-                <td><input type="text" th:field="*{password}"></td>
-                <td><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
+                <td><input type="password" th:field="*{password}"></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><p style='color:red'><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></p></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <input type="submit" />
-                    <input type="reset" />
+                    <button type="submit">Submit
+                    <button type="submit">Reset
                 </td>
             </tr>
             <tr>
@@ -33,10 +157,5 @@
             </tr>
         </table>
     </form>
-
-
-
-
-    <div th:replace="fragments/layout.html :: footer" />
 </body>
 </html>

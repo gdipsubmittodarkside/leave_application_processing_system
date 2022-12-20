@@ -1,85 +1,132 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head"/>
+
+<link rel="stylesheet" 
+type="text/css" 
+href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
+
 <body>
     <div th:replace="fragments/layout.html :: header"/>
     <div th:replace="fragments/layout.html :: menu"/>
-<head>
-    <title>Pending Leaves and Claims Request</title>
-</head>
 
 <body>
-    <div>
-        <h2>Pending Leaves and Claims Request</h2>
-    </div>
+    <body>
+        <div class = "tabinator">
+            <input type = "radio" id = "tab1" name = "tabs" checked>
+            <label for = "tab1">Approve Leaves</label>
+            <input type = "radio" id = "tab2" name = "tabs">
+            <label for = "tab2">Approve Claims</label>
+                <!-- <label for = "tab3"><a th:href="@{/admin/holidays/export/csv}">Generate Report</span></a></label> -->
+            <div id = "content1">
+                <div>
+                    <h4>Pending Leaves Applications</h4>
+                </div>
+                <div th:if="${#lists.isEmpty(leavePendingApproval)}">
+                    <p>No pending leave approvals to show.</p>
+                </div>
+                <div th:if="${not #lists.isEmpty(leavePendingApproval)}">
+                    <table class="table1" id="leave-table">
+                        <thead>
+                            <tr>
+                            <th>Leave Id</th>
+                            <th>Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Leave Type</th>
+                            <th>Reason</th> 
+                            <th>Status</th>
+                            <th>Details</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="leave:${leavePendingApproval}">
+                                <form th:action="@{/manager/leave/display/} + ${leave.leaveId}" method="post">
+                                <td th:text="${leave.leaveId}"></td>
+                                <td th:text="${leave.employee.name}"></td>
+                                <td th:text="${leave.startDate}"></td>
+                                <td th:text="${leave.endDate}"></td>
+                                <td th:text="${leave.leaveType}"></td>
+                                <td th:text="${leave.reason}"></td>
+                                <td th:text="${leave.status}"></td>
+                                <td><button type="submit" value="Details">DETAILS</td>
+                                </form>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+            <div id = "content2">
+                <div>
+                    <h4>Compensation Claims</h4>
+                </div>
+                
+                <div th:if="${#lists.isEmpty(compRequests)}">
+                    <p>No pending compensation claims to show.</p>
+                </div>
+            
+                <div th:if="${not #lists.isEmpty(compRequests)}">
+                    <table class="table1" id="compensation-table">
+                        <thead>
+                        <tr>
+                            <th>Claim Id</th>
+                            <th>Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tr th:each="req:${compRequests}">
+                            <form th:action="@{/manager/claim/display/} + ${req.compensationLeaveId}" method="post">
+                            <td th:text="${req.compensationLeaveId}"></td>
+                            <td th:text="${req.employee.name}"></td>
+                            <td th:text="${req.OTstartTime}"></td>
+                            <td th:text="${req.OTendTime}"></td>
+                            <td th:text="${req.status}"></td>
+                            <td><button type="submit" value="Details">DETAILS</td>
+                            </form>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
-    <div>
-        <h4>Leave Requests</h4>
-    </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+     
+        <script 
+        type="text/javascript" 
+        src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js"></script>
+        
+        <script>
+            // jquery pagination and search
+            $(document).ready(function(){
+                $("#leave-table").DataTable({
+            "pageLength": 5,
+            "lengthMenu": [ 5, 10, 15, 20, 25, -1 ]
+        });	
+            })
 
-    <div th:if="${#lists.isEmpty(leavePendingApproval)}">
-        <p>No pending leave approvals to show.</p>
-    </div>
+            $(document).ready(function(){
+                $("#compensation-table").DataTable({
+            "pageLength": 5,
+            "lengthMenu": [ 5, 10, 15, 20, 25, -1]
+        });
+            })
 
-    <div th:if="${not #lists.isEmpty(leavePendingApproval)}">
-        <table border="1">
-            <tr>
-                <th>Leave Id</th>
-                <th>Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Leave Type</th>
-                <th>Reason</th> 
-                <th>Status</th>
-                    <!--Reason may be too long, maybe need click into "Details" button and put reason ther-->
-                <th>Details</th>
-            </tr>
-            <tr th:each="leave:${leavePendingApproval}">
-                <form th:action="@{/manager/leave/display/} + ${leave.leaveId}" method="post">
-                <td th:text="${leave.leaveId}"></td>
-                <td th:text="${leave.employee.name}"></td>
-                <td th:text="${leave.startDate}"></td>
-                <td th:text="${leave.endDate}"></td>
-                <td th:text="${leave.leaveType}"></td>
-                <td th:text="${leave.reason}"></td>
-                <td th:text="${leave.status}"></td>
-                <td><input type="submit" value="Details"></td>
-                </form>
-            </tr>
-        </table>
-    </div>
+            // navigation tabs
+            function openView(view){
+                var i; 
+                var x = document.getElementsByClassName("manager-view");
+                
+                for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";  
+                }
+                document.getElementById(view).style.display = "block";
+            }
+        </script>
 
-    <div>
-        <h4>Compensation Claims</h4>
-    </div>
-    
-    <div th:if="${#lists.isEmpty(compRequests)}">
-        <p>No pending compensation claims to show.</p>
-    </div>
+        </div>
 
-    <div th:if="${not #lists.isEmpty(compRequests)}">
-        <table border="1">
-            <tr>
-                <th>Claim Id</th>
-                <th>Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <!-- <th>Duration</th> -->
-                <th>Status</th>
-                <th>Details</th>
-            </tr>
-            <tr th:each="req:${compRequests}">
-                <form th:action="@{/manager/claim/display/} + ${req.compensationLeaveId}" method="post">
-                <td th:text="${req.compensationLeaveId}"></td>
-                <td th:text="${req.employee.name}"></td>
-                <td th:text="${req.OTstartTime}"></td>
-                <td th:text="${req.OTendTime}"></td>
-                <!-- <td th:text="${req.reason}"></td> -->
-                <td th:text="${req.status}"></td>
-                <td><input type="submit" value="Details"></td>
-                </form>
-            </tr>
-        </table>
-    </div>
+    </body>
+
+    <div th:replace="fragments/layout.html :: footer" />
 </body>
 </html>

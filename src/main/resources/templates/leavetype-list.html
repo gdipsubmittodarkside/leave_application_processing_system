@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
-integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
-crossorigin="anonymous">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body onload="openView('view-leave')">
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
 
-<head th:replace="fragments/layout.html :: html_head"/>
-<body>
-  <div th:replace="fragments/layout.html :: menu"/>
-  <div th:replace="fragments/layout.html :: header"/> 
-<div align="left" class="container my-2">
-  <h3>Leave Type List page</h3>
-  <a th:href="@{/admin/leavetype/create}" class="btn btn-primary">Add Leave Type</a>
-  <a th:href="@{/admin/leavetype/export/csv}"><i class=" btn btn-dark px-4">Generate Report</i></a>
+
+    <div class = "tabinator">
+        <input type = "radio" id = "tab1" name = "tabs" checked>
+        <label for = "tab1">Leave Type List</label>
+        <label for = "tab2"><a th:href="@{/admin/leavetype/create}">Apply Leave Type</span></a></label>
+        <label for = "tab3"><a th:href="@{/admin/leavetype/export/csv}">Generate Report</span></a></label>
+        <div id = "content1">
+          <div>
+            <h4>Leave Type List</h4>
+        </div>
+
   <div th:if="${not #lists.isEmpty(leaveType)}">
 
-    <table style="border: 1" class="table table-striped table-responsive-md">
+    <table class="table1">
       <thead>
         <tr class="listHeading">
           <th><span th:text="#{fieldLabel.leaveType}"></span></th>
@@ -27,15 +31,13 @@ crossorigin="anonymous">
       </thead>
       <tbody>
 
-        <tr th:each="leavetype : ${leaveType}" class="listRecord">
+        <tr th:each="leavetype : ${leaveType}">
           <td th:text="${leavetype.leaveTypeName}">LeaveTypeName</td>
           <td th:text="${leavetype.leavePeriod}">LeavePeriod</td>
           <td th:text="${leavetype.description}">Description</td>
 
-          <td><a th:href="@{/admin/leavetype/edit/}+${leavetype.leaveTypeName}"
-            class="btn btn-info"><span th:text="#{caption.edit}"></span></a>
-          <a th:href="@{/admin/leavetype/delete/}+${leavetype.leaveTypeName}"
-            class="btn btn-danger"><span th:text="#{caption.delete}"></span></a></td>
+          <td><a th:href="@{/admin/leavetype/edit/}+${leavetype.leaveTypeName}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
+          <a th:href="@{/admin/leavetype/delete/}+${leavetype.leaveTypeName}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a>
         </tr>
       </tbody>
     </table>

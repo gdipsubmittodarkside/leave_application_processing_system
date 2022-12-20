@@ -2,43 +2,66 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/layout.html :: html_head" />
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+
+
 <body>
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
-    <h3>compensation Request Detail</h3>
 
-    <table class="framed" th:object = "${compensationRequestDetail}">
+    <div id="main">
+        <h4>compensation Request Detail</h4>
+    </div>
+
+    <table class="table4" th:object = "${compensationRequestDetail}">
         <tr>
-            <td>Compensation Request Id</td>
+            <th><span>Compensation Request Id</span></th>
             <td th:utext = "*{compensationLeaveId}"></td>
         </tr>
         <tr>
-            <td>OT Start Time</td>
+            <th><span>OT Start Time</span></th>
             <td th:utext = "*{OTstartTime}"></td>
         </tr>
         <tr>
-            <td>OT End Date</td>
+            <th><span>OT End Date</span></th>
             <td th:utext = "*{OTendTime}"></td>
         </tr>
         <br>
         <tr>
-            <td>Description</td>
+            <th><span>Description</span></th>
             <td th:utext = "*{description}" ></td>
         </tr>
         <tr>
-            <td>Comment</td>
+            <th><span>Comment</span></th>
             <td th:utext = "*{comment}"></td>
         </tr>
         <tr>
-            <td>Status</td>
+            <th><span>Status</span></th>
             <td th:utext = "*{status}"></td>
+        </tr>
+        <tr>
+            <td></td>
+
         </tr>
 
     </table>
+
+    <br>
+
+</br>
+
+        <div style="text-align: center;">
+            <button type="submit" value="Back" onclick="history.back()">Return to Claim History</button>
+        </div>
     
-    <form>
-        <input type="button" value="Go Back" onclick="history.back()">
-    </form>
+   
 
     <div th:replace="fragments/layout.html :: footer" />
 </body>

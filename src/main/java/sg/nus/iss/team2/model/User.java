@@ -22,11 +22,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @NotBlank(message = "enter your username")
     @Column(name = "username")
     private String username;
 
-    @NotBlank(message = "enter your password")
     @Column(name = "password")
     private String password;
 

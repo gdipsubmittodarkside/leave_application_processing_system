@@ -20,6 +20,10 @@ public interface CompensationRequestService {
     void removeCompensationRequest(CompensationRequest compensationRequest);
 
     List<CompensationRequest> findRequestByTeam(List<Employee> team);
+        // applied, updated only
+
+    List<CompensationRequest> findTeamCompensationHistory(List<Employee> team);
+        // approved, rejected, cancelled only
 
     void updateCompReqAndLeaveBalance(CompensationRequest compensationRequest, String decision, String comment);
 

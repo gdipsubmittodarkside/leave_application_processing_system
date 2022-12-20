@@ -16,4 +16,7 @@ public interface CompensationRequestRepository extends JpaRepository<Compensatio
     
     @Query("SELECT c FROM CompensationRequest c WHERE c.employee.employeeId = :emp_id AND c.status IN ('APPLIED', 'UPDATED')")
     public List<CompensationRequest> findRequestByEmpId(Long emp_id);
+
+    @Query("SELECT c FROM CompensationRequest c WHERE c.employee.employeeId = :emp_id AND c.status IN ('APPROVED', 'CANCELLED', 'REJECTED')")
+    public List<CompensationRequest> findHistoryByEmpId(Long emp_id);
 }

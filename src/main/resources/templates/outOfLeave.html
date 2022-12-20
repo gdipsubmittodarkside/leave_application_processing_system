@@ -2,16 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/layout.html :: html_head" />
+    
 <body>
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
-    <h1>Out of Leave Balance</h1>
-    <p>You don't have enough balance leaves for this duration. Please resubmit with your available leave balance.</p>
 
-    <form>
-        <input type="button" value="Go Back" onclick="history.back()">
-    </form>
 
-    <div th:replace="fragments/layout.html :: footer" />
+        <h5><b>Insufficient Leave</b></h5>
+        <h5>You don't have enough balance leaves for this duration.</h5>
+        <h5>Please resubmit with your available leave balance.</h5>
+
+
+
+    <div style="text-align: center;">
+        <button type="submit" value="Back" onclick="history.back()">Return to Form</button>
+    </div>
+
 </body>
 </html>

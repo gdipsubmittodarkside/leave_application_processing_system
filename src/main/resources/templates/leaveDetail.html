@@ -2,47 +2,70 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/layout.html :: html_head" />
+
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+    
 <body>
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
-    <h3>Leave Details</h3>
 
-    <table class="framed" th:object = "${leaveDetail}">
+    <div id="main">
+        <h4>Leave Details</h4>
+    </div>
+
+    <!-- <table class="framed" th:object = "${leaveDetail}"> -->
+    <table class="table4" th:object = "${leaveDetail}">
+        
         <tr>
-            <td>Leave Id</td>
+            <th><span>Leave Id</span></th>
             <td th:utext = "*{leaveId}"></td>
         </tr>
         <tr>
-            <td>Start Date</td>
+            <th><span>Date</span> </th>
             <td th:utext = "*{startDate}"></td>
         </tr>
         <tr>
-            <td>End Date</td>
+            <th><span>End Date</span></th>
             <td th:utext = "*{endDate}"></td>
         </tr>
         <br>
         <tr>
-            <td>Leave Type</td>
+            <th><span>Leave Type</span></th>
             <td th:utext = "*{leaveType}"></td>
         </tr>
         <tr>
-            <td>Reason</td>
+            <th><span>Reason</span></th>
             <td th:utext = "*{reason}"></td>
         </tr>
         <tr>
-            <td>Status</td>
+            <th><span>Status</span></th>
             <td th:utext = "*{status}"></td>
         </tr>
         <tr>
-            <td>Comment</td>
+            <th><span>Comment</span></th>
             <td th:utext = "*{comment}"></td>
+        </tr>
+        <tr>
+            <td></td>
+
         </tr>
 
     </table>
 
-    <form>
-        <input type="button" value="Go Back" onclick="history.back()">
-    </form>
+    <br>
+
+</br>
+
+        <div style="text-align: center;">
+            <button type="submit" value="Back" onclick="history.back()">Return to Leave History</button>
+        </div>
     
    
 
