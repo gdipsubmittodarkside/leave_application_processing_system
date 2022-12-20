@@ -51,15 +51,15 @@ public class LeaveValidator implements Validator{
 
         if(startDate!=null && endDate!=null &&  startDate.compareTo(endDate) > 0){
 
-            errors.rejectValue("startDate","error.startDate","StartDate cannot be later than endDate.");
+            errors.rejectValue("startDate","error.startDate","Start Date cannot be later than end Date.");
         }
 
         if (startDate!=null && (startDate.getDayOfWeek().toString().equals("SUNDAY") || startDate.getDayOfWeek().toString().equals("SATURDAY"))){
-            errors.rejectValue("startDate","error.startDate2","Please choose working date only, Saturday and Sunday are not working date!");
+            errors.rejectValue("startDate","error.startDate2","Please choose working days only, Saturday and Sunday are not working days");
         }
 
         if (endDate!=null && (endDate.getDayOfWeek().toString().equals("SUNDAY") || endDate.getDayOfWeek().toString().equals("SATURDAY"))){
-            errors.rejectValue("endDate","error.endDate2","Please choose working date only, Saturday and Sunday are not working date!");
+            errors.rejectValue("endDate","error.endDate2","Please choose working days only, Saturday and Sunday are not working datys");
         }
         
        

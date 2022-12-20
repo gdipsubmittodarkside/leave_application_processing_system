@@ -33,6 +33,7 @@ import sg.nus.iss.team2.service.LeaveTypeService;
 import sg.nus.iss.team2.service.PublicHolidayService;
 import sg.nus.iss.team2.service.RoleService;
 import sg.nus.iss.team2.service.UserService;
+import sg.nus.iss.team2.validator.EmployeeValidator;
 import sg.nus.iss.team2.validator.LeaveTypeValidator;
 import sg.nus.iss.team2.validator.UserCreateValidator;
 
@@ -65,9 +66,17 @@ public class AdminController {
     @Autowired
     private LeaveTypeService leTyService;
 
+    @Autowired
+    private EmployeeValidator empValidator;
+
     @InitBinder("user")
     private void initUserBinder(WebDataBinder binder) {
         binder.addValidators(userCreateValidator);
+    }
+
+    @InitBinder("employee")
+    private void initEmployeeBinder(WebDataBinder binder) {
+        binder.addValidators(empValidator);
     }
 
     @Autowired
@@ -307,8 +316,11 @@ public class AdminController {
 
     @PostMapping("/leavetype/edit/{leaveTypeName}")
     public String editLeaveSave(@ModelAttribute @Valid LeaveType leaveType, BindingResult result,
-            @PathVariable String leaveTypeName) {
+            @PathVariable String leaveTypeName, Model model) {
         if (result.hasErrors()) {
+
+            model.addAttribute("leavetype", leTyService.findLeaveType(leaveTypeName));
+
             return "leavetype-edit";
         }
         leTyService.updateLeaveType(leaveType);

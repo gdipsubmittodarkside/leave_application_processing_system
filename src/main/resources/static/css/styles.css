@@ -102,16 +102,16 @@ frame {
 ul {
     margin: 0;
     padding: 0;
-    width:185px;
+    width:170px;
     list-style-type: none;
 }
 
 ul li a {
     text-decoration: none;
-    color: white;
-    padding: 10.5px 11px;
-    background-color: #002b55;
-    display:block;
+    color: #338;
+    padding: none;
+    background-color: white;
+    
 }
 
 ul li a:visited {

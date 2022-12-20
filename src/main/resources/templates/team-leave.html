@@ -1,16 +1,13 @@
 <!DOCTYPE html>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" th:src="@{/DataTable/jquery.min.js}" ></script>
+  <script type="text/javascript" th:src="@{/DataTable/datatables.min.js}" ></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/DataTable/datatables.min.css}"/>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout.html :: html_head"/>
-
-<link rel="stylesheet" 
-type="text/css" 
-href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
-
-<body>
-    <div th:replace="fragments/layout.html :: header"/>
-    <div th:replace="fragments/layout.html :: menu"/>
-
-<body>
+<head th:replace="fragments/layout.html :: html_head" />
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
     <body>
         <div class = "tabinator">
             <input type = "radio" id = "tab1" name = "tabs" checked>
@@ -94,13 +91,6 @@ href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
         </div>
 
     </div>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-     
-    <script 
-	type="text/javascript" 
-	src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js"></script>
     
     <script>
        // jquery pagination and search

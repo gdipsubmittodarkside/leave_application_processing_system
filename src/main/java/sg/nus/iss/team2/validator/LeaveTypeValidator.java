@@ -19,15 +19,15 @@ public class LeaveTypeValidator implements Validator {
         System.out.println(target);
         System.out.println("In side the Validation");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "leaveTypeName", "error.leavetype.leaveTypeName.empty",
-                "Leave Type Name Cannot be empty");
+                "Name of the Leave Type cannot be empty");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "leavePeriod", "error.leavetype.leavePeriod.empty",
-                "Leave Period Cannot be Empty");
+                "Leave Period cannot be empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.leavetype.description.empty",
-                "Description Cannot be empty");
+                "Description cannot be empty");
         LeaveType lt = (LeaveType) target;
         if (lt.getLeavePeriod() <= 0) {
-            errors.rejectValue("leavePeriod", "error.leavePeriod", "Leave Period Must bigger than 0");
+            errors.rejectValue("leavePeriod", "error.leavePeriod", "Leave period must be more than 0");
         }
     }
 }

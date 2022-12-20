@@ -24,7 +24,7 @@ public class RoleValidator  implements Validator {
         !rolename.equalsIgnoreCase("admin") &&
         !rolename.equalsIgnoreCase("staff") &&
         !rolename.equalsIgnoreCase("manager")) {
-            errors.rejectValue("roleName", "error.roleName","RoleName must be either admin/staff/manager");
+            errors.rejectValue("roleName", "error.roleName","Role name must be either admin/staff/manager");
         }
        }
 }
