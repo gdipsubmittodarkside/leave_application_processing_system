@@ -139,47 +139,50 @@ public class LeavingSystemApplication {
                                         LocalDate.parse("2022-09-11"),
                                         LeaveTypeEnum.ANNUAL, "JUST FOR HOT POT", LeaveStatusEnum.APPLIED, emp4);
 
-                        Leave leave8 = new Leave(LocalDate.parse("2022-08-10"),
-                                        LocalDate.parse("2022-09-11"),
-                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
-                        Leave leave9 = new Leave(LocalDate.parse("2022-08-10"),
-                                        LocalDate.parse("2022-08-11"),
-                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
-                        Leave leave10 = new Leave(LocalDate.parse("2022-12-30"),
-                                        LocalDate.parse("2022-12-31"),
-                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp5 );
-                        Leave leave11 = new Leave(LocalDate.parse("2023-01-16"),
-                                        LocalDate.parse("2023-02-10"),
-                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp5 );
-                        Leave leave12 = new Leave(LocalDate.parse("2022-10-10"),
-                                        LocalDate.parse("2022-10-11"),
-                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
-                        Leave leave13 = new Leave(LocalDate.parse("2022-09-10"),
-                                        LocalDate.parse("2022-09-11"),
-                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );                        
+                        LeaveType annual_admin = new LeaveType("annual_admin", 14, "This is admin break time");
+                        LeaveType medical = new LeaveType("medical", 60, "This is sick for rest");
 
-                        LeaveType annual_admin = new LeaveType("annual_admin", 14, "Admin annual leave");
-                        LeaveType medical = new LeaveType("medical", 60, "Medical certified leave");
+                        LeaveType annual_staff = new LeaveType("annual_staff", 18, "This is staff breaking time");
 
-                        LeaveType annual_staff = new LeaveType("annual_staff", 18, "Staff annual leave");
-
-                        LeaveBalance staff_balance = new LeaveBalance(annual_staff.getLeavePeriod(),
+                        LeaveBalance staff_balance_1 = new LeaveBalance(annual_staff.getLeavePeriod(),
                                         medical.getLeavePeriod(), 0.0);
-                        LeaveBalance admin_balance = new LeaveBalance(annual_admin.getLeavePeriod(),
+                        LeaveBalance admin_balance_1 = new LeaveBalance(annual_admin.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_2 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance admin_balance_2 = new LeaveBalance(annual_admin.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_3 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance admin_balance_3 = new LeaveBalance(annual_admin.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_4 = new LeaveBalance(annual_staff.getLeavePeriod(),
                                         medical.getLeavePeriod(), 0.0);
 
-                        emp1.setLeaveBalance(staff_balance);
-                        emp2.setLeaveBalance(staff_balance);
-                        emp3.setLeaveBalance(staff_balance);
-                        emp4.setLeaveBalance(staff_balance);
-                        emp5.setLeaveBalance(staff_balance);
-                        emp6.setLeaveBalance(staff_balance);
-                        emp7.setLeaveBalance(staff_balance);
-                        emp8.setLeaveBalance(staff_balance);
-                        emp9.setLeaveBalance(staff_balance);
-                        emp10.setLeaveBalance(admin_balance);
-                        emp11.setLeaveBalance(admin_balance);
-                        emp12.setLeaveBalance(admin_balance);
+                        LeaveBalance staff_balance_5 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_6 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_7 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_8 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+                        LeaveBalance staff_balance_9 = new LeaveBalance(annual_staff.getLeavePeriod(),
+                                        medical.getLeavePeriod(), 0.0);
+
+
+                        emp1.setLeaveBalance(staff_balance_1);
+                        emp2.setLeaveBalance(staff_balance_2);
+                        emp3.setLeaveBalance(staff_balance_3);
+                        emp4.setLeaveBalance(staff_balance_4);
+                        emp5.setLeaveBalance(staff_balance_5);
+                        emp6.setLeaveBalance(staff_balance_6);
+                        emp7.setLeaveBalance(staff_balance_7);
+                        emp8.setLeaveBalance(staff_balance_8);
+                        emp9.setLeaveBalance(staff_balance_9);
+                        emp10.setLeaveBalance(admin_balance_1);
+                        emp11.setLeaveBalance(admin_balance_2);
+                        emp12.setLeaveBalance(admin_balance_3);
 
                         CompensationRequest cr1 = new CompensationRequest(LocalDateTime.parse("2022-12-12T17:30:00"),
                                         LocalDateTime.parse("2022-12-12T21:30:00"), LeaveStatusEnum.APPLIED, emp2);
@@ -187,33 +190,44 @@ public class LeavingSystemApplication {
                                         LocalDateTime.parse("2022-12-13T22:30:00"), LeaveStatusEnum.APPROVED, emp4);
                         CompensationRequest cr3 = new CompensationRequest(LocalDateTime.parse("2022-12-14T14:30:00"),
 
-                                        LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.APPLIED, emp5);
+                                        LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.UPDATED, emp12);
                         CompensationRequest cr4 = new CompensationRequest(LocalDateTime.parse("2022-12-15T12:30:00"),
                                         LocalDateTime.parse("2022-12-15T20:45:00"), LeaveStatusEnum.APPROVED, emp4);
                         CompensationRequest cr5 = new CompensationRequest(LocalDateTime.parse("2022-12-16T18:30:00"),
                                         LocalDateTime.parse("2022-12-16T20:30:00"), LeaveStatusEnum.UPDATED, emp12);
                         emp1.setCompensationRequests(Arrays.asList(cr1, cr2, cr3));
-                        emp2.setCompensationRequests(Arrays.asList(cr2,cr4));
-                        emp3.setCompensationRequests(Arrays.asList(cr3,cr5));
+                        emp2.setCompensationRequests(Arrays.asList(cr2));
+                        emp3.setCompensationRequests(Arrays.asList(cr3));
                         emp4.setCompensationRequests(Arrays.asList(cr1));
-                        emp5.setCompensationRequests(Arrays.asList(cr2,cr3));
-                        emp11.setCompensationRequests(Arrays.asList(cr3,cr5));
+                        emp5.setCompensationRequests(Arrays.asList(cr2));
+                        emp11.setCompensationRequests(Arrays.asList(cr3));
                         emp12.setCompensationRequests(Arrays.asList(cr3));
 
-                        leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance, admin_balance));
+                        leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance_1, 
+                        staff_balance_2,
+                        staff_balance_3,
+                        staff_balance_4,
+                        staff_balance_5,
+                        staff_balance_6,
+                        staff_balance_7,
+                        staff_balance_8,
+                        staff_balance_9,
+                        admin_balance_1,
+                        admin_balance_2,
+                        admin_balance_3));
                         roleRepository.saveAll(Arrays.asList(admin, staff, manager));
                         leaveTypeRepo.saveAllAndFlush(Arrays.asList(annual_admin, annual_staff, medical));
                         userRepository.saveAllAndFlush(Arrays.asList(staff1, staff2, staff3, staff4, staff5, staff6,
                                         staff7, staff8, staff9, staff10, staff11, staff12));
                         empRepo.saveAllAndFlush(Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9,
                                         emp10, emp11, emp12));
-                        compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1, cr2, cr3,cr4,cr5));
+                        compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1, cr2, cr3));
                         leaveRepository.saveAllAndFlush(
-                                        Arrays.asList(leave1,leave2,leave3,leave4,leave5,leave6,leave7,leave8,leave9,leave10,leave11,leave12,leave13));
+                                        Arrays.asList(leave1, leave2, leave3, leave4, leave5, leave6, leave7));
                         pubService.saveAll(api.getPublicHoliday("2022"));
                         pubService.saveAll(api.getPublicHoliday("2023"));
                 };
-        }
+                }
 
 
     @Bean
