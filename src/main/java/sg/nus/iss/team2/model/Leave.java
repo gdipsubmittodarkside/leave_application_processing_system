@@ -30,7 +30,7 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "leave")
+@Table(name = "leave_request")    //need to change to _request for MySQL to create table
 @Getter
 @Setter
 @NoArgsConstructor
