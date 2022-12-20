@@ -28,10 +28,10 @@
             <input type = "radio" id = "tab1" name = "tabs" checked>
             <label for = "tab1">Leave History</label>
             <input type = "radio" id = "tab2" name = "tabs">
-            <label for = "tab2">Approve Claims</label>
+            <label for = "tab2">Claims History</label>
             <div id = "content1">
                 <div>
-                    <h4>Leave History <a th:href="@{/manager/exportLeaveHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
+                    <h4>My Team's Leave History <a th:href="@{/manager/exportLeaveHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
                 </div>
 
         <div th:if="${#lists.isEmpty(teamLeaves)}">
@@ -70,7 +70,7 @@
 
     <div id = "content2">
         <div>
-            <h4>Compensation History<a th:href="@{/manager/exportCompHistcsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
+            <h4>My Team's Compensation History<a th:href="@{/manager/exportCompHistcsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
 
         </div>
 

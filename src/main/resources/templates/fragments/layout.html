@@ -13,55 +13,55 @@
 <body>
     <div th:fragment="menu" id="menu">
         <nav class="navbar">
-            <a th:href="@{/staff/viewLeave}"><b>LAPS</b></a>
-            <a th:href="@{/home}">Home</a>
+            <a th:href="@{/staff/viewLeave}"><b>L A P S</b></a>
+            <!-- <a th:text="${session.userSession.username}"></a> -->
+            <!-- <a th:href="@{/home}">Home</a> -->
             <a th:href="@{/about}">About</a>
-            <!-- <a th:href="@{/manager/pending}">Manager</a> -->
-
-            <!-- you need write validation -->
-            <div>
-                <div class="subnav">
-                    <button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
-                    <div class="subnav-content">
-                        <a th:href="@{/manager/pending}">Pending Leaves & Claims</a>
-                        <a th:href="@{/manager/team-leave}">Past Approvals</a>
+            
+            <div th:if="${session.userSession?.roles}">
+            <div th:each="role : ${session.userSession.roles}">
+                <div th:if="${role.roleName == 'manager'}">
+                    <div class="subnav">
+                        <button class="subnavbtn">Manager<i class="fa fa-caret-down"></i></button>
+                        <div class="subnav-content">
+                            <a th:href="@{/manager/pending}">Pending Leaves & Claims</a>
+                            <a th:href="@{/manager/team-leave}">Past Approvals</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- you need write validation -->
-            <div>
-                <div class="subnav">
-                    <button class="subnavbtn">Staff Menu <i class="fa fa-caret-down"></i></button>
-                    <div class="subnav-content">
-                        <a th:href="@{/staff/leave/new }">Apply Leave</a>
-                        <a th:href="@{/staff/compensation/claimLeave }">Apply Compensation Claim</a>
-                        <a th:href="@{/staff/viewLeave }">Leave & Claim History</a>
+                <div th:if="${role.roleName == 'staff'}">
+                    <div class="subnav">
+                        <button class="subnavbtn">Staff <i class="fa fa-caret-down"></i></button>
+                        <div class="subnav-content">
+                            <a th:href="@{/staff/leave/new }">Apply Leave</a>
+                            <a th:href="@{/staff/compensation/claimLeave }">Apply Compensation Claim</a>
+                            <a th:href="@{/staff/viewLeave }">Leave & Claim History</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- you need write validation -->
-            <div>
-                <div class="subnav">
-                    <button class="subnavbtn">Admin Menu <i class="fa fa-caret-down"></i></button>
-                    <div class="subnav-content">
-                        <a th:href="@{/admin/leavetype/list}" 
-                        th:utext="#{menu.admin.leavetypelist}">Manage Leave Type</a>
-                        <a th:href="@{/admin/employee/list}"
-                        th:utext="#{menu.admin.emplist}">Manage Employee</a>
-                        <a th:href="@{/admin/user/list}"
-                        th:utext="#{menu.admin.ulist}">Manage User</a>
-                        <a th:href="@{/admin/holidays/list}"
-                        th:utext="#{menu.admin.publist}">Manage Public Holiday</a>
+                <div th:if="${role.roleName == 'admin'}">
+                    <div class="subnav">
+                        <button class="subnavbtn">Admin <i class="fa fa-caret-down"></i></button>
+                        <div class="subnav-content">
+                            <a th:href="@{/admin/leavetype/list}" 
+                            th:utext="#{menu.admin.leavetypelist}">Manage Leave Type</a>
+                            <a th:href="@{/admin/employee/list}"
+                            th:utext="#{menu.admin.emplist}">Manage Employee</a>
+                            <a th:href="@{/admin/user/list}"
+                            th:utext="#{menu.admin.ulist}">Manage User</a>
+                            <a th:href="@{/admin/holidays/list}"
+                            th:utext="#{menu.admin.publist}">Manage Public Holiday</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <a th:href="@{/logout}">Logout</a>
+            </div>
         </nav>
     </div>
 
-    <!-- you need to write some validation -->
     <div th:fragment="header">
     </div>
 
