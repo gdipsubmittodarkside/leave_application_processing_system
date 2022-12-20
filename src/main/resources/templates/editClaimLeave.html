@@ -2,16 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/layout.html :: html_head" />
-<body>
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+
+
+<body onload="set_time()">
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
-    <h3>Compensational Leave Claiming Form</h3>
     
-    <form action="#" th:action="@{/staff/compensation/edit/{id}(id=${compensation.compensationLeaveId})}"
-        th:object="${compensation}" method="post">
-
-        <table class="framed" >
-
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-lg-6 col-sm-6 container justify-content-center card">
+                
+                <div id="main">
+                    <h4>Edit Compensation Claim Form</h4>
+                </div>
+    
+                <table class = "table4">
+        <form action="#" th:action="@{/staff/compensation/edit/{id}(id=${compensation.compensationLeaveId})}"
+            th:object="${compensation}" method="post">
             
             <tr>
                 <th>Request Id</th>
@@ -36,16 +51,13 @@
                 <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>
             </tr>
             
-            <tr><td>
-                <input type="submit" value="Update" class="blcass" />
-                <input type="reset" value="Reset" class="blcass" />
-            </td></tr>
+            <tr>
+                <td></td><td><button type="submit">Submit</button><button type="reset">Reset</button></td>
+            </td>
             
         </table>
 
     </form>
-
-    <div th:replace="fragments/layout.html :: footer" />
 </body>
 </html>
 

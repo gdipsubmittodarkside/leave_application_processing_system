@@ -2,15 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/layout.html :: html_head" />
+
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+    
 <body>
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
-    <h1>Outdated Leave</h1>
-    <p>You cannot edit or cancle this leave as it is already outdated.</p>
 
-    <form>
-        <input type="button" value="Go Back" onclick="history.back()">
-    </form>
+    <h5><b>Outdated Leave</b></h5>
+        <h5>You can no longer edit or cancel this leave as it is already outdated.</h5>
+
+    <div style="text-align: center;">
+        <button type="submit" value="Back" onclick="history.back()">Return to Form</button>
+    </div>
 
     <div th:replace="fragments/layout.html :: footer" />
 </body>

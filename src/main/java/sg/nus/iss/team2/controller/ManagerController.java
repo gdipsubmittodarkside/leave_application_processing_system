@@ -1,3 +1,5 @@
+// yt updated 19th Dec 9pm
+
 package sg.nus.iss.team2.controller;
 
 import java.time.LocalDate;
@@ -52,14 +54,17 @@ public class ManagerController {
         return empService.findSubordinates(managerId);
     }
 
-    // View Employees' Leave History
+    // View Employees' Leave History 
     @GetMapping("/team-leave")
     public String ViewTeamLeaveHistory(Model model){
         List<Employee> team = FindEmployeesUnderManager();
+        
         List<Leave> teamLeaves = leaveService.findTeamLeaveHistory(team);
-            // only: approved, withdraw, rejected 
+        List<CompensationRequest> compHistory = compRequestService.findTeamCompensationHistory(team);
 
+        model.addAttribute("compHistory", compHistory);
         model.addAttribute("teamLeaves", teamLeaves);
+
         return "team-leave";
     }
 

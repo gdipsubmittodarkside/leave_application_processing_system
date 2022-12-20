@@ -88,6 +88,24 @@ public class CompensationRequestServiceImpl implements CompensationRequestServic
 
     @Override
     @Transactional
+    public List<CompensationRequest> findTeamCompensationHistory(List<Employee> team){
+        List<CompensationRequest> teamCompHistory = new ArrayList<CompensationRequest>();
+        
+        for (Employee e : team){
+            Long emp_id = e.getEmployeeId();
+            List<CompensationRequest> compHistory = crr.findHistoryByEmpId(emp_id);
+            if (compHistory != null || !compHistory.isEmpty()){
+                for (CompensationRequest c : compHistory){
+                    teamCompHistory.add(c);
+                }
+            }
+        }
+        
+        return teamCompHistory;
+    }
+
+    @Override
+    @Transactional
     public void updateCompReqAndLeaveBalance(CompensationRequest compensationRequest, String decision, String comment){
         
         if (comment!=null)

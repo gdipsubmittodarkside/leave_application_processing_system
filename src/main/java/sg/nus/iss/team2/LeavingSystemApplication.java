@@ -61,18 +61,18 @@ public class LeavingSystemApplication {
                         EmployeeRepository empRepo) {
                 return (args) -> {
 
-                        Employee emp1 = new Employee("Kaung1", "exsiting", 1);
-                        Employee emp2 = new Employee("Kaung2", "exsiting", 1);
-                        Employee emp3 = new Employee("Kaung3", "exsiting", 2);
-                        Employee emp4 = new Employee("Kaung4", "exsiting", 1);
-                        Employee emp5 = new Employee("Kaung5", "exsiting", 2);
-                        Employee emp6 = new Employee("Kaung6", "exsiting", 1);
-                        Employee emp7 = new Employee("Kaung7", "exsiting", 2);
-                        Employee emp8 = new Employee("Kaung8", "exsiting", 2);
-                        Employee emp9 = new Employee("Kaung9", "exsiting", 1);
-                        Employee emp10 = new Employee("Kaung10", "exsiting", 2);
-                        Employee emp11 = new Employee("Kaung11", "exsiting", 2);
-                        Employee emp12 = new Employee("Kaung12", "exsiting", 1);
+                        Employee emp1 = new Employee("Kaung1", "existing", 1);
+                        Employee emp2 = new Employee("Kaung2", "existing", 1);
+                        Employee emp3 = new Employee("Kaung3", "existing", 2);
+                        Employee emp4 = new Employee("Kaung4", "existing", 1);
+                        Employee emp5 = new Employee("Kaung5", "existing", 2);
+                        Employee emp6 = new Employee("Kaung6", "existing", 1);
+                        Employee emp7 = new Employee("Kaung7", "existing", 2);
+                        Employee emp8 = new Employee("Kaung8", "existing", 2);
+                        Employee emp9 = new Employee("Kaung9", "existing", 1);
+                        Employee emp10 = new Employee("Kaung10", "existing", 2);
+                        Employee emp11 = new Employee("Kaung11", "existing", 2);
+                        Employee emp12 = new Employee("Kaung12", "existing", 1);
 
                         User staff1 = new User("Kaung", "a123", LocalDate.now());
                         User staff2 = new User("Yun", "a123", LocalDate.now().plusDays(1));
@@ -139,10 +139,29 @@ public class LeavingSystemApplication {
                                         LocalDate.parse("2022-09-11"),
                                         LeaveTypeEnum.ANNUAL, "JUST FOR HOT POT", LeaveStatusEnum.APPLIED, emp4);
 
-                        LeaveType annual_admin = new LeaveType("annual_admin", 14, "This is admin break time");
-                        LeaveType medical = new LeaveType("medical", 60, "This is sick for rest");
+                        Leave leave8 = new Leave(LocalDate.parse("2022-08-10"),
+                                        LocalDate.parse("2022-09-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+                        Leave leave9 = new Leave(LocalDate.parse("2022-08-10"),
+                                        LocalDate.parse("2022-08-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+                        Leave leave10 = new Leave(LocalDate.parse("2022-12-30"),
+                                        LocalDate.parse("2022-12-31"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp5 );
+                        Leave leave11 = new Leave(LocalDate.parse("2023-01-16"),
+                                        LocalDate.parse("2023-02-10"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp5 );
+                        Leave leave12 = new Leave(LocalDate.parse("2022-10-10"),
+                                        LocalDate.parse("2022-10-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+                        Leave leave13 = new Leave(LocalDate.parse("2022-09-10"),
+                                        LocalDate.parse("2022-09-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );                        
 
-                        LeaveType annual_staff = new LeaveType("annual_staff", 18, "This is staff breaking time");
+                        LeaveType annual_admin = new LeaveType("annual_admin", 14, "Admin annual leave");
+                        LeaveType medical = new LeaveType("medical", 60, "Medical certified leave");
+
+                        LeaveType annual_staff = new LeaveType("annual_staff", 18, "Staff annual leave");
 
                         LeaveBalance staff_balance = new LeaveBalance(annual_staff.getLeavePeriod(),
                                         medical.getLeavePeriod(), 0.0);
@@ -168,17 +187,17 @@ public class LeavingSystemApplication {
                                         LocalDateTime.parse("2022-12-13T22:30:00"), LeaveStatusEnum.APPROVED, emp4);
                         CompensationRequest cr3 = new CompensationRequest(LocalDateTime.parse("2022-12-14T14:30:00"),
 
-                                        LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.UPDATED, emp12);
+                                        LocalDateTime.parse("2022-12-14T20:30:00"), LeaveStatusEnum.APPLIED, emp5);
                         CompensationRequest cr4 = new CompensationRequest(LocalDateTime.parse("2022-12-15T12:30:00"),
                                         LocalDateTime.parse("2022-12-15T20:45:00"), LeaveStatusEnum.APPROVED, emp4);
                         CompensationRequest cr5 = new CompensationRequest(LocalDateTime.parse("2022-12-16T18:30:00"),
                                         LocalDateTime.parse("2022-12-16T20:30:00"), LeaveStatusEnum.UPDATED, emp12);
                         emp1.setCompensationRequests(Arrays.asList(cr1, cr2, cr3));
-                        emp2.setCompensationRequests(Arrays.asList(cr2));
-                        emp3.setCompensationRequests(Arrays.asList(cr3));
+                        emp2.setCompensationRequests(Arrays.asList(cr2,cr4));
+                        emp3.setCompensationRequests(Arrays.asList(cr3,cr5));
                         emp4.setCompensationRequests(Arrays.asList(cr1));
-                        emp5.setCompensationRequests(Arrays.asList(cr2));
-                        emp11.setCompensationRequests(Arrays.asList(cr3));
+                        emp5.setCompensationRequests(Arrays.asList(cr2,cr3));
+                        emp11.setCompensationRequests(Arrays.asList(cr3,cr5));
                         emp12.setCompensationRequests(Arrays.asList(cr3));
 
                         leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance, admin_balance));
@@ -188,9 +207,9 @@ public class LeavingSystemApplication {
                                         staff7, staff8, staff9, staff10, staff11, staff12));
                         empRepo.saveAllAndFlush(Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9,
                                         emp10, emp11, emp12));
-                        compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1, cr2, cr3));
+                        compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1, cr2, cr3,cr4,cr5));
                         leaveRepository.saveAllAndFlush(
-                                        Arrays.asList(leave1, leave2, leave3, leave4, leave5, leave6, leave7));
+                                        Arrays.asList(leave1,leave2,leave3,leave4,leave5,leave6,leave7,leave8,leave9,leave10,leave11,leave12,leave13));
                         pubService.saveAll(api.getPublicHoliday("2022"));
                         pubService.saveAll(api.getPublicHoliday("2023"));
                 };

@@ -1,44 +1,136 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head"/>
+
+<link rel="stylesheet" 
+type="text/css" 
+href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
+
 <body>
     <div th:replace="fragments/layout.html :: header"/>
     <div th:replace="fragments/layout.html :: menu"/>
-<head>
-    <title>My Team Leave Detail</title>
-</head>
 
 <body>
-    <div>
-        <h2>My Team Leave Detail</h2>
+    <body>
+        <div class = "tabinator">
+            <input type = "radio" id = "tab1" name = "tabs" checked>
+            <label for = "tab1">Leave History</label>
+            <input type = "radio" id = "tab2" name = "tabs">
+            <label for = "tab2">Approve Claims</label>
+                <!-- <label for = "tab3"><a th:href="@{/admin/holidays/export/csv}">Generate Report</span></a></label> -->
+            <div id = "content1">
+                <div>
+                    <h4>Leave History</h4>
+                </div>
+
+        <div th:if="${#lists.isEmpty(teamLeaves)}">
+            <p>No team leave history to show.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(teamLeaves)}">
+            <table class="table1" id="leave-table">
+                <thead>
+                    <tr>
+                        <th>Leave Id</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Leave Type</th>
+                        <th>Reason</th> 
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="leave:${teamLeaves}">
+                        <td th:text="${leave.leaveId}"></td>
+                        <td th:text="${leave.employee.name}"></td>
+                        <td th:text="${leave.startDate}"></td>
+                        <td th:text="${leave.endDate}"></td>
+                        <td th:text="${leave.leaveType}"></td>
+                        <td th:text="${leave.reason}"></td>
+                        <td th:text="${leave.status}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div th:if="${#lists.isEmpty(teamLeaves)}">
-        <p>No team leave history to show.</p>
+    <div id = "content2">
+        <div>
+            <h4>Compensation History</h4>
+        </div>
+
+        <div th:if="${#lists.isEmpty(compHistory)}">
+            <p>No team compensation history to show.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(compHistory)}">
+            <table class="table1" id="compensation-table">
+                <thead>
+                    <tr>
+                        <th>Compensation Id</th>
+                        <th>Name</th>
+                        <th>OT Start Date</th>
+                        <th>OT End Date</th>
+                        <th>Description</th> 
+                        <th>Status</th>
+                        <th>Manager Comments</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="comp:${compHistory}">
+                        <td th:text="${comp.compensationLeaveId}"></td>
+                        <td th:text="${comp.employee.name}"></td>
+                        <td th:text="${comp.OTstartTime}"></td>
+                        <td th:text="${comp.OTendTime}"></td>
+                        <td th:text="${comp.description}"></td>
+                        <td th:text="${comp.status}"></td>
+                        <td th:text="${comp.comment}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
-    <div th:if="${not #lists.isEmpty(teamLeaves)}">
-        <table border="1">
-            <tr>
-                <th>Leave Id</th>
-                <th>Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Leave Type</th>
-                <th>Reason</th> 
-                <th>Status</th>
-                    <!--Reason may be too long, maybe need click into "Details" button and put reason there-->
-            </tr>
-            <tr th:each="leave:${teamLeaves}">
-                <td th:text="${leave.leaveId}"></td>
-                <td th:text="${leave.employee.name}"></td>
-                <td th:text="${leave.startDate}"></td>
-                <td th:text="${leave.endDate}"></td>
-                <td th:text="${leave.leaveType}"></td>
-                <td th:text="${leave.reason}"></td>
-                <td th:text="${leave.status}"></td>
-            </tr>
-        </table>
-    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+     
+    <script 
+	type="text/javascript" 
+	src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js"></script>
+    
+    <script>
+       // jquery pagination and search
+       $(document).ready(function(){
+			$("#leave-table").DataTable({
+        "pageLength": 5,
+        "lengthMenu": [ 5, 10, 15, 20, 25, -1 ]
+      });	
+		})
+
+
+        $(document).ready(function(){
+                $("#compensation-table").DataTable({
+            "pageLength": 5,
+            "lengthMenu": [ 5, 10, 15, 20, 25, -1]
+        });
+            })
+
+        // navigation tabs
+        function openView(view){
+            var i;
+            var x = document.getElementsByClassName("team-history");
+            
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+            }
+            document.getElementById(view).style.display = "block";
+        }
+    </script>
+
+    <div th:replace="fragments/layout.html :: footer" />
 </body>
 </html>

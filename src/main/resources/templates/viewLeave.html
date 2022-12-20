@@ -1,92 +1,105 @@
 <!DOCTYPE html>
+<!-- For Jquery -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+  crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" 
+  type="text/css" 
+  href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head" />
 <body onload="openView('view-leave')">
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
-    
-    <div class="nav-tab">
-        <button class="nav-tab-button" onclick="openView('view-leave')"><b>Leave History</b></button>
-        <button class="nav-tab-button" onclick="openView('view-claim')"><b>Claim History</b></button>
-      </div>
 
-    <div id="view-leave" class="staff-view">
-        <h3>Personal Leave Detail</h3>
-        
-            <table class="framed" >
-                <tr>
-                    <th>Leave Id</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Leave Type</th>
-                    <th>Reason</th>
-                    <th>Status</th>
-                    <th>Manage Leave</th>
-                    <th>Leave Details</th>
-                </tr>
-                <tr th:each = "leave : ${leaves}" >  
-                    <td th:utext = "${leave.leaveId}">Id</td>
-                    <td th:utext = "${leave.startDate}">Start Date</td>
-                    <td th:utext = "${leave.endDate}">End Date</td>
-                    <td th:utext = "${leave.leaveType}">Leave Type</td>
-                    <td th:utext = "${leave.reason}">Reason</td>
-                    <td th:utext = "${leave.status}">Status</td>
-                    
-                <td>
-                    <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.status.name() != 'APPROVED'} and ${leave.startDate.isAfter(todayDate)}">
-                        <a th:href="@{/staff/leave/edit/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
-                    </span>
-                    <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.startDate.isAfter(todayDate)}">
-                        <a th:href="@{/staff/delete/{id}(id=${leave.leaveId})}" class="btn btn-danger btn-sm mb-1">Cancel</a>
-                    </span>
-                </td>
 
-                <td>
-                    <a th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}" class="btn btn-primary btn-sm mb-1">Detail</a>
-                </td>
+    <div class = "tabinator">
+        <input type = "radio" id = "tab1" name = "tabs" checked>
+        <label for = "tab1">Personal Leave Detail</label>
+        <input type = "radio" id = "tab2" name = "tabs">
+        <label for = "tab2">Claim History</label>
+        <label for = "tab3"><a th:href="@{/staff/leave/new }">Apply Leave</span></a></label>
+        <label for = "tab4"><a th:href="@{/staff/compensation/claimLeave }">Apply Compensation Claim</span></a></label>
+        <div id = "content1">
+            <div>
+                <h4>Leave History</h4>
+            </div>
 
-                </tr>
-                
+            <table class="table1" id="staff-leave-table">
+                <thead>
+                    <tr>
+                        <th>Leave Id</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Leave Type</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Manage Leave</th>
+                        <th>Leave Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each = "leave : ${leaves}" >  
+                        <td th:utext = "${leave.leaveId}">Id</td>
+                        <td th:utext = "${leave.startDate}">Start Date</td>
+                        <td th:utext = "${leave.endDate}">End Date</td>
+                        <td th:utext = "${leave.leaveType}">Leave Type</td>
+                        <td th:utext = "${leave.reason}">Reason</td>
+                        <td th:utext = "${leave.status}">Status</td>
+                        <td>
+                            <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.status.name() != 'APPROVED'} and ${leave.startDate.isAfter(todayDate)}">
+                                <a th:href="@{/staff/leave/edit/{id}(id=${leave.leaveId})}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
+                            </span>
+                            <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.startDate.isAfter(todayDate)}">
+                                <a th:href="@{/staff/delete/{id}(id=${leave.leaveId})}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a>
+                            </span>
+                        </td>
+                        <td>
+                            <a style="color: white" th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}"><button type="submit" value="Details">DETAILS</a>
+                        </td>
+
+                    </tr>
+                </tbody>
                 
             </table>
-            <br><br>
-            <h4><a th:href="@{/staff/leave/new }"> >>>>> Take Leave <<<<< </a></h4>
-            <br><br>
     </div>
 
-    <div id="view-claim" class="staff-view">
-        <h3>Leave Claiming History </h3>
+    <div id = "content2">
+        <h4>View Claim History </h4>
     
-        <table class="framed" >
-            <tr>
-                <th>Claim Id</th>
-                <th>OT Start Date</th>
-                <th>OT End Date</th>
-                <th>Status</th>
-                <th>Manage Request</th>
-                <th>Detail</th>
-            </tr>
-            <tr th:each = "cr : ${crReq}" >  
-                <td th:utext = "${cr.compensationLeaveId}">Id</td>
-                <td th:utext = "${cr.OTstartTime}">Start Date</td>
-                <td th:utext = "${cr.OTendTime}">End Date</td>
-                <td th:utext = "${cr.status}">Status</td>
-                <td>
-                    <span th:if="${cr.status.name() != 'CANCELLED'} and ${cr.status.name() != 'REJECTED'} and ${cr.status.name() != 'APPROVED'}">
-                        <a th:href="@{/staff/compensation/edit/{id}(id=${cr.compensationLeaveId})}" class="btn btn-primary btn-sm mb-1">Update</a>
-                        <a th:href="@{/staff/compensation/cancel/{id}(id=${cr.compensationLeaveId})}" class="btn btn-danger btn-sm mb-1">Cancel</a>
-                    </span>
-                </td>
-                <td>
-                    <a th:href="@{/staff/compensationRequestDetail/{id}(id=${cr.compensationLeaveId})}" class="btn btn-primary btn-sm mb-1">Detail</a>
-                </td>
-            </tr>
-            
+        <table class="table1" id="staff-claim-table">
+            <thead>
+                <tr>
+                    <th>Claim Id</th>
+                    <th>OT Start Date</th>
+                    <th>OT End Date</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Manage Claim Request</th>
+                    <th>Claim Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each = "cr : ${crReq}" >  
+                    <td th:utext = "${cr.compensationLeaveId}">Id</td>
+                    <td th:utext = "${cr.OTstartTime}">Start Date</td>
+                    <td th:utext = "${cr.OTendTime}">End Date</td>
+                    <td th:utext = "${cr.description}">Reason</td>
+                    <td th:utext = "${cr.status}">Status</td>
+                    <td>
+                        <span th:if="${cr.status.name() != 'CANCELLED'} and ${cr.status.name() != 'REJECTED'} and ${cr.status.name() != 'APPROVED'}">
+                            <a th:href="@{/staff/compensation/edit/{id}(id=${cr.compensationLeaveId})}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
+                            <a th:href="@{/staff/compensation/cancel/{id}(id=${cr.compensationLeaveId})}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a>
+                        </span>
+                    </td>
+                    <td>
+                        <a style="color: white" th:href="@{/staff/compensationRequestDetail/{id}(id=${cr.compensationLeaveId})}"><button type="submit" value="Details">DETAILS</a>
+                    </td>
+                </tr>
+            </tbody>
         </table>
-
-        <br><br>
-        <h4><a th:href="@{/staff/compensation/claimLeave }"> >>>>> Calim compensation Leave <<<<< </a></h4>
-        <br><br>
     </div>
 
     <script>
@@ -100,9 +113,28 @@
           document.getElementById(view).style.display = "block";  
         }
     </script>
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script 
+	type="text/javascript" 
+	src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#staff-claim-table").DataTable({
+        "pageLength": 5,
+        "lengthMenu": [ 5, 10, 15, 20, 25]
+      });
+			
+		})
+	</script>
+    <script>
+		$(document).ready(function(){
+			$("#staff-leave-table").DataTable({
+        "pageLength": 5,
+        "lengthMenu": [ 5, 10, 15, 20, 25, -1 ]
+      });
+			
+		})
+	</script>
     <div th:replace="fragments/layout.html :: footer" />
 </body>
 </html>

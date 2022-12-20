@@ -1,23 +1,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="html_head" id="html_head" >
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
-    >
     <meta charset="UTF-8">
-
     <title>Employee Leave System</title>
-
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
-    <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
+    <!-- <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/> -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 </head>
 
 <body>
     <div th:fragment="menu" id="menu">
         <nav class="navbar">
-            <a th:href="@{/staff/viewLeave}">Employee Leave System</a>
-            <a th:href="@{/}">Home</a>
-            <a th:href="@{/}">About</a>
+            <a th:href="@{/staff/viewLeave}"><b>LAPS</b></a>
+            <a th:href="@{/home}">Home</a>
+            <a th:href="@{/about}">About</a>
+            <!-- <a th:href="@{/manager/pending}">Manager</a> -->
 
             <!-- you need write validation -->
             <div>
@@ -35,8 +34,8 @@
                 <div class="subnav">
                     <button class="subnavbtn">Staff Menu <i class="fa fa-caret-down"></i></button>
                     <div class="subnav-content">
-                        <a th:href="@{/staff/leave/new }">Take Leave</a>
-                        <a th:href="@{/staff/compensation/claimLeave }">Calim compensation Leave</a>
+                        <a th:href="@{/staff/leave/new }">Apply Leave</a>
+                        <a th:href="@{/staff/compensation/claimLeave }">Claim Compensation Leave</a>
                         <a th:href="@{/staff/viewLeave }">Leave & Claim History</a>
                     </div>
                 </div>
@@ -55,7 +54,6 @@
                         th:utext="#{menu.admin.ulist}">Manage User</a>
                         <a th:href="@{/admin/holidays/list}"
                         th:utext="#{menu.admin.publist}">Manage Public Holiday</a>
-
                     </div>
                 </div>
             </div>
@@ -68,8 +66,8 @@
     </div>
 
 
-    <div th:fragment="footer">
-        &copy; 2022 Footer
+    <div class="footer-content" th:fragment="footer">
+        &copy; 2022 All rights reserved.
     </div>
 </body>
 
