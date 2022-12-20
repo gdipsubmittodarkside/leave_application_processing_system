@@ -2,8 +2,11 @@
 
 package sg.nus.iss.team2.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.iss.team2.model.*;
+import sg.nus.iss.team2.reporting.FilesExporter;
 import sg.nus.iss.team2.service.*;
 import sg.nus.iss.team2.validator.ApproveValidator;
 
@@ -41,6 +45,9 @@ public class ManagerController {
 
     @Autowired
     private ApproveValidator approveValidator;
+
+    @Autowired
+    private FilesExporter export;
 
     @InitBinder("approve")
 	private void initCourseBinder(WebDataBinder binder) { 
@@ -110,6 +117,20 @@ public class ManagerController {
         model.addAttribute("approve", new Approve());
 
         return "manager-leave-detail";
+    }
+
+    @GetMapping("/exportLeaveHiscsv")
+    public void exportLeaveHistCSV(HttpServletResponse response) throws IOException{
+        List<Employee> team = FindEmployeesUnderManager();
+        List<Leave> leaveHis = leaveService.findTeamLeaveHistory(team);
+        export.exportLeaveHisToCSV(leaveHis, response);
+    }
+
+    @GetMapping("/exportCompHistcsv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        List<Employee> team = FindEmployeesUnderManager();
+        List<CompensationRequest> comHistory = compRequestService.findTeamCompensationHistory(team);
+        export.exportCompensationHisToCSV(comHistory, response);
     }
 
     // After Manager clicks "approve" or "reject" Leave

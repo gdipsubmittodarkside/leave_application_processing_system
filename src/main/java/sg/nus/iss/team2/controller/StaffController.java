@@ -1,8 +1,10 @@
 package sg.nus.iss.team2.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -23,6 +25,7 @@ import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.model.LeaveStatusEnum;
 import sg.nus.iss.team2.model.User;
+import sg.nus.iss.team2.reporting.FilesExporter;
 import sg.nus.iss.team2.service.CompensationRequestService;
 import sg.nus.iss.team2.service.LeaveService;
 import sg.nus.iss.team2.validator.CompensationRequestValidator;
@@ -53,6 +56,9 @@ public class StaffController {
     
     @Autowired
     private CompensationRequestValidator crValidator;
+
+    @Autowired
+    private FilesExporter export;
 
     @InitBinder("compensation")
     private void initcrBinder(WebDataBinder binder){
@@ -129,6 +135,21 @@ public class StaffController {
         return "editClaimLeave";
     }
 
+    @GetMapping("/exportClaimHiscsv")
+    public void exportClaimHisToCSV(HttpServletResponse response, HttpSession httpSession) throws IOException {
+        User user = (User) httpSession.getAttribute("userSession");
+        Employee emp = user.getEmployee();
+        List<CompensationRequest> crReq = crService.findEmployeeCompensationRequest(emp);
+        export.exportCompensationHisToCSV(crReq, response);
+    }
+
+    @GetMapping("/exportLeaveHiscsv")
+    public void exportLeaveHisToCSV(HttpServletResponse response, HttpSession httpSession) throws IOException {
+        User user = (User) httpSession.getAttribute("userSession");
+        Employee emp = user.getEmployee();
+        List<Leave> leaves = leaveService.findEmployeeLeaves(emp);
+        export.exportLeaveHisToCSV(leaves, response);
+    }
     @PostMapping(value={"/compensation/edit/{id}"})
     public String updateCompensationRequest(@PathVariable Long id, @Valid @ModelAttribute(value="compensation") CompensationRequest compensation, BindingResult bindingResult, Model model){
        

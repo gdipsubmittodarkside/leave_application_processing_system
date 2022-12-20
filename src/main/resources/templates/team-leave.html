@@ -4,6 +4,21 @@
   <script type="text/javascript" th:src="@{/DataTable/datatables.min.js}" ></script>
   <link rel="stylesheet" type="text/css" th:href="@{/DataTable/datatables.min.css}"/>
 
+  <style>
+.btn {
+  background-color: #c0bac4;
+  border: none;
+  color: white;
+  padding: 6px 15px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn:hover {
+  background-color: #338;
+}
+  </style>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head" />
     <div th:replace="fragments/layout.html :: header" />
@@ -14,10 +29,9 @@
             <label for = "tab1">Leave History</label>
             <input type = "radio" id = "tab2" name = "tabs">
             <label for = "tab2">Approve Claims</label>
-                <!-- <label for = "tab3"><a th:href="@{/admin/holidays/export/csv}">Generate Report</span></a></label> -->
             <div id = "content1">
                 <div>
-                    <h4>Leave History</h4>
+                    <h4>Leave History <a th:href="@{/manager/exportLeaveHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
                 </div>
 
         <div th:if="${#lists.isEmpty(teamLeaves)}">
@@ -26,6 +40,7 @@
 
         <div th:if="${not #lists.isEmpty(teamLeaves)}">
             <table class="table1" id="leave-table">
+                
                 <thead>
                     <tr>
                         <th>Leave Id</th>
@@ -55,7 +70,8 @@
 
     <div id = "content2">
         <div>
-            <h4>Compensation History</h4>
+            <h4>Compensation History<a th:href="@{/manager/exportCompHistcsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
+
         </div>
 
         <div th:if="${#lists.isEmpty(compHistory)}">

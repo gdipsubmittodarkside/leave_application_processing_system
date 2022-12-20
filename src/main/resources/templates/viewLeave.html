@@ -4,6 +4,21 @@
   <script type="text/javascript" th:src="@{/DataTable/datatables.min.js}" ></script>
   <link rel="stylesheet" type="text/css" th:href="@{/DataTable/datatables.min.css}"/>
 
+  <style>
+    .btn {
+      background-color: #c0bac4;
+      border: none;
+      color: white;
+      padding: 6px 15px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    .btn:hover {
+      background-color: #338;
+    }
+      </style>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head" />
 <body onload="openView('view-leave')">
@@ -20,7 +35,7 @@
         <label for = "tab4"><a th:href="@{/staff/compensation/claimLeave }">Apply Compensation Claim</span></a></label>
         <div id = "content1">
             <div>
-                <h4>Leave History</h4>
+                <h4>Leave History <a th:href="@{/staff/exportLeaveHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
             </div>
 
             <table class="table1" id="staff-leave-table">
@@ -63,7 +78,7 @@
     </div>
 
     <div id = "content2">
-        <h4>View Claim History </h4>
+        <h4>View Claim History <a th:href="@{/staff/exportClaimHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
     
         <table class="table1" id="staff-claim-table">
             <thead>
