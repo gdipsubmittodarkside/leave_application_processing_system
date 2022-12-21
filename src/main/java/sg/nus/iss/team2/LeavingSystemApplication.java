@@ -138,6 +138,25 @@ public class LeavingSystemApplication {
                         Leave leave7 = new Leave(LocalDate.parse("2022-09-10"),
                                         LocalDate.parse("2022-09-11"),
                                         LeaveTypeEnum.ANNUAL, "JUST FOR HOT POT", LeaveStatusEnum.APPLIED, emp4);
+                        
+                        Leave leave8 = new Leave(LocalDate.parse("2022-08-10"),
+                                        LocalDate.parse("2022-09-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+                        Leave leave9 = new Leave(LocalDate.parse("2022-08-10"),
+                                        LocalDate.parse("2022-08-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+                        Leave leave10 = new Leave(LocalDate.parse("2022-12-30"),
+                                        LocalDate.parse("2022-12-31"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp5 );
+                        Leave leave11 = new Leave(LocalDate.parse("2023-01-16"),
+                                        LocalDate.parse("2023-02-10"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp5 );
+                        Leave leave12 = new Leave(LocalDate.parse("2022-10-10"),
+                                        LocalDate.parse("2022-10-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
+                        Leave leave13 = new Leave(LocalDate.parse("2022-09-10"),
+                                        LocalDate.parse("2022-09-11"),
+                                        LeaveTypeEnum.ANNUAL,"JUST FOR HOT POT",LeaveStatusEnum.APPLIED, emp1 );
 
                         LeaveType annual_admin = new LeaveType("annual_admin", 14, "This is admin break time");
                         LeaveType medical = new LeaveType("medical", 60, "This is sick for rest");
@@ -196,11 +215,11 @@ public class LeavingSystemApplication {
                         CompensationRequest cr5 = new CompensationRequest(LocalDateTime.parse("2022-12-16T18:30:00"),
                                         LocalDateTime.parse("2022-12-16T20:30:00"), LeaveStatusEnum.UPDATED, emp12);
                         emp1.setCompensationRequests(Arrays.asList(cr1, cr2, cr3));
-                        emp2.setCompensationRequests(Arrays.asList(cr2));
-                        emp3.setCompensationRequests(Arrays.asList(cr3));
+                        emp2.setCompensationRequests(Arrays.asList(cr2,cr4));
+                        emp3.setCompensationRequests(Arrays.asList(cr3,cr5));
                         emp4.setCompensationRequests(Arrays.asList(cr1));
-                        emp5.setCompensationRequests(Arrays.asList(cr2));
-                        emp11.setCompensationRequests(Arrays.asList(cr3));
+                        emp5.setCompensationRequests(Arrays.asList(cr2,cr3));
+                        emp11.setCompensationRequests(Arrays.asList(cr3,cr5));
                         emp12.setCompensationRequests(Arrays.asList(cr3));
 
                         leaveBalanceRepository.saveAllAndFlush(Arrays.asList(staff_balance_1, 
@@ -221,9 +240,9 @@ public class LeavingSystemApplication {
                                         staff7, staff8, staff9, staff10, staff11, staff12));
                         empRepo.saveAllAndFlush(Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7, emp8, emp9,
                                         emp10, emp11, emp12));
-                        compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1, cr2, cr3));
+                        compensationRequestRepository.saveAllAndFlush(Arrays.asList(cr1, cr2, cr3, cr4, cr5));
                         leaveRepository.saveAllAndFlush(
-                                        Arrays.asList(leave1, leave2, leave3, leave4, leave5, leave6, leave7));
+                                        Arrays.asList(leave1, leave2, leave3, leave4, leave5, leave6, leave7,leave8,leave9,leave10,leave11,leave12,leave13));
                         pubService.saveAll(api.getPublicHoliday("2022"));
                         pubService.saveAll(api.getPublicHoliday("2023"));
                 };
