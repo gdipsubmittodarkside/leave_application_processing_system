@@ -135,7 +135,7 @@ public class AdminController {
     public String newEmployeePage(Model model) {
 
         model.addAttribute("employee", new Employee());
-        model.addAttribute("eidlist", empService.findAllEmployee());
+        model.addAttribute("eidlist", empService.findAllManagers());
         return "employee-new";
     }
 
@@ -144,7 +144,7 @@ public class AdminController {
             BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("eidlist", empService.findAllEmployee());
+            model.addAttribute("eidlist", empService.findAllManagers());
             return "employee-new";
         }
         empService.createEmployee(employee);
@@ -155,14 +155,14 @@ public class AdminController {
     public String editUser(@PathVariable Long id, Model model) {
         Employee emp = empService.findEmployeeById(id);
         model.addAttribute("employee", emp);
-        model.addAttribute("eidlist", empService.findAllUserIDs());
+        model.addAttribute("eidlist", empService.findAllManagers());
         return "employee-edit";
     }
 
     @PostMapping("employee/edit/{id}")
     public String editUser(@ModelAttribute @Valid Employee emp, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("eidlist", empService.findAllUserIDs());
+            model.addAttribute("eidlist", empService.findAllManagers());
             return "employee-edit";
         }
         empService.updateEmployee(emp);

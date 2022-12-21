@@ -48,11 +48,13 @@
           
             <select th:field="*{managerId}">
               <option value=""></option>
-              <option th:each="manager : ${eidlist}" th:value="${manager.getManagerId}" 
-              th:text="${manager.getEmployeeId}+'.'+${manager.getName}">
+              <option th:each="manager : ${eidlist}" th:value="${manager}" 
+              th:text="${manager}">
                 Manager
               </option>
             </select>
+            <span th:if="${#fields.hasErrors('managerId')}"
+          th:errors="*{managerId}"></span>
           </fieldset>
         </td>
       </tr>
