@@ -1,0 +1,95 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+	<head th:replace="fragments/layout.html :: html_head" />
+<title>Add LeaveType</title>
+
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+
+</head>
+<body>
+	<div class="container">
+
+		<div th:replace="fragments/layout.html :: header" />
+		<div th:replace="fragments/layout.html :: menu" />
+		
+		<div id="main">
+			<h4>Add Leave Type</h4>
+		</div>
+
+		<table class="table4">
+		<form th:action="@{/admin/leavetype/create}" th:object="${leaveType}" method="POST">
+
+			<tr>
+				<th>Leave Type Name</th>
+				<td>			
+					<input type="text" th:field="*{leaveTypeName}" class="form-control col-4 mb-4" 
+					placeholder="Enter Name" />
+				</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td style='color:red'>
+					<span th:if="${#fields.hasErrors('leaveTypeName')}"
+					th:errors="*{leaveTypeName}"></span>
+				</td>
+			</tr>
+
+			<tr>
+				<th>Leave Period</th>
+				<td>
+					<input type="number" th:field="*{leavePeriod}" class="form-control col-4 mb-4" 
+					placeholder="Enter Period" />
+				</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td style='color:red'>
+					<span th:if="${#fields.hasErrors('leavePeriod')}"
+					th:errors="*{leavePeriod}"></span>
+				</td>
+			</tr>
+          
+
+			<tr>
+				<th>Description</th>
+				<td>
+					<input type="text" th:field="*{description}" class="form-control col-4 mb-4" 
+					placeholder="Enter Description" />
+				</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td style='color:red'>
+					<span th:if="${#fields.hasErrors('description')}"
+					th:errors="*{description}"></span>
+				</td>
+			</tr>
+	
+			<tr>
+				<td></td>
+				<td>
+					<button type="submit">Submit</button>
+				</td>
+			</tr>			
+			
+		</form>
+		</table>
+		
+		<div style="text-align: center;">
+            <button type="submit" value="Back" onclick="history.back()">Back</button>
+        </div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>

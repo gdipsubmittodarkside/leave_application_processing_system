@@ -1,0 +1,518 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
+
+BODY {
+    font-family : calbiri ;
+    font-size : 10pt;
+}
+p {
+    margin-top: 0;
+    text-align: justify;
+}
+
+A {
+    color: #c0bac4;
+    text-decoration:none;
+}
+
+A:Hover {
+    color: #338;
+    text-decoration:none;
+}
+
+h1 {
+    margin: 1em 0 0.5em 0;
+    font-weight: 300;
+    font-family: poppins;
+    position: relative;
+    font-size: 21px;
+    line-height: 30px;
+    padding: 1px 1px 1px 1%;
+    color: #355681;
+    box-shadow:
+            inset 0 0 0 1px rgba(53,86,129, 0.4),
+            inset 0 0 5px rgba(53,86,129, 0.5),
+            inset -285px 0 35px white;
+    border-radius: 0 10px 0 10px;
+    background: #fff;
+}
+
+h2 {
+    margin: 1em 0 0.5em 0;
+    font-weight: normal;
+    position: relative;
+    text-shadow: 0 -1px rgba(0,0,0,0.6);
+    font-size: 8px;
+    text-align: center;
+    line-height: 20px;
+    background: #355681;
+    background: rgba(53,86,129, 0.8);
+    /* border: 1px solid #fff;
+    padding: 5px 15px; */
+    color: white;
+    border-radius: 0 10px 0 10px;
+    box-shadow: inset 0 0 5px rgba(53,86,129, 0.5);
+    font-family: poppins;
+}
+
+h3 {
+    margin: 1em 0 0.5em 0;
+    font-weight: 600;
+    font-family: poppins;
+    position: relative;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
+    font-size: 15px;
+    line-height: 40px;
+    color: #355681;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(53,86,129, 0.3);
+}
+
+h4 {
+    font-weight: 600;
+    font-family: poppins;
+    position: relative;
+    font-size: 18px;
+    line-height: 20px;
+    color: #338;
+    font-family: poppins;
+    font-weight: 200;
+}
+
+h5 {
+    font-weight: 600;
+    font-family: poppins;
+    text-align: center;
+    font-size: 18px;
+    line-height: 20px;
+    color: #338;
+    font-family: poppins;
+    font-weight: 200;
+}
+
+
+
+frame {
+    margin : 0px 0px 0px 0px;
+    border : none;
+    border-width : 0px 0px 0px 0px;
+    padding : 0px 0px 0px 0px;
+}
+
+/* this is for the pagination footer */
+ul {
+    margin: 0;
+    padding: 0;
+    width:170px;
+    list-style-type: none;
+
+}
+
+ul li a {
+    text-decoration: none;
+    color: #338;
+    padding: none;
+    background-color: white;
+
+    
+    
+}
+
+ul li a:visited {
+    color: white;
+}
+
+ul li a:hover, ul li  {
+    color: #338;
+    /* background-color: #338      ; */
+}
+
+table.table1
+{
+    font-family: poppins;
+    font-size: 12px;
+    background: #ffffff;
+    border-collapse: collapse;
+    margin-left: auto; 
+    margin-right: auto;
+    box-shadow: 1px 1px 1px 1px #cbced1;
+    border-radius: 15px;
+    width: 100%
+    
+}
+
+table.table2
+{
+    font-family: poppins;
+    font-size: 12px;
+    background: #ffffff;
+    border-collapse: collapse;
+    margin-left: auto; 
+    margin-right: auto;
+    box-shadow: 1px 1px 1px 1px #cbced1;
+    border-radius: 15px;
+    width: 70%
+
+}
+
+table.table3
+{
+    font-family: poppins;
+    font-size: 12px;
+    background: #ffffff;
+    border-collapse: collapse;
+    margin-left: auto; 
+    margin-right: auto;
+    box-shadow: 1px 1px 1px 1px #cbced1;
+    border-radius: 15px;
+    width: 110%
+
+}
+
+table.table4
+{
+    font-family: poppins;
+    font-size: 12px;
+    background: #ffffff;
+    border-collapse: collapse;
+    margin-left: auto; 
+    margin-right: auto;
+    box-shadow: 1px 1px 1px 1px #cbced1;
+    border-radius: 15px;
+    width: 50%
+
+}
+
+th
+{
+    font-size: 14px;
+    font-weight: normal;
+    color: #338;
+    padding: 10px 8px;
+    border-bottom: 2px solid #6678b1;
+    text-align: center;
+}
+td
+{
+    color: #669;
+    padding: 9px 8px 0px 8px;
+    text-align: center;
+
+}
+
+tbody tr:hover td
+{
+    color: #338;
+}
+
+
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="week"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+select,
+textarea {
+    padding: 0.5em 0.6em;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px #ddd;
+    border-radius: 4px;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+/*
+Need to separate out the :not() selector from the rest of the CSS 2.1 selectors
+since IE8 won't execute CSS that contains a CSS3 selector.
+*/
+input:not([type]) {
+    padding: 0.5em 0.6em;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+/* Chrome (as of v.32/34 on OS X) needs additional room for color to display. */
+/* May be able to remove this tweak as color inputs become more standardized across browsers. */
+input[type="color"] {
+    padding: 0.2em 0.5em;
+}
+
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+select:focus,
+textarea:focus {
+    outline: 0;
+    border-color: #338;
+}
+
+/*
+Need to separate out the :not() selector from the rest of the CSS 2.1 selectors
+since IE8 won't execute CSS that contains a CSS3 selector.
+*/
+input:not([type]):focus {
+    outline: 0;
+    border-color: #338;
+}
+
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+    outline: thin solid #338;
+    outline: 1px auto #338;
+}
+select {
+    /* Normalizes the height; padding is not sufficient. */
+    height: 2.25em;
+    border: 1px solid #ccc;
+    background-color:  #ecf0f3;
+}
+select[multiple] {
+    height: auto;
+}
+label {
+    margin: 0.5em 0 0.2em;
+}
+fieldset {
+    margin: 0;
+    padding: 0.35em 0 0.75em;
+    border: 0;
+}
+legend {
+    display: block;
+    width: 100%;
+    padding: 0.3em 0;
+    margin-bottom: 0.3em;
+    color: #333;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* button {
+    font-family: inherit;
+    font-size: 100%;
+    padding: 0.5em 1em;
+    color: rgba(0, 0, 0, 0.80);
+    border: none rgba(0, 0, 0, 0);
+    background-color: #E6E6E6;
+    text-decoration: none;
+    border-radius: 2px;
+} */
+
+button:hover,
+button:focus {
+    background-image: linear-gradient(transparent, #338 40%, #338 );
+    box-shadow: none;
+}
+
+button {
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #cbced1, -1px -1px 1px white;
+    transition: 0.5s;
+  }
+
+
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: rgb(183, 48, 48);
+    /* width: 100%; */
+    font-family: poppins;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color:white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    width: 12%;
+    font-family: poppins;
+    
+}
+
+.subnav {
+    float: left;
+    overflow: hidden;
+    font-family: poppins;
+}
+
+.subnav .subnavbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: poppins;
+    margin: 0;
+}
+
+.navbar a:hover, .subnav:hover .subnavbtn {
+    background-image: linear-gradient(transparent, #338 40%, #338 );
+}
+
+.subnav-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: rgb(68, 56, 56);
+    width: 100%;
+    z-index: 5;
+}
+
+.subnav-content a {
+    float: left;
+    color: white;
+    text-decoration: none;
+    width: 20%;
+}
+
+.subnav-content a:hover {
+    background-color: #338;
+    color: white;
+}
+
+.subnav:hover .subnav-content {
+    display: block;
+}
+
+/* This is for manager pending */
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+body {
+  padding: -20px;
+}
+.tabinator {
+  background: #fff;
+  padding: 30px;
+  font-family: poppins;
+}
+.tabinator h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.tabinator input {
+  display: none;
+}
+.tabinator label {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 15px 25px;
+  color: #ccc;
+  margin-bottom: -1px;
+  margin-left: -1px;
+}
+.tabinator label:before {
+  content:'';
+  display:block;
+  width:100%;
+  height:15px;
+  position:absolute;
+  bottom:-11px;
+  left:0;
+  z-index:10;  
+}
+.tabinator label:hover {
+  color: #888;
+  cursor: pointer;
+}
+.tabinator input:checked + label {
+  position: relative;
+  color: white;
+  background: rgb(183, 48, 48);
+  border: 1px solid rgb(183, 48, 48);
+  border-bottom: 1px solid #bbb;
+  border-radius: 5px 5px 0 0;
+}
+.tabinator input:checked + label:after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  box-shadow: 0 0 15px #939393;
+}
+#content1, #content2, #content3, #content4 {
+  display: none;
+  border-top: 1px solid #bbb;
+  padding: 15px;
+}
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4 {
+  display: block;
+  box-shadow: 0 0 12px #939393;
+}
+
+
+/* footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #111;
+    height: 10px;
+    width: 100%;
+    padding-top: 40px;
+    color: #fff;
+} */
+
+.footer-content{
+    font-family: poppins;
+    /* background-color: lightgray; */
+    clear: both;
+    position: relative;
+    bottom: -100px;
+    height: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}

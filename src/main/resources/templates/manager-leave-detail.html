@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+
+  <head>
+      <title>Leave Request Details</title>
+  </head>
+
+  <style>
+
+#main {
+  display: flex;
+  justify-content: center;
+  padding-top: 2%;
+}
+  </style>
+
+
+<body>
+
+  <div id="main">
+    <h4>Leave Request Details</h4>
+</div>
+    <table class="table2">
+        <tr>
+            <th align="right"><span>Leave ID </span></th> 
+            <td style="text-align:left" th:text="${leave.leaveId}">Id</td>
+          <th align="Left"><span>Employee Name</span></th>
+          <td style="text-align:left" th:text="${leave.employee.name}">Id</td>
+        </tr>
+        <tr>
+            <th><span> Leave type</span></th>
+            <td style="text-align:left" th:text="${leave.leaveType}">Leave type</td>
+            <th><span>Status</span>
+            </th>
+            <td style="text-align:left" th:text="${leave.status}">Status</td>
+        </tr>
+        <tr>
+            <th align="right"><span> Start Date</span></th>
+            <td style="text-align:left" th:text="${leave.startDate}">Start Date</td>
+            <th align="right"><span> End Date</span></th>
+            <td style="text-align:left" colspan="1" th:text="${leave.endDate}">End Date</td>
+        </tr>
+        <tr>
+          <th align="right"><span>Reason</span></th>
+          <td style="text-align:left" th:text="${leave.reason}">Justification</td>
+        </tr>
+
+
+
+    
+        <form action="#" th:action="@{/manager/leave/edit/}+${leave.leaveId}" th:object="${approve}" method="post">
+            <tr>
+              <td>
+                <fieldset>
+
+                  <td>
+                    <input  type="radio" th:field="*{decision}" value="APPROVED" />
+                    <label>approve</label> &nbsp;&nbsp; 
+                    <input type="radio" th:field="*{decision}" value="REJECTED" /> <label>reject</label>
+                  </td>
+                  <td><p style='color:red'><span th:if="${#fields.hasErrors('decision')}" th:errors="*{decision}"></span></p></td>
+                </fieldset>
+              </td>
+            </tr>
+            <tr>
+              <td><span>Comment</span></td> 
+              <td><textarea th:field="*{comment}" th:rows="*{comment}" cols="40"></textarea></td>
+              <td><p style='color:red'><span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span></p></td>
+                
+            </tr>
+            <tr>
+              <td>
+                  <!-- <input th:type="submit" th:value="Update" class="blcass"/> -->
+                  <td><button type="submit" value="UPDATE">UPDATE</td>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+
+              </td>
+            </tr>
+
+
+        </form>
+
+    </table>
+
+    <div id="main">
+      <h4>Team's Leave</h4>
+    </div>
+    <div id="main">
+        <div th:if="${#lists.isEmpty(teamLeaves)}">
+          <p>No staff on leave during this period.</p>
+      </div>
+
+      <div th:if="${not #lists.isEmpty(teamLeaves)}">
+        <table class="table3">
+              <tr>
+                  <th>Leave Id</th>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Leave Type</th>
+              </tr>
+              <tr th:each="leave:${teamLeaves}">
+                  <td th:text="${leave.leaveId}"></td>
+                  <td th:text="${leave.employee.name}"></td>
+                  <td th:text="${leave.startDate}"></td>
+                  <td th:text="${leave.endDate}"></td>
+                  <td th:text="${leave.leaveType}"></td>
+              </tr>
+              <tr>
+                <td>
+  
+                </td>
+              </tr>
+          </table>
+
+          <br>
+
+        </br>
+      
+          
+      
+          <div style="text-align: center;">
+            <button type="submit" value="Back" onclick="history.back()">Back</button>
+        </div>
+        </div>
+      
+      </div>
+
+</body>
+</html>

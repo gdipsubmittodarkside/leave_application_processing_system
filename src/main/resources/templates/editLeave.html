@@ -1,0 +1,119 @@
+<<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+
+
+<body onload="set_time()">
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-lg-6 col-sm-6 container justify-content-center card">
+                
+                <div id="main">
+                    <h4>Edit Leave Application Form</h4>
+                </div>
+                
+                <table class = "table4">
+                    <form th:action="@{/staff/leave/edit/{id}(id=${leave.leaveId})}" th:object="${leave}" method="post">
+                        
+                        <tr>
+                            <th>Leave Id</th>
+                            <td><input type="text" name= leaveId th:value="*{leaveId}" class="form-control" readonly/></td>
+                        </tr>
+
+                        <tr>
+                                <th> Start Date</th>
+                                <td><input type="date" id="editLeaveStartDate" name= startDate th:field="*{startDate}" class="form-control" placeholder="Choose Start Date" /></td>
+                                <script type="text/javascript">editLeaveStartDate.min=new Date().toISOString().split("T")[0];</script>
+                            
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style='color:red'><span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span></td>
+                        </tr>
+
+                        <tr>
+                                <th> End Date</th>
+                                <td><input type="date" id="editLeaveEndDate" name= endDate th:field="*{endDate}" class="form-control" placeholder="Choose Start Date"/></td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style='color:red'><span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span></td>
+                            
+                        </tr>
+
+                        <tr>
+                            <th> Leave Type </th>
+                            <td><select th:field="*{leaveType}" class="form-control" > 
+                                <option value="ANNUAL" th:text="ANNUAL"></option>
+                                <option value="MEDICAL" th:text="MEDICAL"></option>
+                                <option value="COMPENSATION" th:text="COMPENSATION"></option>
+                            </select></td>
+                        </tr>  
+                        
+                        
+                        <tr>                      
+                            <th> Reason</th>
+                                <td><textarea th:field="*{reason}" rows= "5" cols="40" class="form-control"></textarea>
+                       
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style='color:red' ><span th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" ></span>
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td></td><td><button type="submit">Update</button></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </form>
+                    </table>
+
+                    <br>
+                    </br>
+
+                    <div style="text-align: center;">
+                        <button type="submit" value="Back" onclick="history.back()">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var myDate = document.getElementById('editLeaveStartDate');
+        function set_time(){
+            // myDate2.valueAsDate = myDate;
+            document.getElementById("editLeaveEndDate").setAttribute("min",myDate.value);
+        }
+        
+        myDate.onchange = function(){
+            var x = this.value;
+          document.getElementById("editLeaveEndDate").setAttribute("min", x);
+        }
+    </script>
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>

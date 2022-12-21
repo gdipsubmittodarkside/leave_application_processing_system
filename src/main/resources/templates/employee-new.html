@@ -1,0 +1,86 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+  <head th:replace="fragments/layout.html :: html_head" />
+<title>Add Employees</title>
+
+
+<style>
+
+  #main {
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+  }
+    </style>
+
+</head>
+<body>
+	<div class="container">
+
+    <div th:replace="fragments/layout.html :: header" />
+		<div th:replace="fragments/layout.html :: menu" />
+
+    <div id="main">
+			<h4>Add Employee</h4>
+		</div>
+
+    <table class="table4">
+		<form th:action="@{/admin/employee/create}" th:object="${employee}" method="POST">
+			
+      <tr>
+        <th>Employee Name</th>
+        <td>
+          <input type="text" th:field="*{name}" class="form-control col-4 mb-4" placeholder="Enter Name" />
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td style='color:red'>
+          <span th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <th>  Manager</th>
+        <td>            
+          <fieldset>
+          
+            <select th:field="*{managerId}">
+              <option value=""></option>
+              <option th:each="manager : ${eidlist}" th:value="${manager.getManagerId}" 
+              th:text="${manager.getEmployeeId}+'.'+${manager.getName}">
+                Manager
+              </option>
+            </select>
+          </fieldset>
+        </td>
+      </tr>
+
+      <tr>    
+        <td></td>
+        <td style="text-align: center;">
+          <button type="submit">Submit</button>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <input type="hidden" th:field="*{employeeId}"/>
+        </td>
+      </tr>			
+			
+		</form>
+    </table>
+    <br>
+
+  </br>
+
+		
+
+    <div style="text-align: center;">
+      <button type="submit" value="Back" onclick="history.back()">Back</button>
+  </div>
+	</div>
+</body>
+</html>
