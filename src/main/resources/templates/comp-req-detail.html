@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+
+  <head>
+      <title>Leave Request Details</title>
+  </head>
+
+  <style>
+
+#main {
+  display: flex;
+  justify-content: center;
+  padding-top: 2%;
+}
+  </style>
+
+
+<body>
+
+  <div id="main">
+    <h4>Compensation Request Details</h4>
+</div>
+    <table class="table2">
+        <tr>
+            <th align="right"><span>Request ID</span></th>
+            <td style="text-align:left" th:text="${compRequest.compensationLeaveId}">Id</td>
+            <th align="right"><span>Employee Name</span></th>
+            <td style="text-align:left" th:text="${compRequest.employee.name}">Leave type</td>
+        </tr>
+        <tr>
+            <th align="right"><span>Start Date</span></th>
+            <td style="text-align:left" th:text="${compRequest.OTstartTime}">Start Date</td>
+            <th align="right"><span>End Date</span></th>
+            <td style="text-align:left" th:text="${compRequest.OTendTime}">End Date</td>
+        </tr>
+        <tr>
+          <th align="right"><span>Description</span></th>
+          <td style="text-align:left" th:text="${compRequest.description}">Justification</td>
+            <th align="right"><span>Status</span></th>
+            <td style="text-align:left" th:text="${compRequest.status}">status</td>
+        </tr>
+
+        <form action="#" th:action="@{/manager/claim/edit/}+${compRequest.compensationLeaveId}" th:object="${approve}" method="post">
+          <tr>
+            <td>
+              <fieldset>
+
+                <td>
+                  <input  type="radio" th:field="*{decision}" value="APPROVED" />
+                  <label>approve</label> &nbsp;&nbsp; 
+                  <input type="radio" th:field="*{decision}" value="REJECTED" /> <label>reject</label>
+                </td>
+                <td><p style='color:red'><span th:if="${#fields.hasErrors('decision')}" th:errors="*{decision}"></span></p></td>
+              </fieldset>
+            </td>
+          </tr>
+          <tr>
+                <td><span>Comment</span></td> 
+                <td><textarea th:field="*{comment}" th:rows="*{comment}" cols="40"></textarea></td>
+                <td><b style='color:red'><span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span></b></td>
+                    
+              </tr>
+              <tr>
+                <td>
+                  <td><button type="submit" value="UPDATE">UPDATE</td>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+    
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+    
+                  </td>
+                </tr>
+    
+    
+            </form>
+
+            <br>
+
+          </br>
+        
+            
+        
+            <div style="text-align: center;">
+              <button type="submit" value="Back" onclick="history.back()">Back</button>
+          </div>
+          </div>
+        
+
+    </table>
+    
+</body>
+</html>

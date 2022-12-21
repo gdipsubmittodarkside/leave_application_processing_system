@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" th:src="@{/DataTable/jquery.min.js}" ></script>
+  <script type="text/javascript" th:src="@{/DataTable/datatables.min.js}" ></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/DataTable/datatables.min.css}"/>
+
+  <style>
+.btn {
+  background-color: #c0bac4;
+  border: none;
+  color: white;
+  padding: 6px 15px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn:hover {
+  background-color: #338;
+}
+
+
+ul.pagination li{
+    display: inline;
+    padding: 10px;
+    width: 150px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    
+}
+  
+</style>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    <body>
+        <div class = "tabinator">
+            <input type = "radio" id = "tab1" name = "tabs" checked>
+            <label for = "tab1">Leave History</label>
+            <input type = "radio" id = "tab2" name = "tabs">
+            <label for = "tab2">Claims History</label>
+            <div id = "content1">
+                <div>
+                    <h4>My Team's Leave History <a th:href="@{/manager/exportLeaveHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
+                </div>
+
+        <div th:if="${#lists.isEmpty(teamLeaves)}">
+            <p>No team leave history to show.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(teamLeaves)}">
+            <table class="table1" id="leave-table">
+                
+                <thead>
+                    <tr>
+                        <th>Leave Id</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Leave Type</th>
+                        <th>Reason</th> 
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="leave:${teamLeaves}">
+                        <td th:text="${leave.leaveId}"></td>
+                        <td th:text="${leave.employee.name}"></td>
+                        <td th:text="${leave.startDate}"></td>
+                        <td th:text="${leave.endDate}"></td>
+                        <td th:text="${leave.leaveType}"></td>
+                        <td th:text="${leave.reason}"></td>
+                        <td th:text="${leave.status}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id = "content2">
+        <div>
+            <h4>My Team's Compensation History<a th:href="@{/manager/exportCompHistcsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
+
+        </div>
+
+        <div th:if="${#lists.isEmpty(compHistory)}">
+            <p>No team compensation history to show.</p>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(compHistory)}">
+            <table class="table1" id="compensation-table">
+                <thead>
+                    <tr>
+                        <th>Compensation Id</th>
+                        <th>Name</th>
+                        <th>OT Start Date</th>
+                        <th>OT End Date</th>
+                        <th>Description</th> 
+                        <th>Status</th>
+                        <th>Manager Comments</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="comp:${compHistory}">
+                        <td th:text="${comp.compensationLeaveId}"></td>
+                        <td th:text="${comp.employee.name}"></td>
+                        <td th:text="${comp.OTstartTime}"></td>
+                        <td th:text="${comp.OTendTime}"></td>
+                        <td th:text="${comp.description}"></td>
+                        <td th:text="${comp.status}"></td>
+                        <td th:text="${comp.comment}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    
+    <script>
+       // jquery pagination and search
+       $(document).ready(function(){
+			$("#leave-table").DataTable({
+        "pageLength": 5,
+        "lengthMenu": [ 5, 10, 15, 20, 25, -1 ]
+      });	
+		})
+
+
+        $(document).ready(function(){
+                $("#compensation-table").DataTable({
+            "pageLength": 5,
+            "lengthMenu": [ 5, 10, 15, 20, 25, -1]
+        });
+            })
+
+        // navigation tabs
+        function openView(view){
+            var i;
+            var x = document.getElementsByClassName("team-history");
+            
+            for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+            }
+            document.getElementById(view).style.display = "block";
+        }
+    </script>
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>

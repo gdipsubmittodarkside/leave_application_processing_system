@@ -1,0 +1,74 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head" id="html_head" >
+    <meta charset="UTF-8">
+    <title>Employee Leave System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <!-- <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/> -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+</head>
+
+<body>
+    <div th:fragment="menu" id="menu">
+        <nav class="navbar">
+            <a th:href="@{/staff/viewLeave}"><b>L A P S</b></a>
+            <!-- <a th:text="${session.userSession.username}"></a> -->
+            <!-- <a th:href="@{/home}">Home</a> -->
+            <a th:href="@{/about}">About</a>
+            
+            <div th:if="${session.userSession?.roles}">
+            <div th:each="role : ${session.userSession.roles}">
+                <div th:if="${role.roleName == 'manager'}">
+                    <div class="subnav">
+                        <button class="subnavbtn" style="width: 250px;">Manager<i class="fa fa-caret-down"></i></button>
+                        <div class="subnav-content">
+                            <a th:href="@{/manager/pending}">Pending Leaves & Claims</a>
+                            <a th:href="@{/manager/team-leave}">Past Approvals</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${role.roleName == 'staff'}">
+                    <div class="subnav">
+                        <button class="subnavbtn" style="width: 250px;">Leave <i class="fa fa-caret-down"></i></button>
+                        <div class="subnav-content">
+                            <a th:href="@{/staff/leave/new }">Apply Leave</a>
+                            <a th:href="@{/staff/compensation/claimLeave }">Apply Compensation Claim</a>
+                            <a th:href="@{/staff/viewLeave }">Leave & Claim History</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${role.roleName == 'admin'}">
+                    <div class="subnav">
+                        <button class="subnavbtn" style="width: 250px;">Admin <i class="fa fa-caret-down"></i></button>
+                        <div class="subnav-content">
+                            <a th:href="@{/admin/leavetype/list}" 
+                            th:utext="#{menu.admin.leavetypelist}">Manage Leave Type</a>
+                            <a th:href="@{/admin/employee/list}"
+                            th:utext="#{menu.admin.emplist}">Manage Employee</a>
+                            <a th:href="@{/admin/user/list}"
+                            th:utext="#{menu.admin.ulist}">Manage User</a>
+                            <a th:href="@{/admin/holidays/list}"
+                            th:utext="#{menu.admin.publist}">Manage Public Holiday</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a th:href="@{/logout}" style="width: 150px; float: right;">Logout</a>
+            </div>
+        </nav>
+    </div>
+
+    <div th:fragment="header">
+    </div>
+
+
+    <div class="footer-content" th:fragment="footer">
+        &copy; GDSA-55 Team-2 2022 All rights reserved.
+    </div>
+</body>
+
+</html>

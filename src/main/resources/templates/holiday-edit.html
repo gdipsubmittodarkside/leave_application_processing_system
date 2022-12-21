@@ -1,0 +1,90 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+	<head th:replace="fragments/layout.html :: html_head" />
+<title>Edit Public Holiday</title>
+
+<style>
+
+	#main {
+	  display: flex;
+	  justify-content: center;
+	  padding-top: 2%;
+	}
+	  </style>
+
+</head>
+<body>
+	<div class="container">
+
+		<div th:replace="fragments/layout.html :: header" />
+		<div th:replace="fragments/layout.html :: menu" />
+
+		<div id="main">
+			<h4>Edit Public Holiday</h4>
+		</div>
+	
+		<table class="table4">
+		<form th:action="@{/admin/holidays/edit/} + ${holid.id}" th:object="${holid}" method="POST">
+			
+			<tr>
+				<th>Local Name</th>
+				<td><input type="text" th:field="*{name}" class="form-control col-4 mb-4" 
+					placeholder="Enter  Name" readonly /></td>
+			</tr>
+			
+			<tr>
+				<td></td>
+				<td style='color:red'>
+					<span th:if="${#fields.hasErrors('name')}"
+            		th:errors="*{localName}"></span>
+				</td>
+			</tr>
+            
+			<tr>
+				<th>Name</th>
+				<td>
+					<input type="text" th:field="*{localName}" class="form-control col-4 mb-4" placeholder="Enter Public Holiday Local Name" />
+				</td>
+				
+			</tr>
+
+			<tr>
+				<td></td>
+				<td style='color:red'>
+					<span th:if="${#fields.hasErrors('localName')}"
+					th:errors="*{localName}"></span>
+
+				</td>
+			</tr>
+
+			<tr>
+				<th>Holiday Date</th>
+				<td><input type="date" th:field="*{date}" class="form-control col-4 mb-4" placeholder="Enter Date" /></td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td style='color:red'>
+					<span th:if="${#fields.hasErrors('date')}"
+					th:errors="*{date}"></span>
+				</td>
+			</tr>
+			
+           <tr>
+			<td></td>
+			<td>
+				<button class="btn btn-primary" type="submit">Update</button>
+			</td>
+		   </tr>		
+		</form>
+		</table>
+		<br>
+
+	</br>
+
+		<div style="text-align: center;">
+			<button type="submit" value="Back" onclick="history.back()">Back</button>
+		</div>
+		
+	</div>
+</body>
+</html>

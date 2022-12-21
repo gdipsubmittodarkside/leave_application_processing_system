@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<div th:replace="fragments/layout.html :: menu" />
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+</style>
+    <div id="main">
+    <h4>Edit User</h4>
+    </div>
+                
+    <table class = "table4">
+		<form th:action="@{/admin/user/edit/}+${user.userId}" th:object="${user}" method="POST">
+      <tr>
+        <th>Username</th>
+			<td><input type="text" th:field="*{username}" class="form-control col-4 mb-4" placeholder="Enter Username" /></td>
+      <td style='color:red'><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></td>
+      </tr>
+
+      <tr>
+      <th>Password</th>
+			<td><input type="text" th:field="*{password}" class="form-control col-4 mb-4" placeholder="Enter Password" /></td>
+      <td style='color:red'><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></td>
+			</tr>
+
+      <tr>
+      <th>Join Date</th>
+      <td><input type="date" th:field="*{joinDate}" class="form-control col-4 mb-4" placeholder="Select JoinDate"  readonly/>
+        <td style='color:red'><span th:if="${#fields.hasErrors('joinDate')}"th:errors="*{joinDate}"></span></td>
+      </tr>
+      <tr>
+       <th>Employee Id</th>
+       <td><input th:each="emp:${user.employee}" th:value="${emp.employeeId}" readonly/></td>
+      </tr>
+      <tr>
+        <th>User Roles (multiple selection)</th>
+          <td><select size="3" multiple="multiple" name="roleSet" id="roleSet">
+              <option th:each="role:${allRoles}" 
+              th:value="${role.roleId}" 
+              th:text="${role.roleName}"
+              th:selected ="${user.roles.contains(role)}">Roles</option>
+            </select></td>
+
+            <tr>
+              <td></td><td><button type="submit">Submit</button></td>
+          </tr>
+		</form>
+
+  </table>
+
+  <br>
+
+</br>
+
+      <div style="text-align: center;">
+          <button type="submit" value="Back" onclick="history.back()">Back</button>
+      </div>
+  
+ 
+
+  <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>

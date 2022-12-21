@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" th:src="@{/DataTable/jquery.min.js}" ></script>
+  <script type="text/javascript" th:src="@{/DataTable/datatables.min.js}" ></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/DataTable/datatables.min.css}"/>
+
+<head th:replace="fragments/layout.html :: html_head"/>
+
+<body>
+  <div th:replace="fragments/layout.html :: menu"/>
+  <div th:replace="fragments/layout.html :: header"/> 
+
+  <div class = "tabinator">
+    <input type = "radio" id = "tab1" name = "tabs" checked>
+    <label for = "tab1">User List</label>
+    <label for = "tab2"><a th:href="@{/admin/user/create}">Add User</span></a></label>
+    <label for = "tab3"><a th:href="@{/admin/user/export/csv}">Generate Report</span></a></label>
+    <div id = "content1">
+        <div>
+            <h4>User List</h4>
+        </div>
+  <div th:if="${not #lists.isEmpty(userList)}">
+
+    <table class="table1">
+      <thead>
+        <tr class="listHeading">
+          <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=userId&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+          <span th:text="#{fieldLabel.userId}"></span></a><i class="fa fa-caret-down"></i></th>
+          <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=username&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+             <span th:text="#{fieldLabel.username}"></span><i class="fa fa-caret-down"></i></a></th>
+          <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=password&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+            <span th:text="#{fieldLabel.password}"></span><i class="fa fa-caret-down"></i></th>
+          </a>
+            
+          <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=joinDate&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+            <span th:text="#{fieldLabel.JoinDate}"></span><i class="fa fa-caret-down"></i></th>
+          </a>
+          <th><span>Action</span></th>
+          
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr th:each="user : ${userList}">
+          <td th:text="${user.userId}"></td>
+          <td th:text="${user.username}"></td>
+          <td th:text="${user.password}"></td>
+          <td th:text="${user.JoinDate}"></td>
+
+          <td><a th:href="@{/admin/user/edit/}+${user.userId}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
+          <a th:href="@{/admin/user/delete/}+${user.userId}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div th:if = "${totalPages > 1}">
+      <div class = "row col-sm-10">
+          <div class="col-sm-2">Total rows: [[${totalItems}]]</div>
+          <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}"> 
+              <a th:if="${currentPage != i}" th:href="@{'/admin/user/list/page/' + ${i} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">[[${i}]]</a>
+              <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+          </div>
+          <div class="col-sm-1">
+            <a th:if="${currentPage < totalPages}" th:href="@{'/admin/user/list/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next>></span>&nbsp;&nbsp;&nbsp;
+            <a th:if="${currentPage < totalPages}" th:href="@{'/admin/user/list/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+          </div>
+          <div class="col-sm-1">
+            <!-- th:onchange="'window.location.href = \'' + @{/admin/employee/list/page/1?sortField=employeeId&sortDir=asc} + '&pageSize=\' + this.value '" -->
+            <select 
+            th:onchange="'window.location.href = \'' + @{/admin/user/list/page/1?sortField=userId&sortDir=asc} + '&pageSize=\' + this.value '"
+            >
+              <option th:each="i:${ {5,10,15,20} }" th:value="${i}" 
+              th:text="${i}" th:selected="${i == pageSize}"
+              >
+            </option>
+            </select>
+          </div>
+  </div>
+</div>
+</body>
+</html>

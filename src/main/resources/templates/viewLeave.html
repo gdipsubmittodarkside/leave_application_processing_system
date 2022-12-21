@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+    <link rel="stylesheet" type="text/css" th:href="@{/DataTable/datatables.min.css}"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" th:src="@{/DataTable/jquery.min.js}" ></script>
+  <script type="text/javascript" th:src="@{/DataTable/datatables.min.js}" ></script>
+
+  <style>
+    .btn {
+      background-color: #c0bac4;
+      border: none;
+      color: white;
+      padding: 6px 15px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    .btn:hover {
+      background-color: #338;
+    }
+    ul.pagination li{
+        display: inline;
+        padding: 10px;
+        width: 150px;
+    }
+
+    div.dataTables_wrapper div.dataTables_paginate{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        
+    }
+
+    </style>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+<body onload="openView('view-leave')">
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+
+
+    <div class = "tabinator">
+        <input type = "radio" id = "tab1" name = "tabs" checked>
+        <label for = "tab1">Personal Leave Detail</label>
+        <input type = "radio" id = "tab2" name = "tabs">
+        <label for = "tab2">Claim History</label>
+        <label for = "tab3"><a th:href="@{/staff/leave/new }">Apply Leave</span></a></label>
+        <label for = "tab4"><a th:href="@{/staff/compensation/claimLeave }">Apply Compensation Claim</span></a></label>
+        <div id = "content1">
+            <div>
+                <h4>Leave History <a th:href="@{/staff/exportLeaveHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
+            </div>
+
+            <table class="table1" id="staff-leave-table">
+                <thead>
+                    <tr>
+                        <th>Leave Id</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Leave Type</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Manage Leave</th>
+                        <th>Leave Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each = "leave : ${leaves}" >  
+                        <td th:utext = "${leave.leaveId}">Id</td>
+                        <td th:utext = "${leave.startDate}">Start Date</td>
+                        <td th:utext = "${leave.endDate}">End Date</td>
+                        <td th:utext = "${leave.leaveType}">Leave Type</td>
+                        <td th:utext = "${leave.reason}">Reason</td>
+                        <td th:utext = "${leave.status}">Status</td>
+                        <td>
+                            <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.status.name() != 'APPROVED'} and ${leave.startDate.isAfter(todayDate)}">
+                                <a th:href="@{/staff/leave/edit/{id}(id=${leave.leaveId})}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
+                            </span>
+                            <span th:if="${leave.status.name() != 'CANCELLED'} and ${leave.status.name() != 'REJECTED'} and ${leave.startDate.isAfter(todayDate)}">
+                                <a th:href="@{/staff/delete/{id}(id=${leave.leaveId})}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a>
+                            </span>
+                        </td>
+                        <td>
+                            <a style="color: white" th:href="@{/staff/leaveDetail/{id}(id=${leave.leaveId})}"><button type="submit" value="Details">DETAILS</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+                
+            </table>
+    </div>
+
+    <div id = "content2">
+        <h4>View Claim History <a th:href="@{/staff/exportClaimHiscsv}"><button class="btn"><i class="fa fa-download"></i> Download</span></button></a></h4>
+    
+        <table class="table1" id="staff-claim-table">
+            <thead>
+                <tr>
+                    <th>Claim Id</th>
+                    <th>OT Start Date</th>
+                    <th>OT End Date</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Manage Claim Request</th>
+                    <th>Claim Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each = "cr : ${crReq}" >  
+                    <td th:utext = "${cr.compensationLeaveId}">Id</td>
+                    <td th:utext = "${cr.OTstartTime}">Start Date</td>
+                    <td th:utext = "${cr.OTendTime}">End Date</td>
+                    <td th:utext = "${cr.description}">Reason</td>
+                    <td th:utext = "${cr.status}">Status</td>
+                    <td>
+                        <span th:if="${cr.status.name() != 'CANCELLED'} and ${cr.status.name() != 'REJECTED'} and ${cr.status.name() != 'APPROVED'}">
+                            <a th:href="@{/staff/compensation/edit/{id}(id=${cr.compensationLeaveId})}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
+                            <a th:href="@{/staff/compensation/cancel/{id}(id=${cr.compensationLeaveId})}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a>
+                        </span>
+                    </td>
+                    <td>
+                        <a style="color: white" th:href="@{/staff/compensationRequestDetail/{id}(id=${cr.compensationLeaveId})}"><button type="submit" value="Details">DETAILS</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+        function openView(view) {
+          var i;
+          var x = document.getElementsByClassName("staff-view");
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+          }
+          document.getElementById(view).style.display = "block";  
+        }
+    </script>
+	<script>
+		$(document).ready(function(){
+			$("#staff-claim-table").DataTable({
+        "pageLength": 5,
+        "lengthMenu": [ 5, 10, 15, 20, 25],
+        
+    });
+
+      $("#staff-leave-table").DataTable({
+       "pageLength": 5,
+        "lengthMenu": [ 5, 10, 15, 20, 25 ],
+        
+    });
+			
+		})
+	</script>
+    
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>

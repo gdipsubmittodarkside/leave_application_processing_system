@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+
+
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+
+<body onload="set_time()">
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+    
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-lg-6 col-sm-6 container justify-content-center card">
+                <div id="main">
+                    <h4>Compensation Leave Claim Form</h4>
+                </div>
+    
+
+        <table class="table4" >
+        <form action="#" th:action="@{/staff/compensation/claimLeave}" th:object="${compensation}" method="post">
+           
+            <tr>
+                <th>OT Start Time</th>
+                <td><input type="datetime-local" th:field="*{OTstartTime}" class="form-control" /></td>              
+               
+            </tr>
+
+            <tr>
+                <td></td>
+                <td style='color:red'><span th:if="${#fields.hasErrors('OTstartTime')}" th:errors="*{OTstartTime}"></span> </td>
+                
+            </tr>
+
+            <tr>
+                <th>OT End Time</th>
+                <td><input type="datetime-local" th:field="*{OTendTime}" /></td>
+               
+            </tr>
+
+            <tr>
+                <td></td>
+                <td style='color:red'><span th:if="${#fields.hasErrors('OTendTime')}" th:errors="*{OTendTime}"></span></td>
+
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td><textarea maxlength="200" type="uText" th:field="*{description}" placeholder="Please write your description here"/></textarea>              
+                
+            </tr>
+
+            <tr>
+                <td></td>
+                <td style='color:red'><span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td>
+                <button type="submit" class = "btn btn-primary btn-sm">Create</button>
+                </td>
+             </tr>
+
+             <tr>
+                <td></td>
+             </tr>
+            
+        </table>
+
+        <br>
+        </br>
+
+        <div style="text-align: center;">
+            <button type="submit" value="Back" onclick="history.back()">Back</button>
+        </div>
+
+    </form>
+</body>
+</html>

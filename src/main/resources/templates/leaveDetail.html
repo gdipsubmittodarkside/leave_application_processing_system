@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<style>
+
+    #main {
+      display: flex;
+      justify-content: center;
+      padding-top: 2%;
+    }
+      </style>
+    
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+
+    <div id="main">
+        <h4>Leave Details</h4>
+    </div>
+
+    <!-- <table class="framed" th:object = "${leaveDetail}"> -->
+    <table class="table4" th:object = "${leaveDetail}">
+        
+        <tr>
+            <th><span>Leave Id</span></th>
+            <td th:utext = "*{leaveId}"></td>
+        </tr>
+        <tr>
+            <th><span>Date</span> </th>
+            <td th:utext = "*{startDate}"></td>
+        </tr>
+        <tr>
+            <th><span>End Date</span></th>
+            <td th:utext = "*{endDate}"></td>
+        </tr>
+        <br>
+        <tr>
+            <th><span>Leave Type</span></th>
+            <td th:utext = "*{leaveType}"></td>
+        </tr>
+        <tr>
+            <th><span>Reason</span></th>
+            <td th:utext = "*{reason}"></td>
+        </tr>
+        <tr>
+            <th><span>Status</span></th>
+            <td th:utext = "*{status}"></td>
+        </tr>
+        <tr>
+            <th><span>Comment</span></th>
+            <td th:utext = "*{comment}"></td>
+        </tr>
+        <tr>
+            <td></td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+</br>
+
+        <div style="text-align: center;">
+            <button type="submit" value="Back" onclick="history.back()">Back</button>
+        </div>
+    
+   
+
+    <div th:replace="fragments/layout.html :: footer" />
+</body>
+</html>
