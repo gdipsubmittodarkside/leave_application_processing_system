@@ -41,13 +41,15 @@ function RegistrationForm() {
               }
             ).then((response) => {responseBody = response.data});
             
-            setUsername("");
-            setPassword("");
+            
             if(responseBody === "Success"){
               setErrMsg("")
+              setUsername("");
+              setPassword("");
               setSucMsg("Successfully")
             }else{
               setErrMsg("Username has been registred");
+              setPassword("");
               setSucMsg("")
             }
             
