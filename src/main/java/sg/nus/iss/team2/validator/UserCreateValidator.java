@@ -23,12 +23,12 @@ public class UserCreateValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "username", "error.user.username.empty");
         ValidationUtils.rejectIfEmpty(errors, "password", "error.user.password.empty");
         User user = (User) target;
-        if ((user.getJoinDate() != null) &&
-                (user.getJoinDate().compareTo(LocalDate.now()) < 0)) {
-            errors.rejectValue("joinDate",
-                    "error.joinDate",
-                    "JoinDate must bigger or equal now");
-        }
+        // if ((user.getJoinDate() != null) &&
+        //         (user.getJoinDate().compareTo(LocalDate.now()) < 0)) {
+        //     errors.rejectValue("joinDate",
+        //             "error.joinDate",
+        //             "JoinDate must bigger or equal now");
+        // }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "joinDate",
                 "error.joinDate",
                 "JoinDate must be filled");

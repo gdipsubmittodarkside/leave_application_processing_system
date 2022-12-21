@@ -28,9 +28,9 @@
           <span th:text="#{fieldLabel.userId}"></span></a><i class="fa fa-caret-down"></i></th>
           <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=username&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
              <span th:text="#{fieldLabel.username}"></span><i class="fa fa-caret-down"></i></a></th>
-          <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=password&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+          <!-- <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=password&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
             <span th:text="#{fieldLabel.password}"></span><i class="fa fa-caret-down"></i></th>
-          </a>
+          </a> -->
             
           <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=joinDate&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
             <span th:text="#{fieldLabel.JoinDate}"></span><i class="fa fa-caret-down"></i></th>
@@ -44,11 +44,11 @@
         <tr th:each="user : ${userList}">
           <td th:text="${user.userId}"></td>
           <td th:text="${user.username}"></td>
-          <td type="password" th:text="${user.password}"></td>
+          <!-- <td type="password" th:text="${user.password}"></td> -->
           <td th:text="${user.JoinDate}"></td>
 
           <td><a th:href="@{/admin/user/edit/}+${user.userId}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
-          <a th:href="@{/admin/user/delete/}+${user.userId}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a></td>
+          <!-- <a th:href="@{/admin/user/delete/}+${user.userId}"><i class="fa fa-trash-o" style="font-size:18px"></i></span></a></td> -->
         </tr>
       </tbody>
     </table>
@@ -56,18 +56,26 @@
     <div th:if = "${totalPages > 1}">
       <div class = "row col-sm-10">
           <div class="col-sm-2">Total rows: [[${totalItems}]]</div>
-          <div class="col-sm-1">
+          
+          <br>
+          <div class="col-sm-1" style="text-align:center">
+
+            <a th:if="${currentPage != 1}" th:href="@{'/admin/user/list/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Previous</a>
+            <span th:if="${currentPage == 1}">Previous</span> &nbsp; &nbsp;
+
             <span th:each="i: ${#numbers.sequence(1, totalPages)}"> 
               <a th:if="${currentPage != i}" th:href="@{'/admin/user/list/page/' + ${i} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">[[${i}]]</a>
-              <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
-            </span>
-          </div>
-          <div class="col-sm-1">
+            <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
+
             <a th:if="${currentPage < totalPages}" th:href="@{'/admin/user/list/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Next</a>
-            <span th:unless="${currentPage < totalPages}">Next>></span>&nbsp;&nbsp;&nbsp;
-            <a th:if="${currentPage < totalPages}" th:href="@{'/admin/user/list/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Last</a>
-            <span th:unless="${currentPage < totalPages}">Last</span>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+
           </div>
+          <br>
+
+
+
+
           <div class="col-sm-1">
             <!-- th:onchange="'window.location.href = \'' + @{/admin/employee/list/page/1?sortField=employeeId&sortDir=asc} + '&pageSize=\' + this.value '" -->
             <select 

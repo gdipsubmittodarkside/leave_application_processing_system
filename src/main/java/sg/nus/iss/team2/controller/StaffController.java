@@ -187,7 +187,7 @@ public class StaffController {
 
     @PostMapping(value= "/leave/submitLeave")
     public String submitLeave(@Valid @ModelAttribute Leave leave, BindingResult result,
-    HttpSession httpSession){
+    HttpSession httpSession, Model model){
         if (result.hasErrors()) {
             return "createLeave";
         }
@@ -196,10 +196,18 @@ public class StaffController {
         Employee emp = user.getEmployee();
 
         if(leaveService.isOutOfLeave(leave,emp)){
+            model.addAttribute("leaveBalance", emp.getLeaveBalance());
             return "outOfLeave";
         }
+        Leave overlapLeave = leaveService.findOverlapLeave(leave, emp);
+        if(overlapLeave != null){
+            model.addAttribute("overlapLeave", overlapLeave);
+            return "overlapLeave";
+        }
+
         leave.setEmployee(emp);
         leave.setStatus(LeaveStatusEnum.APPLIED);
+        
         leaveService.createLeave(leave);
         
         return "redirect:/staff/viewLeave";
@@ -227,7 +235,13 @@ public class StaffController {
         Employee emp = user.getEmployee();
         
         if(leaveService.isOutOfLeave(leave,emp)){
+            model.addAttribute("leaveBalance", emp.getLeaveBalance());
             return "outOfLeave";
+        }
+        Leave overlapLeave = leaveService.findOverlapLeave(leave, emp);
+        if(overlapLeave != null){
+            model.addAttribute("overlapLeave", overlapLeave);
+            return "overlapLeave";
         }
 
         Leave exitingLeave = leaveService.findLeave(id);

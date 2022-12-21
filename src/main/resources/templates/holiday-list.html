@@ -52,8 +52,8 @@
       <tbody>
 
         <tr th:each="holid : ${pubs}" class="listRecord">
-          <td th:text="${holid.localName}">LocalName</td>
           <td th:text="${holid.name}">Name</td>
+          <td th:text="${holid.localName}">Local Name</td>
           <td th:text="${holid.date}">Date</td>
 
           <td>
@@ -75,7 +75,7 @@
 		$(document).ready(function(){
 			$("#holidaytable").DataTable({
         "pageLength": 5,
-        "lengthMenu": [ 5, 10, 15, 20, 25, -1 ]
+        "lengthMenu": [ 5, 10, 15, 20, 25 ]
       });
 			
 		})

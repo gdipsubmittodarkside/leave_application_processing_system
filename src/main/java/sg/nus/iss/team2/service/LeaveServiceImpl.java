@@ -1,10 +1,10 @@
 package sg.nus.iss.team2.service;
 
 import sg.nus.iss.team2.Utility.Calculate;
+
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.Leave;
 import sg.nus.iss.team2.model.LeaveBalance;
-
 import sg.nus.iss.team2.model.LeaveStatusEnum;
 
 import sg.nus.iss.team2.repository.LeaveRepository;
@@ -14,27 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
-
 import java.time.LocalDate;
-import java.util.*;
-
-
-import java.time.LocalDate;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import sg.nus.iss.team2.model.Employee;
-import sg.nus.iss.team2.model.Leave;
-import sg.nus.iss.team2.model.LeaveBalance;
-import sg.nus.iss.team2.model.LeaveStatusEnum;
-import sg.nus.iss.team2.repository.LeaveRepository;
-
-
 
 //NEWCHANGES
 @Service
@@ -72,6 +55,7 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     @Transactional
     public Leave createLeave(Leave leave) {
+        this.deductLeaveBalance(leave, leave.getEmployee());
         return leaveRepository.saveAndFlush(leave);
     }
 
@@ -179,7 +163,6 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional
-
     public void updateLeaveAndLeaveBalance(Leave leave, String decision, String comment){
 
         // if (comment!=null) 
@@ -190,15 +173,46 @@ public class LeaveServiceImpl implements LeaveService {
         if (decision.equalsIgnoreCase(LeaveStatusEnum.REJECTED.toString()) )
         {
             leave.setStatus(LeaveStatusEnum.REJECTED);
+
+            // update "LeaveBalance" DB with new (increased) leave balance
+            Employee emp = leave.getEmployee();
+            LeaveBalance LB1 = emp.getLeaveBalance();
+            String typeOfLeave = leave.getLeaveType().toString();
+            
+            LocalDate startDate = leave.getStartDate();
+            LocalDate endDate = leave.getEndDate();
+            double durationInDays = calculate.numOfDaysMinusPHAndWeekend(startDate, endDate);
+
+
+            if (typeOfLeave.equals("ANNUAL")){
+                
+                int INTdurationInDays = (int) durationInDays;
+                LBservice.addAnnualLeaveBalance(LB1, INTdurationInDays);
+            }
+            else if (typeOfLeave.equals("MEDICAL"))
+            {
+                int INTdurationInDays = (int) durationInDays;
+                LBservice.addMedicalLeaveBalance(LB1, INTdurationInDays);
+            }
+            else if (typeOfLeave.equals("COMPENSATION"))
+            {
+                LBservice.addCompensationLeaveBalance(LB1, durationInDays);
+            }
             
         }
         else if (decision.equalsIgnoreCase(LeaveStatusEnum.APPROVED.toString()) )
         {
-            // update Leave item with new status
+            // update Leave item with new status; leave balance already subtracted when employee apply for leave
             leave.setStatus(LeaveStatusEnum.APPROVED);
+        }
+        
+        leave.setComment(comment);
+        updateLeave(leave);
+    }
 
-            // update "LeaveBalance" DB with new (decreased) leave balance
-            Employee emp = leave.getEmployee();
+    @Override
+    @Transactional
+    public void deductLeaveBalance(Leave leave, Employee emp){
             LeaveBalance LB1 = emp.getLeaveBalance();
             String typeOfLeave = leave.getLeaveType().toString();
             
@@ -221,10 +235,37 @@ public class LeaveServiceImpl implements LeaveService {
             {
                 LBservice.minusCompensationLeaveBalance(LB1, durationInDays);
             }
+
+    }
+
+    @Override
+    @Transactional
+    public Leave findOverlapLeave(Leave leave, Employee emp){
+        List<Leave> leaves = findEmployeeLeaves(emp);
+        for(Leave lv: leaves){
+            if(isDateOverlap(lv,leave)){
+                return lv;
+            }
         }
+        return null;
+    }
+
+    public boolean isDateOverlap(Leave existing, Leave newLeave){
+        LocalDate s1 = existing.getStartDate();
+        LocalDate e1 = existing.getEndDate();
+        LocalDate s2 = newLeave.getStartDate();
+        LocalDate e2 = newLeave.getEndDate();
         
-        leave.setComment(comment);
-        updateLeave(leave);
+        if((s1.isBefore(s2) && e1.isAfter(s2)) ||
+        (s1.isBefore(e2) && e1.isAfter(e2)) ||
+        (s1.isBefore(s2) && e1.isAfter(e2)) ||
+        (s1.isAfter(s2) && e1.isBefore(e2)) ||
+        s1.isEqual(s2) || s1.isEqual(e2) || e1.isEqual(s2) || e1.isEqual(e2) ){
+            return true;
+        }
+
+
+        return false;
     }
 
 }

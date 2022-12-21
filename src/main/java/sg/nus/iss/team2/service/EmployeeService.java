@@ -24,10 +24,10 @@ public interface EmployeeService {
 
     List<Long> findAllUserIDs();
 
+    List<Integer> findAllManagers();
+
     boolean deleteEmployee(Long employeeId);
 
     EmployeeModel updateEmployeeMol(Long employeeId, EmployeeModel empMol);
-
-    
 
 }

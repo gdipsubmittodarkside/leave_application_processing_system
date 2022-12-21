@@ -328,11 +328,12 @@ button:hover,
 button:focus {
     background-image: linear-gradient(transparent, #338 40%, #338 );
     box-shadow: none;
+    color: white;
 }
 
 button {
     border: none;
-    color: white;
+    color: #338;
     padding: 4px 8px;
     text-align: center;
     text-decoration: none;
@@ -515,4 +516,8 @@ body {
     justify-content: center;
     flex-direction: column;
     text-align: center;
+}
+
+th.sorting {
+    text-align: center !important;
 }

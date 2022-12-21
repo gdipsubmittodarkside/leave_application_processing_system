@@ -90,4 +90,24 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 
         updateLeaveBalance(leaveBalance);
     }
+
+    @Override
+    @Transactional
+    public void addAnnualLeaveBalance(LeaveBalance leaveBalance, int days){
+        int curr_compBalance = leaveBalance.getBalanceAnnualLeaveDays();
+        int new_compBalance = curr_compBalance + days;
+        leaveBalance.setBalanceAnnualLeaveDays(new_compBalance);
+
+        updateLeaveBalance(leaveBalance);
+    }
+
+    @Override
+    @Transactional
+    public void addMedicalLeaveBalance(LeaveBalance leaveBalance, int days){
+        int curr_compBalance = leaveBalance.getBalanceMedicalLeaveDays();
+        int new_compBalance = curr_compBalance + days;
+        leaveBalance.setBalanceMedicalLeaveDays(new_compBalance);
+
+        updateLeaveBalance(leaveBalance);
+    }
 }

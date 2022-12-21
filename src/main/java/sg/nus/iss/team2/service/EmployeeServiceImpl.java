@@ -56,7 +56,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        // TODO Auto-generated method stub
         return employeeRepository.save(employee);
     }
 
@@ -88,5 +87,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(emp);
         empMol.setEmployeeId(employeeId);
         return empMol;
+    }
+
+    @Override
+    public List<Integer> findAllManagers() {
+        // TODO Auto-generated method stub
+        return employeeRepository.findAllManagerIDs();
     }
 }

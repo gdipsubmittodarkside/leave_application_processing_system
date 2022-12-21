@@ -46,18 +46,23 @@
     <div th:if = "${totalPages > 1}">
       <div class = "row col-sm-10">
           <div class="col-sm-2">Total rows: [[${totalItems}]]</div>
-          <div class="col-sm-1">
-            <span th:each="i: ${#numbers.sequence(1, totalPages)}"> 
-              <a th:if="${currentPage != i}" th:href="@{'/admin/employee/list/page/' + ${i} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">[[${i}]]</a>
-              <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
-            </span>
-          </div>
-          <div class="col-sm-1">
-            <a th:if="${currentPage < totalPages}" th:href="@{'/admin/employee/list/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Next</a>
-            <span th:unless="${currentPage < totalPages}">Next>></span>&nbsp;&nbsp;&nbsp;
-            <a th:if="${currentPage < totalPages}" th:href="@{'/admin/employee/list/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Last</a>
-            <span th:unless="${currentPage < totalPages}">Last>></span>
-          </div>
+    
+      <br>
+      <div class="col-sm-1" style="text-align:center">
+
+        <a th:if="${currentPage != 1}" th:href="@{'/admin/employee/list/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Previous</a>
+        <span th:if="${currentPage == 1}">Previous</span> &nbsp; &nbsp;
+
+        <span th:each="i: ${#numbers.sequence(1, totalPages)}"> 
+          <a th:if="${currentPage != i}" th:href="@{'/admin/employee/list/page/' + ${i} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">[[${i}]]</a>
+        <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
+
+        <a th:if="${currentPage < totalPages}" th:href="@{'/admin/employee/list/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +'&pageSize='+${pageSize}}">Next</a>
+        <span th:unless="${currentPage < totalPages}">Next</span>
+
+      </div>
+      <br>
+          
           <div class="col-sm-1">
             <!-- th:onchange="'window.location.href = \'' + @{/admin/employee/list/page/1?sortField=employeeId&sortDir=asc} + '&pageSize=\' + this.value '" -->
             <select 
