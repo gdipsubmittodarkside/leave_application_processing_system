@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+    
+<body>
+    <div th:replace="fragments/layout.html :: header" />
+    <div th:replace="fragments/layout.html :: menu" />
+
+
+        <h5><b>Overlapping Leave Period</b></h5>
+        <h4 style="text-align: center;">Your current leave is Overlapping with the following leave: </h4>
+        <table th:object ="${overlapLeave}" style="margin-left: auto; margin-right: auto; font-size: 20px;">
+            <tr>
+                <td style="text-align: right;">Leave Id: </td>
+                <td th:utext = "*{leaveId}"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Start Date: </td>
+                <td th:utext = "*{startDate}"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">End Date: </td>
+                <td th:utext = "*{endDate}"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Leave Type: </td>
+                <td th:utext = "*{leaveType}"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Leave Status: </td>
+                <td th:utext = "*{status}"></td>
+            </tr>
+        </table>
+        <br><br><br>
+
+
+    <div style="text-align: center;">
+        <button type="submit" value="Back" onclick="history.back()">Back</button>
+    </div>
+
+</body>
+</html>

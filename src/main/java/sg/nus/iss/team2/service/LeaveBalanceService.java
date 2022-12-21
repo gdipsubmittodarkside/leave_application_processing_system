@@ -28,4 +28,8 @@ public interface LeaveBalanceService {
 
     // After Manager approve compensation request. Increase compensation leave balance.
     void addCompensationLeaveBalance(LeaveBalance leaveBalance, double days);
+
+    void addAnnualLeaveBalance(LeaveBalance leaveBalance, int days);
+
+    void addMedicalLeaveBalance(LeaveBalance leaveBalance, int days);
 }
