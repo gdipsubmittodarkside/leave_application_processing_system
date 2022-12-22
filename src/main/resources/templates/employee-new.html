@@ -47,7 +47,7 @@
           <fieldset>
           
             <select th:field="*{managerId}">
-              <option value=""></option>
+              <!-- <option value=""></option> -->
               <option th:each="manager : ${eidlist}" th:value="${manager}" 
               th:text="${manager}">
                 Manager

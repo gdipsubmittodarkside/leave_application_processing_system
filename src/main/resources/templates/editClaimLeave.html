@@ -9,10 +9,10 @@
       justify-content: center;
       padding-top: 2%;
     }
-      </style>
+</style>
 
 
-<body onload="set_time()">
+<body onload="setClaimDate()">
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
     
@@ -35,13 +35,13 @@
 
             <tr>
                 <th>OT Start Time</th>
-                <td><input type="datetime-local" th:field="*{OTstartTime}" /></td>
+                <td><input id="editClaimLeaveStartDate" type="datetime-local" th:field="*{OTstartTime}" /></td>
                 
             </tr>
 
             <tr>
                 <td></td>
-                <td style='color:red' th:if="${#fields.hasErrors('OTstartTime')}" th:errors="*{OTstartTime}"></td>
+                <td id="editClaimLeaveEndDate" style='color:red' th:if="${#fields.hasErrors('OTstartTime')}" th:errors="*{OTstartTime}"></td>
 
             </tr>
 
@@ -85,7 +85,17 @@
         <div style="text-align: center;">
             <button type="submit" value="Back" onclick="history.back()">Back</button>
         </div>
+<script>
+    function setClaimDate(){
+        let dateInput1 = document.getElementById("editClaimLeaveStartDate")
+        dateInput1.max = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
 
+        let dateInput2 = document.getElementById("editClaimLeaveEndDate")
+        dateInput2.max = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+    }
+
+
+</script>
     
 </body>
 </html>

@@ -39,8 +39,10 @@
         <td align="left" th:text="${employee.name}">Employee Id</td>
         <td align="left" th:text="${employee.managerId}">Manager Id</td>
         <td align="left" th:text="${employee.status}">Name</td>
+        <span th:if="${employee.status != 'resigned'}">
         <td><a th:href="@{/admin/employee/edit/}+${employee.employeeId}"><i class="fa fa-pencil" style="font-size:18px"></i></span></a>
         <a th:href="@{/admin/employee/delete/}+${employee.employeeId}"> <i class="fa fa-trash-o" style="font-size:18px"></i></span></a></td>
+      </span>
       </tr>
     </table>
     <div th:if = "${totalPages > 1}">

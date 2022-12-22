@@ -87,6 +87,21 @@ public class StaffController {
  
     }
 
+    @GetMapping(value = "/viewClaim")
+    public String viewClaim(HttpSession httpSession, Model model){
+        User user = (User) httpSession.getAttribute("userSession");
+        Employee emp = user.getEmployee();
+        List<Leave> leaves = leaveService.findEmployeeLeaves(emp);
+        model.addAttribute("leaves", leaves);
+        List<CompensationRequest> crReq = crService.findEmployeeCompensationRequest(emp);
+        model.addAttribute("crReq", crReq);
+        LocalDate today = LocalDate.now();
+        model.addAttribute("todayDate", today);
+
+        return "view-Claim";
+ 
+    }
+
     @GetMapping(value={"/leaveDetail/{id}"})
     public String showLeaveDetail(@PathVariable Long id, Model model){
         Leave targetLeave = leaveService.findLeave(id);
@@ -125,7 +140,7 @@ public class StaffController {
         String message = "New Compensation Leave Request " + compensationRequest.getCompensationLeaveId() + " was successfully created.";
         System.out.println(message);
 
-        return "redirect:/staff/viewLeave";
+        return "redirect:/staff/viewClaim";
     }
 
     @GetMapping(value={"/compensation/edit/{id}"})
@@ -164,7 +179,7 @@ public class StaffController {
           exitingRequest.setStatus(LeaveStatusEnum.UPDATED);
 
         crService.updCompensationRequest(exitingRequest);
-        return "redirect:/staff/viewLeave";
+        return "redirect:/staff/viewClaim";
     }
 
     @GetMapping(value={"/compensation/cancel/{id}"})
@@ -172,7 +187,7 @@ public class StaffController {
         CompensationRequest targetCompensationRequest = crService.findCompensationRequest(id);
         targetCompensationRequest.setStatus(LeaveStatusEnum.CANCELLED);
         crService.updCompensationRequest(targetCompensationRequest);
-        return "redirect:/staff/viewLeave";
+        return "redirect:/staff/viewClaim";
     }
 
     //<<<Leave Section>>>

@@ -12,7 +12,7 @@
     }
       </style>
 
-<body onload="set_time()">
+<body onload="setClaimDate()">
     <div th:replace="fragments/layout.html :: header" />
     <div th:replace="fragments/layout.html :: menu" />
     
@@ -29,7 +29,7 @@
            
             <tr>
                 <th>OT Start Time</th>
-                <td><input type="datetime-local" th:field="*{OTstartTime}" class="form-control" /></td>              
+                <td><input id="claimLeaveStartDate" type="datetime-local" th:field="*{OTstartTime}" class="form-control" /></td>              
                
             </tr>
 
@@ -41,7 +41,7 @@
 
             <tr>
                 <th>OT End Time</th>
-                <td><input type="datetime-local" th:field="*{OTendTime}" /></td>
+                <td><input id="claimLeaveEndDate" type="datetime-local" th:field="*{OTendTime}" /></td>
                
             </tr>
 
@@ -83,7 +83,15 @@
         <div style="text-align: center;">
             <button type="submit" value="Back" onclick="history.back()">Back</button>
         </div>
+<script>
+    function setClaimDate(){
+        let dateInput1 = document.getElementById("claimLeaveStartDate")
+        dateInput1.max = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
 
+        let dateInput2 = document.getElementById("claimLeaveEndDate")
+        dateInput2.max = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
+    }
+</script>
     
 </body>
 </html>

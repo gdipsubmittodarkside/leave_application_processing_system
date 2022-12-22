@@ -13,14 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
-@Table(name = "leave_request")   //to make SQL able to create table
+@Table(name = "leave_request") // to make SQL able to create table
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,9 +34,11 @@ public class Leave {
     private Long leaveId;
 
     @Column(name = "start_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate startDate;
 
     @Column(name = "end_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate endDate;
 
     @Column(name = "leave_type", columnDefinition = "ENUM('ANNUAL', 'MEDICAL', 'COMPENSATION')")
@@ -48,7 +51,6 @@ public class Leave {
     @Column(name = "status", columnDefinition = "ENUM('APPLIED', 'CANCELLED', 'APPROVED', 'REJECTED', 'UPDATED')")
     @Enumerated(EnumType.STRING)
     private LeaveStatusEnum status;
-
 
     @Column(name = "comment")
     private String comment;

@@ -27,7 +27,7 @@ import sg.nus.iss.team2.reporting.FilesExporter;
 import sg.nus.iss.team2.service.*;
 import sg.nus.iss.team2.validator.ApproveValidator;
 
-@Controller 
+@Controller
 @RequestMapping("/manager")
 public class ManagerController {
 
@@ -37,7 +37,7 @@ public class ManagerController {
     @Autowired
     private LeaveService leaveService;
 
-    @Autowired 
+    @Autowired
     private HttpSession session;
 
     @Autowired
@@ -50,22 +50,23 @@ public class ManagerController {
     private FilesExporter export;
 
     @InitBinder("approve")
-	private void initCourseBinder(WebDataBinder binder) { 
-	binder.addValidators(approveValidator); }
+    private void initCourseBinder(WebDataBinder binder) {
+        binder.addValidators(approveValidator);
+    }
 
     // Get the List of Employees under the Manager
-    public List<Employee> FindEmployeesUnderManager(){
-        User manager = (User)session.getAttribute("userSession");
+    public List<Employee> FindEmployeesUnderManager() {
+        User manager = (User) session.getAttribute("userSession");
         Long managerId = manager.getUserId();
 
         return empService.findSubordinates(managerId);
     }
 
-    // View Employees' Leave History 
+    // View Employees' Leave History
     @GetMapping("/team-leave")
-    public String ViewTeamLeaveHistory(Model model){
+    public String ViewTeamLeaveHistory(Model model) {
         List<Employee> team = FindEmployeesUnderManager();
-        
+
         List<Leave> teamLeaves = leaveService.findTeamLeaveHistory(team);
         List<CompensationRequest> compHistory = compRequestService.findTeamCompensationHistory(team);
 
@@ -77,7 +78,7 @@ public class ManagerController {
 
     // View Pending Approvals (1) leave, (2) claims
     @GetMapping("/pending")
-    public String ViewPendingApprovals(Model model){
+    public String ViewPendingApprovals(Model model) {
         List<Employee> team = FindEmployeesUnderManager();
 
         // Leave - applied & updated only
@@ -87,22 +88,20 @@ public class ManagerController {
         // Compensation Claims - applied & updated only
         List<CompensationRequest> compRequests = compRequestService.findRequestByTeam(team);
         model.addAttribute("compRequests", compRequests);
-
         return "mgr-pending-approval";
-    } 
+    }
 
     // when "Detail" button is clicked, display details of 1 particular leave
-        // will show approve/reject option
-        // Show leave records of his/her subordinates during the leave period are listed
-        //Logic: 
-        //1. From the leaveid --> look for the leave period
-        //2. From the managerid --> look for the subordinates id
-        //3. Get his/her subordinates leave record that coincide with the leave period
-        //4. Display them
+    // will show approve/reject option
+    // Show leave records of his/her subordinates during the leave period are listed
+    // Logic:
+    // 1. From the leaveid --> look for the leave period
+    // 2. From the managerid --> look for the subordinates id
+    // 3. Get his/her subordinates leave record that coincide with the leave period
+    // 4. Display them
 
     @PostMapping("/leave/display/{id}")
-    public String ViewLeaveDetails(@PathVariable Long id, Model model)
-    {
+    public String ViewLeaveDetails(@PathVariable Long id, Model model) {
         Leave leave = leaveService.findLeave(id);
 
         LocalDate theLeaveStartDate = leave.getStartDate();
@@ -110,17 +109,22 @@ public class ManagerController {
 
         List<Employee> team = FindEmployeesUnderManager();
 
-        List<Leave> teamLeaves = leaveService.findApprovedTeamLeaveHistory(team, theLeaveStartDate, theLeaveEndDate);// only: approved, and the same period
+        List<Leave> teamLeaves = leaveService.findApprovedTeamLeaveHistory(team, theLeaveStartDate, theLeaveEndDate);// only:
+                                                                                                                     // approved,
+                                                                                                                     // and
+                                                                                                                     // the
+                                                                                                                     // same
+                                                                                                                     // period
 
         model.addAttribute("teamLeaves", teamLeaves);
-        model.addAttribute("leave",leave);
+        model.addAttribute("leave", leave);
         model.addAttribute("approve", new Approve());
 
         return "manager-leave-detail";
     }
 
     @GetMapping("/exportLeaveHiscsv")
-    public void exportLeaveHistCSV(HttpServletResponse response) throws IOException{
+    public void exportLeaveHistCSV(HttpServletResponse response) throws IOException {
         List<Employee> team = FindEmployeesUnderManager();
         List<Leave> leaveHis = leaveService.findTeamLeaveHistory(team);
         export.exportLeaveHisToCSV(leaveHis, response);
@@ -134,45 +138,44 @@ public class ManagerController {
     }
 
     // After Manager clicks "approve" or "reject" Leave
-    @PostMapping("/leave/edit/{leave_id}") 
-    public String ApproveOrRejectLeave(@Valid @ModelAttribute Approve approve, BindingResult bindingResult, @PathVariable long leave_id, Model model){
+    @PostMapping("/leave/edit/{leave_id}")
+    public String ApproveOrRejectLeave(@Valid @ModelAttribute Approve approve, BindingResult bindingResult,
+            @PathVariable long leave_id, Model model) {
 
-        //To rewrite the data so that when it returns, we can get them back. 
-        if (bindingResult.hasErrors())
-        {
-            Leave leave = leaveService.findLeave(leave_id); 
+        // To rewrite the data so that when it returns, we can get them back.
+        if (bindingResult.hasErrors()) {
+            Leave leave = leaveService.findLeave(leave_id);
             LocalDate theLeaveStartDate = leave.getStartDate();
             LocalDate theLeaveEndDate = leave.getEndDate();
-    
-            List<Employee> team = FindEmployeesUnderManager();
-            List<Leave> teamLeaves = leaveService.findApprovedTeamLeaveHistory(team, theLeaveStartDate, theLeaveEndDate);// only: approved, and the same period
-    
-            model.addAttribute("teamLeaves", teamLeaves);
-            model.addAttribute("leave",leave); 
 
-            return "manager-leave-detail"; 
+            List<Employee> team = FindEmployeesUnderManager();
+            List<Leave> teamLeaves = leaveService.findApprovedTeamLeaveHistory(team, theLeaveStartDate,
+                    theLeaveEndDate);// only: approved, and the same period
+
+            model.addAttribute("teamLeaves", teamLeaves);
+            model.addAttribute("leave", leave);
+
+            return "manager-leave-detail";
 
         }
 
         Leave leave = leaveService.findLeave(leave_id);
         String decision = approve.getDecision();
         String comment = approve.getComment();
-        
- 
+
         leaveService.updateLeaveAndLeaveBalance(leave, decision, comment);
 
-
         return "redirect:/manager/pending";
-        
+
     }
 
-    // when "Detail" button is clicked, display details of 1 particular Claim Request
-        // will show approve/reject option
+    // when "Detail" button is clicked, display details of 1 particular Claim
+    // Request
+    // will show approve/reject option
     @PostMapping("/claim/display/{comp_id}")
-    public String ViewCompensationRequest(@PathVariable Long comp_id, Model model)
-    {
+    public String ViewCompensationRequest(@PathVariable Long comp_id, Model model) {
         CompensationRequest compReq = compRequestService.findCompensationRequest(comp_id);
-        
+
         model.addAttribute("compRequest", compReq);
         model.addAttribute("approve", new Approve());
 
@@ -181,12 +184,12 @@ public class ManagerController {
 
     // After Manager clicks "approve" or "reject" Compensation
     @PostMapping("/claim/edit/{comp_id}")
-    public String ApproveOrRejectCompensation(@Valid @ModelAttribute Approve approve, BindingResult bindingResult, @PathVariable long comp_id, Model model){
+    public String ApproveOrRejectCompensation(@Valid @ModelAttribute Approve approve, BindingResult bindingResult,
+            @PathVariable long comp_id, Model model) {
 
-        if (bindingResult.hasErrors())
-        {
+        if (bindingResult.hasErrors()) {
             CompensationRequest compReq = compRequestService.findCompensationRequest(comp_id);
-            model.addAttribute("compRequest",compReq);
+            model.addAttribute("compRequest", compReq);
             return "comp-req-detail";
 
         }

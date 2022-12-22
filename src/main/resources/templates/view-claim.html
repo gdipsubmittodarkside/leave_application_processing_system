@@ -5,7 +5,7 @@
   <script type="text/javascript" th:src="@{/DataTable/datatables.min.js}" ></script>
 
   <style>
-   
+    
     ul.pagination li{
         display: inline;
         padding: 10px;
@@ -19,7 +19,7 @@
         
     }
 
-    </style>
+</style>
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head" />
@@ -29,9 +29,9 @@
 
 
     <div class = "tabinator">
-        <input type = "radio" id = "tab1" name = "tabs" checked>
+        <input type = "radio" id = "tab1" name = "tabs">
         <label for = "tab1">Personal Leave Detail</label>
-        <input type = "radio" id = "tab2" name = "tabs">
+        <input type = "radio" id = "tab2" name = "tabs" checked>
         <label for = "tab2">Claim History</label>
         <label for = "tab3"><a th:href="@{/staff/leave/new }">Apply Leave</span></a></label>
         <label for = "tab4"><a th:href="@{/staff/compensation/claimLeave }">Apply Compensation Claim</span></a></label>

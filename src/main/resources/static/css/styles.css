@@ -330,7 +330,12 @@ button:focus {
     box-shadow: none;
     color: white;
 }
-
+.detail-link{
+    color: #338;
+}
+.detail-link:hover{
+    color: white;
+}
 button {
     border: none;
     color: #338;

@@ -94,6 +94,7 @@
                             <td th:text="${req.compensationLeaveId}"></td>
                             <td th:text="${req.employee.name}"></td>
                             <td th:text="${req.OTstartTime}"></td>
+                            <!-- <td th:text="${#temporals.format(now, 'dd-MM-yyyy HH:mm')}"></td> -->
                             <td th:text="${req.OTendTime}"></td>
                             <td th:text="${req.status}"></td>
                             <td><button type="submit" value="Details">DETAILS</td>
@@ -108,14 +109,14 @@
             $(document).ready(function(){
                 $("#leave-table").DataTable({
             "pageLength": 5,
-            "lengthMenu": [ 5, 10, 15, 20, 25, -1 ]
+            "lengthMenu": [ 5, 10, 15, 20, 25]
         });	
             })
 
             $(document).ready(function(){
                 $("#compensation-table").DataTable({
             "pageLength": 5,
-            "lengthMenu": [ 5, 10, 15, 20, 25, -1]
+            "lengthMenu": [ 5, 10, 15, 20, 25]
         });
             })
 
