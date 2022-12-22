@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import sg.nus.iss.team2.configuration.PublicHolidayApi;
 import sg.nus.iss.team2.model.Employee;
+import sg.nus.iss.team2.model.LeaveBalance;
 import sg.nus.iss.team2.model.LeaveType;
 import sg.nus.iss.team2.model.PublicHoliday;
 import sg.nus.iss.team2.model.Role;
 import sg.nus.iss.team2.model.User;
 import sg.nus.iss.team2.reporting.FilesExporter;
 import sg.nus.iss.team2.service.EmployeeService;
+import sg.nus.iss.team2.service.LeaveBalanceService;
 import sg.nus.iss.team2.service.LeaveTypeService;
 import sg.nus.iss.team2.service.PublicHolidayService;
 import sg.nus.iss.team2.service.RoleService;
@@ -65,6 +67,9 @@ public class AdminController {
 
     @Autowired
     private LeaveTypeService leTyService;
+
+    @Autowired
+    private LeaveBalanceService leaveBalService;
 
     @Autowired
     private EmployeeValidator empValidator;
@@ -236,13 +241,15 @@ public class AdminController {
         }
         userService.createUser(user);
         List<Role> newRoleSet = new ArrayList<>();
+
         user.getRoles().forEach(role -> {
             Role complete = roleService.findRoleById(role.getRoleId());
             newRoleSet.add(complete);
         });
+
         user.setRoles(newRoleSet);
         userService.createUser(user);
-
+    
         return "redirect:/admin/user/list";
     }
 
@@ -264,7 +271,7 @@ public class AdminController {
             model.addAttribute("allRoles", roles);
             return "user-edit";
         }
-        
+
         userService.updateUser(user);
         return "redirect:/admin/user/list";
     }
