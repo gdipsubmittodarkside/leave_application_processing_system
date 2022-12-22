@@ -86,7 +86,7 @@ public class StaffController {
         return "viewLeave";
  
     }
-
+    
     @GetMapping(value = "/viewClaim")
     public String viewClaim(HttpSession httpSession, Model model){
         User user = (User) httpSession.getAttribute("userSession");
@@ -275,8 +275,8 @@ public class StaffController {
         if(LocalDate.now().isAfter(targetLeave.getStartDate())){
             return "OutDated";
         }
-        targetLeave.setStatus(LeaveStatusEnum.CANCELLED);
-        leaveService.updateLeave(targetLeave);
+        
+        leaveService.cancelLeave(targetLeave);
         return "redirect:/staff/viewLeave";
     }
 

@@ -67,6 +67,14 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional
+    public Leave cancelLeave(Leave leave) {
+        leave.setStatus(LeaveStatusEnum.CANCELLED);
+        this.addLeaveBalance(leave, leave.getEmployee());
+        return leaveRepository.saveAndFlush(leave);
+    }
+
+    @Override
+    @Transactional
     public void removeLeave(Leave leave) {
         leaveRepository.delete(leave);
     }
@@ -176,28 +184,7 @@ public class LeaveServiceImpl implements LeaveService {
 
             // update "LeaveBalance" DB with new (increased) leave balance
             Employee emp = leave.getEmployee();
-            LeaveBalance LB1 = emp.getLeaveBalance();
-            String typeOfLeave = leave.getLeaveType().toString();
-            
-            LocalDate startDate = leave.getStartDate();
-            LocalDate endDate = leave.getEndDate();
-            double durationInDays = calculate.numOfDaysMinusPHAndWeekend(startDate, endDate);
-
-
-            if (typeOfLeave.equals("ANNUAL")){
-                
-                int INTdurationInDays = (int) durationInDays;
-                LBservice.addAnnualLeaveBalance(LB1, INTdurationInDays);
-            }
-            else if (typeOfLeave.equals("MEDICAL"))
-            {
-                int INTdurationInDays = (int) durationInDays;
-                LBservice.addMedicalLeaveBalance(LB1, INTdurationInDays);
-            }
-            else if (typeOfLeave.equals("COMPENSATION"))
-            {
-                LBservice.addCompensationLeaveBalance(LB1, durationInDays);
-            }
+            this.addLeaveBalance(leave, emp);
             
         }
         else if (decision.equalsIgnoreCase(LeaveStatusEnum.APPROVED.toString()) )
@@ -240,6 +227,37 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional
+    public void addLeaveBalance(Leave leave, Employee emp){
+        LeaveBalance LB1 = emp.getLeaveBalance();
+        String typeOfLeave = leave.getLeaveType().toString();
+        
+        LocalDate startDate = leave.getStartDate();
+        LocalDate endDate = leave.getEndDate();
+        double durationInDays = calculate.numOfDaysMinusPHAndWeekend(startDate, endDate);
+
+
+        if (typeOfLeave.equals("ANNUAL")){
+            
+            int INTdurationInDays = (int) durationInDays;
+            LBservice.addAnnualLeaveBalance(LB1, INTdurationInDays);
+        }
+        else if (typeOfLeave.equals("MEDICAL"))
+        {
+            int INTdurationInDays = (int) durationInDays;
+            LBservice.addMedicalLeaveBalance(LB1, INTdurationInDays);
+        }
+        else if (typeOfLeave.equals("COMPENSATION"))
+        {
+            LBservice.addCompensationLeaveBalance(LB1, durationInDays);
+        }
+
+    }
+
+
+
+
+    @Override
+    @Transactional
     public Leave findOverlapLeave(Leave leave, Employee emp){
         List<Leave> leaves = findEmployeeLeaves(emp);
         for(Leave lv: leaves){
@@ -267,5 +285,7 @@ public class LeaveServiceImpl implements LeaveService {
 
         return false;
     }
+    
+    // scheduler.schedule(task, new CronTrigger("0 15 9-17 * * MON-FRI"));
 
 }

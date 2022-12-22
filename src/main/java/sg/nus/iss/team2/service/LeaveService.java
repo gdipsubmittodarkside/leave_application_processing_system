@@ -20,6 +20,8 @@ public interface LeaveService {
 
     Leave updateLeave(Leave leave);
 
+    Leave cancelLeave(Leave leave);
+
     void removeLeave(Leave leave);
 
     Boolean isOutOfLeave(Leave leave, Employee emp);
@@ -34,6 +36,8 @@ public interface LeaveService {
     void updateLeaveAndLeaveBalance(Leave leave, String decision, String comment);
 
     void deductLeaveBalance(Leave leave, Employee emp);
+
+    void addLeaveBalance(Leave leave, Employee emp);
 
     Leave findOverlapLeave(Leave leave, Employee emp);
 
