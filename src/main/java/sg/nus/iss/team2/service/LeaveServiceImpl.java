@@ -48,6 +48,20 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional
+    public List<Leave> findEmployeeThisYearLeaves(Employee employee) {
+
+        int thisyear = LocalDate.now().getYear();
+        List<Leave> thisyearLeaves = new ArrayList<>();
+        for(Leave lv : leaveRepository.findEmployeeLeave(employee)){
+            if(lv.getEndDate().getYear() >= thisyear){
+                thisyearLeaves.add(lv);
+            }
+        }
+        return thisyearLeaves;
+    };
+
+    @Override
+    @Transactional
     public Leave findLeave(Long lid) {
         return leaveRepository.findById(lid).orElse(null);
     }

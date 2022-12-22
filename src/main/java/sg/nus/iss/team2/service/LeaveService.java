@@ -14,6 +14,8 @@ public interface LeaveService {
 
     List<Leave> findEmployeeLeaves(Employee employee);
 
+    List<Leave> findEmployeeThisYearLeaves(Employee employee);
+
     Leave findLeave(Long lid);
 
     Leave createLeave(Leave leave);

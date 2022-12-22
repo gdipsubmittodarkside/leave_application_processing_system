@@ -77,15 +77,9 @@ public class StaffController {
     public String viewLeave(HttpSession httpSession, Model model){
         User user = (User) httpSession.getAttribute("userSession");
         Employee emp = user.getEmployee();
-        List<Leave> leaves = leaveService.findEmployeeLeaves(emp);
-        int thisyear = LocalDate.now().getYear();
-        List<Leave> thisyearLeaves = new ArrayList<>();
-        for(Leave lv : leaves){
-            if(lv.getEndDate().getYear() == thisyear){
-                thisyearLeaves.add(lv);
-            }
-        }
-        model.addAttribute("leaves", thisyearLeaves);
+        List<Leave> leaves = leaveService.findEmployeeThisYearLeaves(emp);
+        
+        model.addAttribute("leaves", leaves);
         List<CompensationRequest> crReq = crService.findEmployeeCompensationRequest(emp);
         model.addAttribute("crReq", crReq);
         LocalDate today = LocalDate.now();

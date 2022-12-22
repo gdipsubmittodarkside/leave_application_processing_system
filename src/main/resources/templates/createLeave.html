@@ -74,7 +74,11 @@
                         <tr>
                             <th>Reason</th>
                             <td><textarea class="form-control" name= reason th:field="*{reason}" placeholder="Please Enter Your Reason (Mandatory)">Please Enter Your Reason</textarea></td> 
-                           
+                        </tr>
+                        <tr><td></td>
+                            <td style='color:red'><span th:if="${#fields.hasErrors('reason')}"
+                                th:errors="*{reason}"></span>
+                             </td>
                         </tr>
                         <tr>
                             <th>Work Dissemination</th>
@@ -83,16 +87,14 @@
                         </tr>
                         <tr>
                             <th>Contact Detail</th>
-                            <td><textarea class="form-control" name= reason th:field="*{contactDetail}" placeholder="Please enter your contactDetail (if you are on oversea trip)"></textarea></td> 
+                            <td><textarea lass="form-control" name= reason th:field="*{contactDetail}" placeholder="Please enter your contactDetail (if you are on oversea trip)"></textarea></td> 
                            
                         </tr>
 
                         <tr>
-                            <td></td>
                             <td style='color:red'><span th:if="${#fields.hasErrors('reason')}"
                                 th:errors="*{reason}"></span>
-                             </td>   
-
+                             </td>
                         </tr>
              
 
