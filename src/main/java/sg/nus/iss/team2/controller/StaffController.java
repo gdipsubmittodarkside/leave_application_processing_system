@@ -254,7 +254,7 @@ public class StaffController {
             return "outOfLeave";
         }
         Leave overlapLeave = leaveService.findOverlapLeave(leave, emp);
-        if(overlapLeave != null){
+        if(overlapLeave != null && overlapLeave.getLeaveId() != leave.getLeaveId()){
             model.addAttribute("overlapLeave", overlapLeave);
             return "overlapLeave";
         }
