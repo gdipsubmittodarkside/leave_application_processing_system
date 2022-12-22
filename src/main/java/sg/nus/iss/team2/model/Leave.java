@@ -48,6 +48,12 @@ public class Leave {
     @Column(name = "reason")
     private String reason;
 
+    @Column(name = "Work_Dissemination")
+    private String workDissemination;
+
+    @Column(name = "Contact_Detail")
+    private String contactDetail;
+
     @Column(name = "status", columnDefinition = "ENUM('APPLIED', 'CANCELLED', 'APPROVED', 'REJECTED', 'UPDATED')")
     @Enumerated(EnumType.STRING)
     private LeaveStatusEnum status;

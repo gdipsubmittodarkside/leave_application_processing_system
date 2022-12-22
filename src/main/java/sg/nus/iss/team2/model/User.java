@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class User {
     private String password;
 
     @Column(name = "join_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate joinDate;
 
     @OneToOne(mappedBy = "user")

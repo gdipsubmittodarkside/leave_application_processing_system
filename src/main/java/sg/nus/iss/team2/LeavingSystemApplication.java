@@ -133,23 +133,23 @@ public class LeavingSystemApplication {
                                         LeaveTypeEnum.MEDICAL, "Family matters", LeaveStatusEnum.CANCELLED, emp5);
                         Leave leave6 = new Leave(LocalDate.parse("2022-09-10"),
                                         LocalDate.parse("2022-09-11"),
-                                        LeaveTypeEnum.ANNUAL, "Vacation", LeaveStatusEnum.APPLIED, emp7);
+                                        LeaveTypeEnum.ANNUAL, "Vacation", LeaveStatusEnum.APPLIED, emp6);
                         Leave leave7 = new Leave(LocalDate.parse("2022-09-10"),
                                         LocalDate.parse("2022-09-11"),
-                                        LeaveTypeEnum.ANNUAL, "Me time", LeaveStatusEnum.APPLIED, emp4);
+                                        LeaveTypeEnum.ANNUAL, "Me time", LeaveStatusEnum.APPLIED, emp7);
 
                         Leave leave8 = new Leave(LocalDate.parse("2022-08-10"),
                                         LocalDate.parse("2022-09-11"),
-                                        LeaveTypeEnum.ANNUAL, "Attend wedding", LeaveStatusEnum.APPLIED, emp1);
+                                        LeaveTypeEnum.ANNUAL, "Attend wedding", LeaveStatusEnum.APPLIED, emp8);
                         Leave leave9 = new Leave(LocalDate.parse("2022-08-10"),
                                         LocalDate.parse("2022-08-11"),
-                                        LeaveTypeEnum.ANNUAL, "Holiday", LeaveStatusEnum.APPLIED, emp1);
+                                        LeaveTypeEnum.ANNUAL, "Holiday", LeaveStatusEnum.APPLIED, emp9);
                         Leave leave10 = new Leave(LocalDate.parse("2022-12-30"),
                                         LocalDate.parse("2022-12-31"),
-                                        LeaveTypeEnum.ANNUAL, "Overseas trip", LeaveStatusEnum.APPLIED, emp5);
+                                        LeaveTypeEnum.ANNUAL, "Overseas trip", LeaveStatusEnum.APPLIED, emp10);
                         Leave leave11 = new Leave(LocalDate.parse("2023-01-16"),
                                         LocalDate.parse("2023-02-10"),
-                                        LeaveTypeEnum.ANNUAL, "Family gathering", LeaveStatusEnum.APPLIED, emp5);
+                                        LeaveTypeEnum.ANNUAL, "Family gathering", LeaveStatusEnum.APPLIED, emp1);
                         Leave leave12 = new Leave(LocalDate.parse("2022-10-10"),
                                         LocalDate.parse("2022-10-11"),
                                         LeaveTypeEnum.ANNUAL, "Personal matters", LeaveStatusEnum.APPLIED, emp1);

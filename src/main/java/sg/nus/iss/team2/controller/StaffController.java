@@ -2,6 +2,7 @@ package sg.nus.iss.team2.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -77,7 +78,14 @@ public class StaffController {
         User user = (User) httpSession.getAttribute("userSession");
         Employee emp = user.getEmployee();
         List<Leave> leaves = leaveService.findEmployeeLeaves(emp);
-        model.addAttribute("leaves", leaves);
+        int thisyear = LocalDate.now().getYear();
+        List<Leave> thisyearLeaves = new ArrayList<>();
+        for(Leave lv : leaves){
+            if(lv.getEndDate().getYear() == thisyear){
+                thisyearLeaves.add(lv);
+            }
+        }
+        model.addAttribute("leaves", thisyearLeaves);
         List<CompensationRequest> crReq = crService.findEmployeeCompensationRequest(emp);
         model.addAttribute("crReq", crReq);
         LocalDate today = LocalDate.now();
