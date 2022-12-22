@@ -63,7 +63,13 @@
           <td><select size="3" multiple="multiple" name="roles" id="roles">
               <option th:each="role:${roles}" th:value="${role.roleId}" th:text="${role.roleName}">Roles</option>
             </select></td>
-
+      <tr>
+        <td></td>
+          <td style='color:red'>
+            <span th:if="${#fields.hasErrors('roles')}"
+            th:errors="*{roles}"></span>
+          </td>
+      </tr>
             <tr>
               <td></td><td><button type="submit">Submit</button></td>
           </tr>

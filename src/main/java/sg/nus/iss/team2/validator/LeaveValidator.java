@@ -59,7 +59,7 @@ public class LeaveValidator implements Validator{
         }
 
         if (endDate!=null && (endDate.getDayOfWeek().toString().equals("SUNDAY") || endDate.getDayOfWeek().toString().equals("SATURDAY"))){
-            errors.rejectValue("endDate","error.endDate2","Please choose working days only, Saturday and Sunday are not working datys");
+            errors.rejectValue("endDate","error.endDate2","Please choose working days only, Saturday and Sunday are not working days");
         }
         
        

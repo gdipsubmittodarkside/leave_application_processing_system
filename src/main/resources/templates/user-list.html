@@ -28,6 +28,9 @@
           <span th:text="#{fieldLabel.userId}"></span></a><i class="fa fa-caret-down"></i></th>
           <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=username&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
              <span th:text="#{fieldLabel.username}"></span><i class="fa fa-caret-down"></i></a></th>
+          <!-- <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=username&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+          <span th:text="#{fieldLabel.userRole}"></span><i class="fa fa-caret-down"></i></a></th> -->
+        
           <!-- <th><a style="color: #338" th:href="@{'/admin/user/list/page/' + ${currentPage} + '?sortField=password&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
             <span th:text="#{fieldLabel.password}"></span><i class="fa fa-caret-down"></i></th>
           </a> -->
@@ -44,6 +47,16 @@
         <tr th:each="user : ${userList}">
           <td th:text="${user.userId}"></td>
           <td th:text="${user.username}"></td>
+          <!-- yt edited -->
+          <!-- <div th:if="${#lists.size(user.roles)==0}">
+            <td th:text="Not Applicable"></td>
+          </div>
+          <div th:if="${#lists.size(user.roles)==1}">
+            <td th:text="${user.roles[0].roleName}"></td>
+          </div>
+          <div th:if="${#lists.size(user.roles)==2}">
+            <td th:text="${user.roles[0].roleName} + ', ' + ${user.roles[1].roleName} "></td>
+          </div> -->
           <!-- <td type="password" th:text="${user.password}"></td> -->
           <td th:text="${user.JoinDate}"></td>
 

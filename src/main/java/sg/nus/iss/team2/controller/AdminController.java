@@ -247,7 +247,7 @@ public class AdminController {
     }
 
     @GetMapping("/user/edit/{id}")
-    public String editUserPage(@PathVariable Long id, Model model) {
+    public String editUserPage(@PathVariable("id") Long id, Model model) {
         User user = userService.findUser(id);
         model.addAttribute("user", user);
         List<Role> roles = roleService.findAllRoles();
@@ -257,13 +257,14 @@ public class AdminController {
 
     @PostMapping("/user/edit/{id}")
     public String editUserSave(@ModelAttribute @Valid User user, BindingResult result,
-            @PathVariable Long id, Model model) {
+            @PathVariable("id") Long id, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("user", userService.findUser(id));
             List<Role> roles = roleService.findAllRoles();
             model.addAttribute("allRoles", roles);
             return "user-edit";
         }
+        
         userService.updateUser(user);
         return "redirect:/admin/user/list";
     }

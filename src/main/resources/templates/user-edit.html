@@ -40,7 +40,7 @@
       </tr>
       <tr>
         <th>User Roles (multiple selection)</th>
-          <td><select size="3" multiple="multiple" name="roleSet" id="roleSet">
+          <td><select size="3" multiple="multiple" name="roleSet" id="roleSet" th:field="*{roles}">
               <option th:each="role:${allRoles}" 
               th:value="${role.roleId}" 
               th:text="${role.roleName}"
@@ -50,6 +50,7 @@
             <tr>
               <td></td><td><button type="submit">Submit</button></td>
           </tr>
+        <input type="hidden" th:field="${user.userId}"/>
 		</form>
 
   </table>

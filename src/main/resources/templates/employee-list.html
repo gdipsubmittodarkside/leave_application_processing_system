@@ -26,6 +26,8 @@
     
     <table class="table1">
         <th><a style="color: #338" th:href="@{'/admin/employee/list/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
+        <span th:text="#{fieldLabel.employeeId}">
+        <th><a style="color: #338" th:href="@{'/admin/employee/list/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
         <span th:text="#{fieldLabel.employeeName}">
         </span></a><i class="fa fa-caret-down"></i></th>
         <th><a style="color: #338" th:href="@{'/admin/employee/list/page/' + ${currentPage} + '?sortField=managerId&sortDir=' + ${reverseSortDir}+'&pageSize='+${pageSize}}">
@@ -36,7 +38,8 @@
         
       </tr>
       <tr th:each="employee : ${employees}">
-        <td align="left" th:text="${employee.name}">Employee Id</td>
+        <td align="left" th:text="${employee.employeeId}">Employee Id</td>
+        <td align="left" th:text="${employee.name}">Employee Name</td>
         <td align="left" th:text="${employee.managerId}">Manager Id</td>
         <td align="left" th:text="${employee.status}">Name</td>
         <span th:if="${employee.status != 'resigned'}">

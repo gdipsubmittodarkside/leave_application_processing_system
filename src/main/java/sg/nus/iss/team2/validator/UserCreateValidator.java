@@ -22,6 +22,8 @@ public class UserCreateValidator implements Validator {
         System.out.println(target);
         ValidationUtils.rejectIfEmpty(errors, "username", "error.user.username.empty");
         ValidationUtils.rejectIfEmpty(errors, "password", "error.user.password.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "roles", "error.user.roles.empty");
+        
         User user = (User) target;
         // if ((user.getJoinDate() != null) &&
         //         (user.getJoinDate().compareTo(LocalDate.now()) < 0)) {
