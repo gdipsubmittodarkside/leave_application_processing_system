@@ -81,7 +81,7 @@ public class StaffController {
         int thisyear = LocalDate.now().getYear();
         List<Leave> thisyearLeaves = new ArrayList<>();
         for(Leave lv : leaves){
-            if(lv.getEndDate().getYear() == thisyear){
+            if(lv.getEndDate().getYear() >= thisyear){
                 thisyearLeaves.add(lv);
             }
         }
