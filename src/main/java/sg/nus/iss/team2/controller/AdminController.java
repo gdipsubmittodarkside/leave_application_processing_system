@@ -248,7 +248,15 @@ public class AdminController {
         });
 
         user.setRoles(newRoleSet);
-        userService.createUser(user);
+        User userFromDB = userService.createUser(user);
+
+        // after create user, need to update employee table with UserID and LeaveBalanceID
+        LeaveBalance newLB = leaveBalService.createDefaultForNewUser(userFromDB);
+        Long emp_id = user.getEmployee().getEmployeeId();
+        Employee emp = empService.findEmployeeById(emp_id);
+        emp.setUser(userFromDB);
+        emp.setLeaveBalance(newLB);
+        empService.updateEmployee(emp);
     
         return "redirect:/admin/user/list";
     }

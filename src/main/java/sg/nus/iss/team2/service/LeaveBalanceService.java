@@ -2,6 +2,7 @@ package sg.nus.iss.team2.service;
 
 import sg.nus.iss.team2.model.Employee;
 import sg.nus.iss.team2.model.LeaveBalance;
+import sg.nus.iss.team2.model.User;
 
 import java.util.List;
 
@@ -32,4 +33,7 @@ public interface LeaveBalanceService {
     void addAnnualLeaveBalance(LeaveBalance leaveBalance, int days);
 
     void addMedicalLeaveBalance(LeaveBalance leaveBalance, int days);
+
+    // for new user (employee object created first)
+    LeaveBalance createDefaultForNewUser(User userFromDB);
 }
