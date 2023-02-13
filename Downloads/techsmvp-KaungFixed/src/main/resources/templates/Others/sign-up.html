@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+<div th:replace="fragments/layout.html :: menu"/>
+<head>
+
+    </script>
+</head>
+<body>
+
+<h2> Sign Up </h2>
+
+<form action="#" th:action="@{/register}"
+      th:object="${newMember}" method="post">
+    <table>
+        <tbody>
+        <tr>
+            <td><span th:text="#{fieldLabel.email}"></span></td>
+            <td><input type="email" th:field="*{email}" size="40" th:placeholder="${currentEmail}"/></td>
+        </tr>
+        <tr>
+            <td><span th:text="#{fieldLabel.password}"></span></td>
+            <td><input type="text" th:field="*{password}" size="40" /></td>
+            <!-- <td th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"></td> -->
+        </tr>
+        <tr>
+            <td><span th:text="#{fieldLabel.username}"></span></td>
+            <td><input type="text" th:value="*{username}" th:field="*{username}"  th:placeholder="${currentUsername}"/></td>
+            <!-- <td th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}"></td> -->
+        </tr>
+        <tr>
+            <td><span th:text="#{fieldLabel.gender}"></span></td>
+            <td>
+                <select th:field="*{gender}">
+                    <option value="MALE">MALE</option>
+                    <option value="FEMALE">FEMALE</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span th:text="#{fieldLabel.birthday}"></span></td>
+            <td><input type="date" th:value="*{birthday}" th:field="*{birthday}"  /></td>
+            <!-- <td th:if="${#fields.hasErrors('birthday')}"
+              th:errors="*{birthday}"></td> -->
+
+        </tr>
+
+
+        <tr>
+            <td><span th:text="#{fieldLabel.currentCity}"></span></td>
+            <td><input type="text" th:value="*{currentCity}" th:field="*{currentCity}"  /></td>
+        </tr>
+
+        <tr>
+            <td><span th:text="#{fieldLabel.courseTaken}"></span></td>
+            <td><input type="text" th:value="*{courseTaken}" th:field="*{courseTaken}"  /></td>
+        </tr>
+
+        <tr>
+            <td><span th:text="#{fieldLabel.dreamJob}"></span></td>
+            <td><input type="text" th:field="*{dreamJob}" size="20" /></td>
+        </tr>
+
+        <!-- <td>
+          <fieldset>
+            <select th:field="*{dreamJob}">
+              <option value=""></option>
+              <option th:each="dreamJob : ${dreamJobs}" th:value="${manager}" th:text="${manager}">List
+              </option>
+            </select>
+          </fieldset>
+        </td> -->
+
+        <tr>
+            <td><span th:text="#{fieldLabel.currentJobTitle}"></span></td>
+            <td><input type="text" th:field="*{currentJobTitle}" size="20" /></td>
+        </tr>
+        <tr>
+            <td><span th:text="#{fieldLabel.education}"></span></td>
+            <td><input type="text" th:field="*{education}" size="20" /></td>
+            <!-- <td th:if="${#fields.hasErrors('education')}"
+            th:errors="*{education}"></td> -->
+
+        </tr>
+        <tr>
+            <td><span th:text="#{fieldLabel.shortBio}"></span></td>
+            <td colspan="3"><textarea th:field="*{shortBio}"
+                                      th:rows="${shortBio}" cols="40"></textarea></td>
+        </tr>
+
+
+        <tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Sign Up" class="blcass" />
+                <input type="reset" value="Reset" class="blcass" />
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    let currentUsername = [[${currentUsername}]];
+    let currentEmail = [[${currentEmail}]]
+    console.log(currentUsername);
+    console.log(currentEmail)
+
+    /*]]>*/
+
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+
+    if (currentUsername!=null && currentEmail!=null) {
+        username.disabled = true;
+        email.disabled = true;
+    }
+</script>
+
+
+
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>

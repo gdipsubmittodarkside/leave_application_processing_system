@@ -1,0 +1,384 @@
+::placeholder {
+  color: lightgrey;
+}
+
+.table td, .table th { padding: 1.5rem; }
+
+#footer {
+  background-color: #3e4551;
+  text-align: center;
+  bottom: 0%;
+  width: 100%;
+  position: fixed;
+}
+
+#resp-table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wrapper{ 
+  display:block; 
+  height:500px;
+  transform: translateY(20%);
+} 
+
+.container{ 
+  display:block; 
+  position:absolute; 
+  height:50%; 
+  margin:auto; 
+  top:0; 
+  bottom:0; 
+  right:0; 
+  left:0; 
+} 
+
+/* mostly for dashboard */
+
+.image1 {
+  position: relative;
+  top: 10%;
+  min-width: 100%;
+  max-width: auto;
+  min-height: 150px;
+  max-height: 150px;
+  
+}
+.image2 {
+  position: absolute;
+  top: 100px;
+  left: 250px;
+  border: 2px rgb(255, 255, 255) solid;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+
+.bottom-left {
+  position: absolute;
+  top: 190px;
+  left: 225px;
+  width: 150px;
+  height:30px;
+  background-color: #ad2eb3;
+  border-radius: 5%;
+  text-align:center;
+  color: white; 
+}
+
+.container3 {
+  height:50%;
+  width:50%;
+  position: absolute;
+  top: 105px;
+  left: 420px;
+  color: white;
+  /* font-size: calc(.5 * (1.5vh + 1.1vw)); */
+  /* white-space: nowrap; */
+}
+
+.container4 {
+  height:90%;
+  width:400px;
+  background-color: white;
+  padding:10px;
+}
+
+.container5 {
+  height:90%;
+  width:600px;
+  background-color: white;
+  padding:10px;
+}
+
+.container6 {
+  height:100%;
+  width:600px;
+  background-color: white;
+  padding:10px;
+}
+
+.container7 {
+  height:100%;
+  width:400px;
+  background-color: white;
+  padding:10px;
+}
+
+.award {
+  width: 85px;
+  height:70px;
+  background-color: #e5e5e5;
+  color: #ad2eb3;
+  text-align: center;
+  display:inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin: 3px;
+  text-transform: uppercase;
+  font-size:12px;
+}
+
+.container8 {
+  height:800px;
+  width:98%;
+  padding:10px;
+  background-color: white;
+}
+
+.navbar {
+  background: #fff;
+}
+
+.nav-item .nav-link.active {
+  color: #4ba67f;
+  font-weight: bold;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+/* tabinator for courses/calendar page */
+.tabinator input {
+display: none;
+}
+.tabinator label {
+display: inline-block;
+color: #000000;
+margin-bottom: 10px;
+padding:1%;
+}
+.tabinator label:hover {
+color: #ad2eb3;
+cursor: pointer;
+}
+.tabinator input:checked + label {
+position: relative;
+color: #ad2eb3;
+font-weight: bolder;
+}
+
+
+/* mostly for courses/calendar layout */
+
+.container9 {
+height:100%;
+width:300px;
+background-color: rgb(255, 255, 255);
+padding:10px;
+}
+
+#content-wrapper {
+width: 465px;
+height:60vh;
+overflow-y: scroll;
+}
+
+#content-wrapper-progress {
+width: 100%;
+height:73vh;
+overflow-y: scroll;
+}
+
+/* for Sign Up page */
+#regForm {
+background-color: #ffffff;
+margin: 30px;
+padding: 40px;
+width: 100%;
+min-width: 300px;
+}
+
+
+input {
+padding: 10px;
+width: 100%;
+font-size: 17px;
+border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+display: none;
+}
+
+button:hover {
+opacity: 0.8;
+}
+
+#prevBtn {
+background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+height: 15px;
+width: 15px;
+margin: 0 2px;
+background-color: #bbbbbb;
+border: none;  
+border-radius: 50%;
+display: inline-block;
+opacity: 0.5;
+}
+
+.step.active {
+opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+background-color: #ad2eb3;
+}
+
+/* inputs */
+.signup-input
+{
+background-color: #fff;
+padding: 10px;
+margin-bottom: 5px;
+height:40px;
+border: 1px solid #ad2eb3;
+border-radius: 5px;
+}
+
+.signup-dropdown
+{
+background-color: #fff;
+width: 80%;
+height:30px;
+padding: 10px;
+margin-bottom: 20px;
+border: 1px solid #ad2eb3;
+border-radius: 5px;
+text-transform: uppercase;
+}
+
+.textarea2 {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;
+border: 1px solid #ad2eb3;
+border-radius: 5px;
+}
+
+
+.loginbutton
+{
+background-color: #ad2eb3;
+border-radius:5px;
+border:none;
+
+}
+
+/* this is for signup*/
+.button-1 {
+background-color: #ad2eb3;
+border:none;
+border-radius: 5px;
+box-sizing: border-box;
+color: #FFFFFF;
+cursor: pointer;
+display: inline-block;
+font-size: 14px;
+font-weight: 500;
+height: 40px;
+width: 100%;
+line-height: 20px;
+list-style: none;
+padding: 10px;
+position: relative;
+text-align: center;
+text-decoration: none;
+transition: color 100ms;
+vertical-align: baseline;
+}
+
+.button-1:hover,
+.button-1:focus {
+background-color: #616161;
+}
+
+.button-2 {
+background-color: #fff;
+border-radius: 5px;
+border: 1px solid #ad2eb3;
+box-sizing: border-box;
+color: #ad2eb3;
+cursor: pointer;
+display: inline-block;
+font-size: 14px;
+font-weight: 500;
+height: 40px;
+width: 100%;
+line-height: 20px;
+list-style: none;
+padding: 10px;
+position: relative;
+text-align: center;
+text-decoration: none;
+transition: color 100ms;
+vertical-align: baseline;
+}
+
+.button-2:hover,
+.button-2:focus {
+background-color: #616161;
+color: #fff;
+border: none;
+}
+
+.hr-lines{
+position: relative;
+max-width: 500px;
+margin: 30px auto;
+text-align: center;
+}
+
+.hr-lines:before{
+content:" ";
+height: 1.5px;
+width: 40%;
+background:  #ad2eb3;
+display: block;
+position: absolute;
+top: 50%;
+left: 0;
+}
+
+.hr-lines:after{
+content:" ";
+height: 1.5px;
+width: 40%;
+background:  #ad2eb3;
+display: block;
+position: absolute;
+top: 50%;
+right: 0;
+}
+
+/* this is for displaying  */
+
+main{
+width: 700px;
+margin: 0 auto;
+position: sticky;
+
+}
+.slide-read-more{
+overflow:hidden;
+}
+.slide-read-more-button{
+cursor: pointer;
+text-align: right;
+margin-top: 8px;
+color: #ad2eb3;
+display: none;
+}
+
+/*   Main color: #ad2eb3; */

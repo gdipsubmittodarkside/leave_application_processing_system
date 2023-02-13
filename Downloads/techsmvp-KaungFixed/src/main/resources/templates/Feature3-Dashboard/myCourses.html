@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+    <div th:replace="fragments/layout.html :: menu"/>
+<head>
+</head>
+<body>
+   
+    <div th:if="${#lists.isEmpty(myCourseList)}">
+        <h4 align="center">You have no saved courses</h4>
+    </div>
+
+    <div class="m-5" th:if="${not #lists.isEmpty(myCourseList)}">
+        
+        <hr>
+        <!-- LIST OF COURSES -->
+        <table class="table table-stripe  d" id="table_displayCourses">
+            <thead>
+                <tr>
+                    <th>My Course Id</th>
+                    <th>Course Title</th>
+                    <th>Skill</th>
+                    <th>Progress</th>
+                    <th>Scheduled?</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                <tr th:each="course,iterStat : ${myCourseList}">
+                    <td th:text="${course.myCourseId}"></td>
+                    <td th:text="${course.myCourseTitle}"></td>
+                    <td th:text="${skillTitles[__${iterStat.index}__]}"></td>
+                    <td th:text="${course.progress}"></td>
+                    <td th:text="${course.scheduleEvent} ? 'Scheduled' : 'Not Scheduled'"></td>
+                    <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"
+                        class="btn btn-info"><span th:text="WatchVideo"></span></a></td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+
+</script>
+<div th:replace="fragments/layout.html :: menu"/>
+<head>
+</head>
+<body>
+<div class="m-4">
+
+    <div class="shadow p-0.5 mb-5 bg-white rounded" sec:authorize="isAuthenticated()">
+        <table class="table table-borderless">
+            <td Align = Middle> <img th:src=${member.avatar} width="80" height="80"> </td>
+            <td style="vertical-align:middle;"><h5 th:text="${member.username} + ', your career goal is to be a ' +${searchedjob}  +'.'" style="color:#ad2eb3;"><span style="color:#ad2eb3;"><b ></b></span></h5></td>
+            <td class="text-center align-middle"><button type="button" class="btn btn-secondary set" th:data-name="${job1.jobId}" th:onclick="savedDreamJob(this.getAttribute('data-name'))"><i class="fa fa-pencil">Goal</i></button></td>
+        </table>
+    </div>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <h1 class="display-6"> <span style="color:#ad2eb3;">Essential skills for you to achieve your goal!</span></h1>
+        </blockquote>
+    </figure>
+
+
+    <!--NAV BAR STYLE-->
+    <!-- <nav class="nav nav-pills flex-column flex-sm-row" th:each="skill : ${skillList}">
+        <a class="flex-sm-fill text-sm-center nav-link active" aria-current="page" th:href="@{/skills/searchIntro/}+${skill.skillId}" th:text="${skill.skillTitle}" th:object="${skill}"></a>
+         -->
+    <!-- <a class="flex-sm-fill text-sm-center nav-link active" aria-current="page" href="#">Java</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">HTML</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">MS SQL</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">C++</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">Visual Basic</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">Tableu</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">Kotlin</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">Redis</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#">Angular</a> -->
+    <!-- </nav> -->
+
+    <!--TABLE STYLE-->
+    <div>
+        <table >
+            <tr th:each="skill : ${skillList}">
+
+                <td>
+                    <!-- <form method="POST" th:action="@{/skills/searchIntro/}+${skill.skillId}" th:object="${skill}"> -->
+                    <button type="submit"  class="btn btn-primary" th:data-name="${skill.skillId}" th:onclick="WatchCourseIntro(this.getAttribute('data-name'))"> <span th:text="${skill.skillTitle}"> </span></button>
+                    <!-- </form> -->
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <!--
+        <br>
+        <div layout:fragment="content" th:if="${not #lists.isEmpty(selectedSkill)}" id="#testing" >
+            <table class='table table-borderless' style="background-color:#f7f5f5" th:if="${selectedSkill[2]}!=null">
+                <tr>
+                    <td Align = Middle> <img src="/images/java.png" width="100" height="100"> </td>
+                    <td bgcolor="#fff"><b th:text="'what is '+${selectedSkill[0]}+' ?'"></b>
+                        <p th:text="${selectedSkill[1]}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p class="text-center"><b th:text="'Introduction to '+${selectedSkill[0]}"></b></p>
+                        <center><iframe width="800" height="450" th:src="@{https://www.youtube.com/embed/{url} (url=${selectedSkill[2]})}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></center>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <center><a class="btn btn-secondary" th:href="@{/skills/searchIntro/}+${targetSkill.skillId}" role="button"><i class="bi bi-book"></i> Start Learning</a></center>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                </tr>
+            </table>
+        </div> -->
+
+    <div>
+        <table class='table table-borderless' style="background-color:#f7f5f5">
+            <!-- <tbody id="imageId"> </tbody> -->
+
+            <tbody id="skillTitleId"> </tbody>
+
+            <tbody id="descriptionId"></tbody>
+
+            <tbody id="introId"></tbody>
+
+            <tbody id="videoId"></tbody>
+
+            <tbody id="startLearningId"></tbody>
+
+
+        </table>
+    </div>
+
+
+
+
+</div>
+
+<script>
+
+    function WatchCourseIntro(skillId){
+        var data = {
+            "skillId" : skillId
+        };
+        console.log(skillId)
+
+        // var selectedSkill = [];
+
+
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            url: "/skills/searchIntro/" + skillId ,
+            data: JSON.stringify(data),
+            success: function (result) {
+
+                // selectedSkill = result;
+                // buildTable(selectedSkill);
+                // console.log(selectedSkill);
+
+
+                // testing ajax response from controller
+                result.forEach(element => {
+                    console.log(element);
+
+                });
+
+                // $.each(result,function(i){
+                //     selectedSkill[i]=result[i];
+                //     console.log(selectedSkill[i]);
+                // });
+
+                //working here show data that we need in screen
+                // $.each(result, function (key,value){
+                //     $('#exampleid').append("<tr>\
+                //         <td>"+value+"</td>\</tr>");
+                // })
+
+
+                //inserting data into html
+
+
+                // $('#imageId').append("<td Align = Middle>\<img src='/images/java.png' width='100' height='100'>\</td>");
+                $('#skillTitleId').append("<tr>\<td Align = Middle>\<b>What is "+result[0]+"?<b>\</td>\</tr>");
+                $('#descriptionId').append("<tr>\<td Align = Middle>\<b>"+result[1]+"<b>\</td>\</tr>");
+                $('#introId').append("<tr>\<td colspan='2'><p class='text-center'>\<b>Introduction to "+result[0]+"<b>\</p>\</td>\</tr>");
+                $('#videoId').append("<tr>\<td><center><iframe width='800' height='450' src="+result[2]+" title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen>\</iframe>\</center>\</td>\</tr>");
+                $('#startLearningId').append("<tr>\<td><center><a class='btn btn-secondary' href='/skills/searchIntro/"+skillId+"  'role='button'>\<i class='bi bi-book'>\</i> Start Learning</a>\</center>");
+
+                //testing
+                console.log("@{skills/searchIntro/"+skillId+"}");
+
+
+            }
+        });
+
+        // function buildTable(haha){
+        //     var table = document.getElementById('myTable');
+        //     for(var i=0; i< haha.length; i++){
+        //         var row = <tr>
+        //                     <td>${haha[i]}</td>
+        //                 </tr>
+        //     }
+        // }
+
+
+
+
+
+    }
+
+
+    function savedDreamJob(newDreamJobId){
+        var data = {
+            "newDreamJobId" : newDreamJobId
+        };
+
+        console.log(newDreamJobId);
+
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            url: "/memebers/setdreamJob/" + newDreamJobId ,
+            data: JSON.stringify(data),
+            success: function (result) {
+                // testing ajax response from controller
+                console.log(result);
+            }
+        });
+
+
+    }
+
+</script>
+
+<script>
+
+    var listItems = document.getElementsByClassName("set");
+
+
+    for(var i = 0; i < listItems.length; i += 1){
+        listItems[i].addEventListener('click', function (e) {
+            // e.target.style.visibility = 'hidden';
+            e.target.outerText= 'set';
+            e.disabled=true;
+        });
+    }
+
+
+
+
+</script>
+
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>

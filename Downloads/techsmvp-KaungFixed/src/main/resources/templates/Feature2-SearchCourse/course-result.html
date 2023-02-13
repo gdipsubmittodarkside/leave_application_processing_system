@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+<div th:replace="fragments/layout.html :: menu"/>
+<head>
+    <script type="text/javascript" src="jquery-3.5.1.min.js">
+        $(document).ready(function(){
+            $("#most_popular").click(sortByPopularity);
+        });
+
+        function sortByPopularity(){
+
+            var $tbody = $('#table_displayCourses tbody')
+
+            $tbody.find('tr').sort(sortBy_popular).appendTo($tbody);
+        }
+
+        function sortBy_popular(a, b){
+            var data1 = $(a).attr('popularity');
+            var data2 = $(b).attr('popularity');
+
+            return data1 > data2 ? 1 : data1 < data2 ? -1 : 0;
+        }
+
+        var listItems = document.getElementsClassName("saved");
+        for(var i = 0; i < listItems.length; i += 1){
+            listItems[i].addEventListener('click', function (e) {
+                // e.target.style.visibility = 'hidden';
+                e.target.outerText= 'saved';
+            });
+        }
+    </script>
+</head>
+<body>
+<div th:if="${#lists.isEmpty(courseList)}">
+    <h4 align="center">There is no course available for <i><b><span th:text="${entered}">skillEntered</span></b></i></h4>
+</div>
+
+<div class="m-5" th:if="${not #lists.isEmpty(courseList)}">
+    <div class="m-5" th:if="${not #lists.isEmpty(courseList)}">
+        <table class="table">
+            <td width="20%" style="text-align: left">
+                <!-- FILTER BY DURATION -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Filter by Video Duration
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">1 - 2 hours</a></li>
+                        <li><a class="dropdown-item" href="#">2 - 3 hours</a></li>
+                        <li><a class="dropdown-item" href="#">3+ hours</a></li>
+                    </ul>
+                </div>
+            </td>
+
+            <td width="20%" style="text-align: left">
+                <!-- SORT BY "BEST MATCH", "MOST POPULAR", "MOST RECENT" -->
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Sort By
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li id="best_match"><a class="dropdown-item" th:href="@{'/courses/recommend?query='+ ${entered}}">Best Match</a></li>
+                        <li id="most_popular"><a class="dropdown-item" th:href="@{/sort/popular}">Most Popular</a></li>
+                        <li id="most_recent"><a class="dropdown-item" th:href="@{/sort/time}">Most Recent</a></li>
+                    </ul>
+                </div>
+            </td>
+
+            <td width="60%" style="text-align: right">
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/myCourses}" class="btn btn-secondary">View My Courses</a>
+                </div>
+            </td>
+
+        </table>
+
+        <!-- LIST OF COURSES -->
+        <table class="table table-striped" th:each="course : ${courseList}" id="table_displayCourses">
+            <tr th:attr="popularity=${course.views}">
+                <td width="30%">
+                    <a th:href="@{'/courses/watchCourse/' + ${course.courseId}}"> <img src="/images/placeholder/placeholderCourse1.jpg" width="320" height="180"></a>
+                </td>
+                <td width="50%" style="vertical-align: middle">
+                    <a th:href="@{'/courses/watchCourse/' + ${course.courseId}}"><p class="text-uppercase"><b><span th:text="${course.courseTitle}"></span></b></p></a>
+                    <div style="padding: 5px; display: inline-block;" th:text="${course.views} + ' views &nbsp; &nbsp;| '"></div>
+                    <div style="padding: 5px; display: inline-block;" th:text="${course.likes} + ' likes &nbsp; &nbsp;| '"></div>
+                    <div style="padding: 5px; display: inline-block;" th:text="${course.subscribers} + ' subscribers'"></div>
+                </td>
+                <td width="20%" style="vertical-align: middle">
+
+                    <div sec:authorize="isAuthenticated()">
+
+                        <a class="btn btn-secondary saved" id="myBtn" role="button" th:data-name="${course.courseId}" th:onclick="SaveCourse(this.getAttribute('data-name'))"><i class="bi bi-bookmarks"></i></i> Save</a>
+
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+        <table th:if="${totalPages > 1}">
+        </table>
+
+    </div>
+
+    <script>
+
+        function SaveCourse(courseId) {
+            let ajax = new XMLHttpRequest();
+
+            ajax.open("post", "/courses/save/" + courseId);
+            ajax.setRequestHeader("Content-Type", "application/json; charset=utf8");
+
+            ajax.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE) {
+                    // receive response from server
+                    if (this.status !== 200) {
+                        return;
+                    }
+
+                    // success
+                    console.log("successfully save course!")
+                    // disableSaveBtn()
+                }
+            }
+
+            let data = {
+                "courseId": courseId
+            }
+            ajax.send(JSON.stringify(data))
+        }
+
+    </script>
+
+    <script>
+
+        var listItems = document.getElementsByClassName("saved");
+        for(var i = 0; i < listItems.length; i += 1){
+            listItems[i].addEventListener('click', function (e) {
+                // e.target.style.visibility = 'hidden';
+                e.target.outerText= 'saved';
+            });
+        }
+
+
+    </script>
+
+    <script th:inline="javascript">
+
+    </script>
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>

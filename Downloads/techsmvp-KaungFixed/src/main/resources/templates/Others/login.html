@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+<div th:replace="fragments/layout.html :: menu"/>
+<head>
+</head>
+<style>
+
+    h6
+    {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #000;
+        line-height: 0.1em;
+        margin: 10px 0 20px;
+    }
+
+    h2 span
+    {
+        background:#fff;
+        padding:0 10px;
+    }
+
+</style>
+<body>
+<div class="m-2">
+    <div class="row d-flex h-100">
+        <table>
+            <tr>
+                <td width="5%">
+                </td>
+                <td width="40%">
+                    <form id="regForm" action="/action_page.php" th:action="@{/login}" method="post">
+                        <h1 style="color:#ad2eb3;">Log In</h1>
+                        <!-- One "tab" for each step in the form: -->
+                        <div th:if="${param.error}">
+                            <p class="text-danger">Invalid username or password.</p>
+                        </div>
+                        <div th:if="${param.logout}">
+                            <p class="text-warning">You have been logged out.</p>
+                        </div>
+                        <div>Username
+                            <p><input type="username" name="username" required class="form-control signup-input" ></p>
+                            Password
+                            <p><input  type="password" name="password" required class="form-control"></p>
+                            <button class="button-1" role="button" >Sign In</button>
+                            <p class="hr-lines"> or </p>
+                            <p><a th:href="@{/oauth2/authorization/google}">Sign In with GOOGLE</a></p>
+                            <p><a class="button-2" th:href="@{/members/register}">New to <b>TECHS</b>? Sign Up</a></p>
+                        </div>
+                    </form>
+
+                </td>
+                <td width="50%">
+                    <div>
+                        
+                        <img src="/images/signupimage.png"
+                          class="img-fluid" width="800" height="600">
+                      </div>
+                </td>
+                <td width="5%">
+
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>

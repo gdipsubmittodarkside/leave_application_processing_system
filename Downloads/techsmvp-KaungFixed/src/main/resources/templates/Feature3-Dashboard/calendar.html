@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+<div th:replace="fragments/layout.html :: menu"/>
+<link th:href="@{/css/js-calendar-calendar.css}" rel="stylesheet">
+<script defer th:src="@{/js/js-calendar.js}"></script>
+<head>
+</head>
+<style>
+    h2{
+        color: #ad2eb3;
+        text-align:center;
+    }
+    h4{
+        font-weight: bold;
+    }
+</style>
+<body style="background-color: #ebebeb">
+<div class="m-4 container8">
+    <table class="table table-borderless" style="table-layout:fixed;">
+        <tr>
+            <h2>Calendar</h2>
+            <td width="500px" style="background-color: #fcfcfc; position: sticky;"><h4>My Courses</h4>
+                <table>
+                    <td width="50%">
+                        <div class = "tabinator">
+                            <input type = "radio" id = "tab1" name = "tabs" checked>
+                            <label for = "tab1" onclick="openCourse('Scheduled');">Scheduled</label>
+                            <input type = "radio" id = "tab2" name = "tabs">
+                            <label for = "tab2" onclick="openCourse('Saved');">Unscheduled</label>
+                        </div>
+
+                    </td>
+                </table>
+                <div id="Scheduled" class="course">
+                    <div id="content-wrapper">
+                        <table class="table table-striped" >
+                            <tr th:if="${scheduledCourseList.empty}">
+                                <td colspan="2"> No Scheduled Course Available </td>
+                            </tr>
+                            <tr  id="myCourseS" th:each="course : ${scheduledCourseList}">
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"> <img th:src="@{|${course.getThumbnail()}|}" width="160px" height="90px"></a> </td>
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"><p class="link-primary text-uppercase" th:text="${course.getMyCourseTitle()}"></p></a><p class="fw-light" th:text="${course.getSkill()}"></p></td>
+                            </tr>
+
+                            <!--                            <tr>-->
+                            <!--                              <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse1.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                              <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">Full Introduction to JAVA</p></a><p class="fw-light">By Harvard</p></td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                              <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse2.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                              <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">Learn java from the best industry expert so that you can be a pro</p></a><p class="fw-light">By Harvard</p></td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse3.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">Full Introduction to JAVA</p></a><p class="fw-light">By Harvard</p></td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse4.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">Full Introduction to JAVA</p></a><p class="fw-light">By Harvard</p></td>-->
+                            <!--                              </tr>-->
+                            <!--                              <tr>-->
+                            <!--                                  <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse5.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                                  <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">Full Introduction to JAVA</p></a><p class="fw-light">By Harvard</p></td>-->
+                            <!--                              </tr>-->
+                        </table>
+                    </div>
+
+                </div>
+
+                <div id="Saved" class="course" style="display:none">
+                    <div id="content-wrapper">
+                        <table class="table table-striped">
+                            <tr th:if="${unscheduledCourseList.empty}">
+                                <td colspan="2"> No Scheduled Course Available </td>
+                            </tr>
+                            <tr th:each="course : ${unscheduledCourseList}">
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"> <img src="@{|${course.getThumbnail()}|}" width="160px" height="90px"></a> </td>
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"><p class="link-primary text-uppercase" th:text="${course.getMyCourseTitle()}"></p></a><p class="fw-light" th:text="${course.getSkill()}"></p></td>
+                            </tr>
+                            <!--                                <tr>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse5.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">From Zero to Hero in Python</p></a><p class="fw-light">By Harvard</p>-->
+                            <!--                                <a class="btn btn-secondary" role="button"> Add to Calendar</a></td>-->
+                            <!--                                </tr>-->
+                            <!--                                <tr>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse4.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                                <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">From Zero to Hero in Python</p></a><p class="fw-light">By Harvard</p>-->
+                            <!--                                <a class="btn btn-secondary" role="button"> Add to Calendar</a></td>-->
+                            <!--                                </tr>-->
+                            <!--                                <tr>-->
+                            <!--                                    <td><a href="https://www.Youtube.com/"> <img src="/images/placeholder/placeholderCourse3.jpg" width="160px" height="90px"></a> </td>-->
+                            <!--                                    <td><a href="https://www.Youtube.com/"><p class="link-primary text-uppercase">From Zero to Hero in Python</p></a><p class="fw-light">By Harvard</p>-->
+                            <!--                                    <a class="btn btn-secondary" role="button"> Add to Calendar</a></td>-->
+                            <!--                                </tr>-->
+                        </table>
+                    </div>
+                </div>
+            </td>
+
+            <td width="72%" style="position:sticky">
+                <div id="calHead">
+                    <div id="calPeriod" style="width:550px; height:40px" >
+                        <input id="calBack" type="button" class="mi">
+                        <select id="calMonth"></select>
+                        <input id="calYear" type="number">
+                        <input id="calNext" type="button" class="mi">
+                    </div>
+                    <input id="calAdd" type="button" class="mi" value="+ New Event">
+                    <input type="hidden" id="events" class="events" th:value="${events}">
+
+                </div>
+
+                <!-- (B) CALENDAR WRAPPER -->
+                <div id="calWrap">
+                    <div id="calDays"></div>
+                    <div id="calBody"></div>
+                </div>
+
+                <!-- (C) EVENT FORM -->
+                <dialog id="calForm"><form method="dialog">
+                    <div id="evtCX" class="mi">X</div>
+                    <h5 class="evt100">ADD EVENT</h5>
+                    <div class="evt50">
+                        <input id="schedule_id" type="hidden" th:value="${schedule_id}">
+                        <label>Start</label>
+                        <input id="evtStart" type="datetime-local" required>
+                    </div>
+                    <div class="evt50">
+                        <label>End</label>
+                        <input id="evtEnd" type="datetime-local" required>
+                    </div>
+                    <div class="evt50">
+                        <label>Text Color</label>
+                        <input id="evtColor" type="color" value="#000000" required>
+                    </div>
+                    <div class="evt50">
+                        <label>Background Color</label>
+                        <input id="evtBG" type="color" value="#ffdbdb" required>
+                    </div>
+                    <div class="evt100">
+                        <label>Event</label>
+                        <input id="evtTxt" type="text">
+
+                        <select id="select" name="selectList">
+                            <option th:each="course: ${unscheduledCourseList}" th:text="${course.getMyCourseTitle()}" th:value="${course.getMyCourseTitle()}"></option>
+                        </select>
+
+                    </div>
+                    <div class="evt100">
+                        <input type="hidden" id="evtID">
+                        <input type="button" id="evtDel" class="mi" value="DELETE">
+                        <input type="submit" id="evtSave" class="mi" value="SAVE">
+
+
+                    </div>
+                </form></dialog>
+            </td>
+
+        </tr>
+    </table>
+</div>
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>
+
+<script>
+    function openCourse(coursetype) {
+        var i;
+        var x = document.getElementsByClassName("course");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(coursetype).style.display = "block";
+    }
+
+    const start = document.getElementById("evtStart");
+    const end = document.getElementById("evtEnd");
+    const course = document.getElementById("select");
+    const saveBtn = document.getElementById("evtSave");
+    const deleteBtn = document.getElementById("evtDel");
+    const selectCourse = document.getElementById("select");
+    const txtColor = document.getElementById("evtColor");
+    const bgColor = document.getElementById("evtBG");
+    const txtNote = document.getElementById("evtTxt");
+
+
+
+    selectCourse.addEventListener("change", function () {
+        course.value = selectCourse.value;
+    })
+
+    saveBtn.addEventListener("click", function () {
+
+        let xhr = new XMLHttpRequest();
+        let data = "s=" + start.value + "&"+ "e="+end.value + "&" + "c="+ course.value +"&" +
+            "cx="+txtColor.value +"&" +"b="+bgColor.value + "&"+"t="+txtNote.value ;
+        xhr.open("POST", "/calendar/create", true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send(data)
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+
+                console.log(data)
+            }
+        }
+    })
+
+    deleteBtn.addEventListener("click", function (){
+        let xhr = new XMLHttpRequest();
+        let data = "s=" + start.value + "&"+ "e="+end.value + "&" + "c="+ course.value +"&" +
+            "cx="+txtColor.value +"&" +"b="+bgColor.value + "&"+"t="+txtNote.value ;
+        xhr.open("POST", "/calendar/delete", true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send(data)
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(data)
+            }
+        }
+    })
+
+
+
+</script>

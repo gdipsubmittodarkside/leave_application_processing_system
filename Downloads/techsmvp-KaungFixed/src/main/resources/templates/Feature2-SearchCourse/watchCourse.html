@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head  th:replace="fragments/layout.html :: html_head"/>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<style>
+    p{
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+</style>
+<body>
+
+<div th:replace="fragments/layout.html :: menu"/>
+
+<table class='table' th:object="${course}">
+    <tr>
+        <td>
+            <center><iframe width="800" height="450" th:src="@{https://www.youtube.com/embed/{url} (url=${urlQuery})}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></center>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table style="margin-left:auto;margin-right:auto">
+                <tr>
+                    <td>
+                        <main>
+                            <div class="slide-read-more">
+                                <p th:text="*{courseTitle}">Couse Title</p>
+                                <span th:text="'By ' + *{channelName} + ' on ' + *{date}">By Harvard on 18 July 2021</span>
+                                <p th:text="*{description}">
+                                    Java is a programming language famous for its ability to compile to platform-independent bytecode.
+                                    It powers enterprise web apps, big data pipelines, and android mobile apps.
+
+                                    #java #programming #100SecondsOfCode
+
+                                    🔗 Resources
+
+                                    Java Website https://java.com
+                                    Star7 Demo https://youtu.be/1CsTH9S79qI
+
+                                    🔥 Get More Content - Upgrade to PRO
+
+                                    Upgrade to Fireship PRO at https://fireship.io/pro
+                                    Use code lORhwXd2 for 25% off your first payment.
+
+                                    🎨 My Editor Settings
+
+                                    - Atom One Dark
+                                    - vscode-icons
+                                    - Fira Code Font
+
+                                    🔖 Topics Covered
+
+                                    - How Java works
+                                    - Java basics
+                                    - History of Java
+                                    - Java vs C
+                                    - How to compile Java
+                                    - Overview of JVM, JRE, & JDK
+                                </p>
+                            </div>
+                            <div class="slide-read-more-button read-more-button">Read More</div>
+                            <div class="slide-read-more-button">Read Less</div>
+                        </main>
+                    </td>
+                    <td>
+                        <div sec:authorize="isAuthenticated()">
+
+                            <a class="btn btn-secondary saved" id="myBtn" role="button" th:data-name="${course.courseId}" th:onclick="SaveCourse(this.getAttribute('data-name'))"><i class="bi bi-bookmarks"></i></i> Save</a>
+
+                        </div>
+                    </td>
+                </tr>
+            </table>
+    </tr>
+</table>
+<br>
+<br>
+<br>
+<br>
+
+<script>
+    $(document).ready(function(){
+        // resize the slide-read-more Div
+        var box = $(".slide-read-more");
+        var minimumHeight = 150; // max height in pixels
+        var initialHeight = box.innerHeight();
+        // reduce the text if it's longer than 200px
+        if (initialHeight > minimumHeight) {
+            box.css('height', minimumHeight);
+            $(".read-more-button").show();
+        }
+
+        SliderReadMore();
+
+        function SliderReadMore() {
+            $(".slide-read-more-button").on('click', function () {
+                // get current height
+                var currentHeight = box.innerHeight();
+
+                // get height with auto applied
+                var autoHeight = box.css('height', 'auto').innerHeight();
+
+                // reset height and revert to original if current and auto are equal
+                var newHeight = (currentHeight | 0) === (autoHeight | 0) ? minimumHeight : autoHeight;
+
+                box.css('height', currentHeight).animate({
+                    height: (newHeight)
+                })
+                $('html, body').animate({
+                    scrollTop: box.offset().top
+                });
+                $(".slide-read-more-button").toggle();
+            });
+        }
+    });
+
+    function SaveCourse(courseId) {
+        let ajax = new XMLHttpRequest();
+
+        ajax.open("post", "/courses/save/" + courseId);
+        ajax.setRequestHeader("Content-Type", "application/json; charset=utf8");
+
+        ajax.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE) {
+                // receive response from server
+                if (this.status !== 200) {
+                    return;
+                }
+
+                // success
+                console.log("successfully save course!")
+                // disableSaveBtn()
+            }
+        }
+
+        let data = {
+            "courseId": courseId
+        }
+        ajax.send(JSON.stringify(data))
+    }
+
+    var listItems = document.getElementsByClassName("saved");
+    for(var i = 0; i < listItems.length; i += 1){
+        listItems[i].addEventListener('click', function (e) {
+            // e.target.style.visibility = 'hidden';
+            e.target.outerText= 'saved';
+        });
+    }
+
+
+</script>
+
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+    <div th:replace="fragments/layout.html :: menu"/>
+    <link th:href="@{/css/js-calendar-calendar.css}" rel="stylesheet">
+    <script defer th:src="@{/js/js-calendar.js}"></script> 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<head>
+</head>
+<style>
+    h2{
+        color: #ad2eb3;
+        text-align:center;
+    }
+    h4{
+        font-weight: bold;
+    }
+</style>
+<body style="background-color: #ebebeb">
+    <div class="m-4 container8">
+        <table class="table table-borderless" style="table-layout:fixed;">
+            <tr>
+                <h2>My Courses</h2>
+                <td width="500px" style="background-color: #fcfcfc; position: sticky;"><h4>My Courses</h4>
+                    <table>
+                        <div class = "tabinator">
+                            <input type = "radio" id = "tab1" name = "tabs" checked>
+                            <label for = "tab1" onclick="openCourse('All');">All</label>
+                            <input type = "radio" id = "tab2" name = "tabs">
+                            <label for = "tab2" onclick="openCourse('In Progress');">In Progress</label>
+                            <input type = "radio" id = "tab3" name = "tabs">
+                            <label for = "tab3" onclick="openCourse('Completed');">Completed</label>
+                        </div>
+                        </td>
+                    </table>
+                    <div id="All" class="course">
+                        <div id="content-wrapper">
+                        <table class="table table-striped" >      
+                            <tr  th:each="course : ${myCourseList}">
+                              <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"> <img src="/images/placeholder/placeholderCourse1.jpg" width="160px" height="90px"></a> </td>
+                              <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"><p class="link-primary text-uppercase" th:text="${course.myCourseTitle}"></p></a><p class="fw-light"></p></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    </div>
+
+                   
+
+
+                    <div id="In Progress" class="course" style="display:none">
+                        <div th:if="${#lists.isEmpty(inProgressList)}">
+                            <span><b>You have no In Progress Courses. Start to add your new one.</b> </span>
+                        </div>
+                        <div id="content-wrapper">
+                            <table class="table table-striped">    
+                                <tr th:each="course : ${inProgressList}">
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"> <img src="/images/placeholder/placeholderCourse5.jpg" width="160px" height="90px"></a> </td>
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"><p class="link-primary text-uppercase" th:text="${course.myCourseTitle}"></p></a><p class="fw-light"></p>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                 
+
+                    <div id="Completed" class="course" style="display:none">
+                        <div th:if="${#lists.isEmpty(completedLlist)}">
+                            <span><b> You have no Completed Course yet. Start Learning a new one.</b></span>
+                        </div>
+                        <div id="content-wrapper">
+                            <table class="table table-striped">      
+                                <tr th:each="course : ${completedLlist}">
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"> <img src="/images/placeholder/placeholderCourse3.jpg" width="160px" height="90px"></a> </td>
+                                <td><a th:href="@{/myCourses/watchCourse/}+${course.myCourseId}"><p class="link-primary text-uppercase" th:text="${course.myCourseTitle}"></p></a><p class="fw-light"></p></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </td>
+                    <!-- NEED FILTER BY ALPHABETICAL AND PROGRESS RATE -->
+                    <td width="72%" style="position:static">
+                        <div id="content-wrapper-progress">
+                        <table class="table table-borderless" > 
+                            <tr th:each="course : ${myCourseList}">
+                                <td>
+                                    <div class="text-uppercase"><b th:text="${course.myCourseTitle}"></b> <div class="btn" role="button">
+                                       
+                                        <form  th:action="@{/myCourses/updateProgress/}+${course.myCourseId}" method="GET">
+                                         
+                                            <input type="number" th:value="${course.progress}" name="updatedProgress" min="1" max="100" style="width:5rem;height:1.5rem;"/>
+                             
+                                            <button class="btn btn-info btn-sm" type="submit" style="font-size:12px;height: 2.5em;" >SAVE</button>
+                                        
+                                        </form>
+                                     
+                                    <!-- <a th:href="@{/myCourses/edit/}+${course.myCourseId}" class="btn btn-info"><span
+                                            th:text="Save"></span></a> -->
+                                    
+                                    </div>
+
+                                    <div>
+                           
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" th:style="'width:' + (${course.progress}) + '%;'"  aria-valuenow="'width:' + (${course.progress}) + '%;'"  aria-valuemin="0" aria-valuemax="100" th:text="${course.progress}+'%'"></div>
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </div>    
+  
+                </td>
+                
+            </tr>
+        </table>
+    </div>
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>
+  
+  <script>
+  function openCourse(coursetype) {
+    var i;
+    var x = document.getElementsByClassName("course");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";  
+    }
+    document.getElementById(coursetype).style.display = "block"; 
+  }
+  </script>

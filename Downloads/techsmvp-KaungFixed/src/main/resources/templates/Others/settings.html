@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+<div th:replace="fragments/layout.html :: menu"/>
+<h2>Settings</h2>
+<div th:if="${message!=null}">
+    <p class="text-danger" th:text="${message}"></p>
+</div>
+
+<table class="table table-borderless">
+    <tr>
+        <td>
+            <div class="center">
+                <div class="form-input">
+                    <div class="preview">
+                        <img th:src="@{|${currentAvatar}|}" id="file-ip-1-preview">
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td style= vertical-align:middle>
+            <form enctype="multipart/form-data" th:action="@{/settings/image}" method="post">
+                <input type="file" accept="image/*" name="image" onchange="showPreview(event)">
+                <input type="submit" value="upload avatar">
+            </form>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <div class = "tabinator">
+            <input type = "radio" id = "tab1" name = "tabs" checked>
+            <label for = "tab1" onclick="openSetting('Profile');">Profile</label>
+            <input type = "radio" id = "tab2" name = "tabs">
+            <label for = "tab2" onclick="openSetting('Information');">Information</label>
+            <input type = "radio" id = "tab3" name = "tabs">
+            <label for = "tab3" onclick="openSetting('Password');">Password</label>
+        </div>
+    </tr>
+</table>
+<div id="Profile" class="setting">
+    <table class="table table-borderless">
+        <form th:action="@{/settings/profile}" th:object="${member}" method="post">
+            <p>Username: <input type="text" th:placeholder="${currentMember.getUsername()}" th:field="*{username}" disabled></p>
+            <p>Email Address: <input type="email" th:placeholder="${currentMember.getEmail()}" th:field="*{email}" disabled></p>
+            <p>Current Role: <input type="text" th:placeholder="${currentMember.getCurrentJobTitle()}" th:field="*{currentJobTitle}"></p>
+
+            <p>Year of Birth<input type="date" th:field="*{birthday}"></p>
+
+            <p>Bio <textarea name="shortBio" th:placeholder="${currentMember.getShortBio()}" th:text="${member.shortBio}" rows="2"></textarea></p>
+
+            <span>CurrentDream:<p th:text="${currentMember.getDreamJob().getJobTitle()}"></p></span>
+            <select th:field="*{dreamJob}">
+                <option th:each="job : ${jobList}" th:value="${job.getJobId()}" th:text="${job.getJobTitle()}"></option>
+            </select>
+            <p><input type="submit" value="Submit">
+                <input type="reset" value="Reset"></p>
+        </form>
+    </table>
+</div>
+
+<div id="Information" class="setting" style="display: none">
+    <form th:action="@{/settings/information}" th:object="${member}" method="post">
+
+        <p>Current Gender:<span th:text="${currentMember.getGender()}"></span></p>
+        <select th:field="*{gender}">
+            <option th:each="gender : ${T(nus.iss.team2.ADProjectTECHS.Model.Enums.Gender).values()}" th:value="${gender}" th:text="${gender}"></option>
+        </select>
+
+        <p>Current Education:<span th:text="${currentMember.getEducation()}"></span></p>
+        <select th:field="*{education}">
+            <option th:each="level : ${T(nus.iss.team2.ADProjectTECHS.Model.Enums.Education).values()}" th:value="${level}" th:text="${level}"></option>
+        </select>
+
+        <p>Current: my skills</p>
+        <div th:each="mk : ${currentMember.getMySkills()}">
+            <span th:text="${mk.getSkill().getSkillTitle()}"></span>
+        </div>
+        <select name="skills" multiple="multiple">
+            <option th:each="skill : ${skillList}" th:value="${skill.getSkillId()}" th:text="${skill.getSkillTitle()}"></option>
+        </select>
+
+        <!--            <select style="margin-bottom:30px;" th:field="*{mySkills}" class="selectpicker" multiple>-->
+        <!--                <option value="HTML">HTML</option>-->
+        <!--                <option value="Jquery">Jquery</option>-->
+        <!--                <option value="CSS">CSS</option>-->
+        <!--                <option value="Bootstrap 3">Bootstrap 3</option>-->
+        <!--                <option value="Bootstrap 4">Bootstrap 4</option>-->
+        <!--                <option value="Java">Java</option>-->
+        <!--                <option value="Javascript">Javascript</option>-->
+        <!--                <option value="Angular">Angular</option>-->
+        <!--                <option value="Python">Python</option>-->
+        <!--                <option value="Hybris">Hybris</option>-->
+        <!--                <option value="SQL">SQL</option>-->
+        <!--                <option value="NOSQL">NOSQL</option>-->
+        <!--                <option value="NodeJS">NodeJS</option>-->
+        <!--            </select>-->
+
+        <p><input type="submit" value="Submit">
+            <input type="reset" value="Reset"></p>
+    </form>
+</div>
+
+<div id="Password" class="setting" style="display: none" >
+    <form th:action="@{/settings/password}" method="post" >
+        <p>Current Password: <input type="password" name="curPwd" required></p>
+        <p>New Password: <input type="password"  name="newPwd" id="newPassword" required></p>
+        <p>Confirm new password <input type="password"  required oninput="checkPasswordMatch(this);"/></p>
+        <p><input type="submit" value="Submit">
+            <input type="reset" value="Reset"></p>
+    </form>
+
+</div>
+
+<script>
+    function openSetting(settingtype) {
+        var i;
+        var x = document.getElementsByClassName("setting");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(settingtype).style.display = "block";
+    }
+
+    // this is for previewing the file selected
+    function showPreview(event){
+        if(event.target.files.length > 0){
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("file-ip-1-preview");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+
+    function checkPasswordMatch(fieldConfirmPassword) {
+        if (fieldConfirmPassword.value != $("#newPassword").val()) {
+            fieldConfirmPassword.setCustomValidity("Passwords do not match!");
+        } else {
+            fieldConfirmPassword.setCustomValidity("");
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

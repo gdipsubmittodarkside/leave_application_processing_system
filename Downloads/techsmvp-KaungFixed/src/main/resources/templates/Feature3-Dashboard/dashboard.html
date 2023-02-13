@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+    <div th:replace="fragments/layout.html :: menu"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link th:href="@{/css/js-calendar-dashboard.css}" rel="stylesheet">
+    <script defer th:src="@{/js/js-calendar.js}"></script> 
+<head>
+</head>
+<body style="background-color: #ebebeb">
+    <img class="image1" src="/images/dashboardbgmini.png" width=100% height=10%/>
+
+    <table th:object="${member}">
+        <tr>
+            <img type= "image" class="image2"  th:src=${member.avatar} alt="photo" width=100 height=100  />
+
+            <div class="bottom-left" th:text="*{username}"></div>
+            <td class="container3" style="height:fit-content">
+                <h5><span> Dream Job : </span><span  th:text="${member.dreamJob.jobTitle}"></span></h5>
+
+                <p th:text="*{shortBio}"></p>
+
+            </td>
+        </tr>
+
+    </table>
+
+
+    <div class="m-5">
+        <table style="margin-left:auto;margin-right:auto;">
+            <tr>
+                <td width="430px" height="430px">
+                    <div class="container4">
+                        <table>
+                            <tr>
+                                <td width="70%">
+                                    <p><b>Progress of Goal</b></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr >
+                                <td>
+                                    <canvas id="courseChart" style="width:150%;"></canvas>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td width="430px" height="430px">
+                    <div class="container5">
+                        <table>
+                            <tr>
+                                <td width="70%">
+                                    <p><b>Skills Require</b></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="70%">
+                                    <ul>
+                                        <li th:each="sk : ${skills}" > <a th:href="@{/search/courses/result(skill=${sk.skillTitle})}" th:text="${sk.skillTitle}">element</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr/>
+                        <table>
+                            <tr>
+                                <td width="70%">
+                                    <p><b>Skills Acquired</b></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="skillsTable">
+                            <tr > 
+
+                                <td  th:each="skill : ${skillTitles}" class="award shadow p-0.5 mb-5 rounded"> <span th:text="${skill}" > </span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="430px" height="430px">
+                    <div class="container7">
+                        <table>
+                            <tr>
+                                <td width="70%">
+                                    <p><b>Courses</b></p>
+                                </td>
+                                <td width="10%">
+                                    <a th:href="@{/myCourses/manageProgress}" class="link-secondary">Manage</a>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="coursesTable">
+
+                            <tr th:each="course : ${myCourses}">
+
+                                <td aligh="left"  style= "width: 20% ; font-size: x-small; font-weight: bold;"><span th:text="${course.myCourseTitle}" ></span></td>
+                                <td class="progress progress-bar" role="progressbar" th:style="'width:' + ( ${course.progress}) + '%;'"  aria-valuenow="'width:' + ( ${course.progress}) + '%;'"  aria-valuemin="0" aria-valuemax="100" th:text="${course.progress}+'%'"></td>
+                                
+                                    <!-- <canvas id="progressbar" style="width:150%; height:300%;"></canvas> -->
+                                
+                            </tr>
+
+
+                       
+                        </table>
+                    </div>
+                </td>
+                <td width="430px" height="430px">
+                    <div class="container6">
+                        <table>
+                            <tr>
+                                <td width="70%">
+                                    <p><b>Monthly Schedule</b></p>
+                                </td>
+                                <td width="10%">
+                                    <a th:href="@{/calendar/}" class="link-secondary">Manage</a>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td style="position:sticky">
+                                      <div id="calHead">
+                                        <div id="calPeriod" style="width:550px;">
+                                          <input id="calBack" type="button" class="mi">
+                                          <select id="calMonth"></select>
+                                          <input id="calYear" type="number">
+                                          <input id="calNext" type="button" class="mi">
+                                        </div>
+                                        <input id="calAdd" type="button" class="mi">
+                                      </div>
+                                  
+                                      <!-- (B) CALENDAR WRAPPER -->
+                                      <div id="calWrap">
+                                        <div id="calDays"></div>
+                                        <div id="calBody"></div>
+                                      </div>
+                                  
+                                        <!-- (C) EVENT FORM -->
+                                        <dialog id="calForm"><form method="dialog">
+                                            <div id="evtCX" class="mi">X</div>
+                                            <h5 class="evt100">ADD EVENT</h5>
+                                            <div class="evt50">
+                                            <label>Start</label>
+                                            <input id="evtStart" type="datetime-local" required>
+                                            </div>
+                                            <div class="evt50">
+                                            <label>End</label>
+                                            <input id="evtEnd" type="datetime-local" required>
+                                            </div>
+                                            <div class="evt50">
+                                            <label>Text Color</label>
+                                            <input id="evtColor" type="color" value="#000000" required>
+                                            </div>
+                                            <div class="evt50">
+                                            <label>Background Color</label>
+                                            <input id="evtBG" type="color" value="#ffdbdb" required>
+                                            </div>
+                                            <div class="evt100">
+                                            <label>Event</label>
+                                            <input id="evtTxt" type="text" required>
+                                            </div>
+                                            <div class="evt100">
+                                            <input type="hidden" id="evtID">
+                                            <input type="button" id="evtDel" class="mi" value="DELETE">
+                                            <input type="submit" id="evtSave" class="mi" value="SAVE">
+                                            </div>
+                                        </form></dialog> 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+        <br>
+
+
+    </div>
+
+
+<!-- 
+    <script th:inline="javascript">
+
+        // this is for the pie chart
+        
+        // var skillLTitles=/*[[${skillTitles}]]*/ [];
+        // var unFinishPart = ["unFinished"];
+        // skillLTitles.push.apply(skillLTitles,unFinishPart);
+        // console.log(skillLTitles);
+
+        // var progressList= /*[[${progressList}]]*/ [];
+
+        // var totalFinishedPercentage = 0;
+
+        
+
+        //change actual progress based on numbers of skill that have
+        for(var i=0; i< progressList.length; i++){
+            progressList[i]= progressList[i]/progressList.length;
+            totalFinishedPercentage += progressList[i];
+        }
+
+ 
+
+        var unFinishedPerentage =  (100-totalFinishedPercentage);
+
+        var unFinishedPer = [unFinishedPerentage];
+        progressList.push.apply(progressList,unFinishedPer);
+
+   
+        var dreamJobTitle = /*[[${dreamJobTitle}]]*/ 'Dream Job Title'
+
+        var barColors = [
+          "#b91d47",
+          "#00aba9",
+          "#2b5797",
+          "#e8c3b9",
+          "#1e7145"
+        ];
+        
+        new Chart("piechart", {
+          type: "pie",
+          data: {
+            labels: skillLTitles,
+            datasets: [{
+              backgroundColor: barColors,
+              data: progressList
+            }]
+          },
+          options: {
+            maintainAspectRatio:false,
+            title: {
+              display: true,
+              text: dreamJobTitle
+            },
+            responsive: true,
+        // show percentage of slice when hover
+        tooltips: 
+        {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var allData = data.datasets[tooltipItem.datasetIndex].data;
+                    var tooltipLabel = data.labels[tooltipItem.index];
+                    var tooltipData = allData[tooltipItem.index];
+                    var total = 0;
+                    for (var i=0; i<allData.length; i++) {
+                        total += allData[i];
+                    }
+                    var tooltipPercentage = Math.round((tooltipData / total) * 100);
+                    return tooltipLabel + ':' + tooltipData + ' (' + tooltipPercentage + '%)';
+                }
+            }
+        }
+        }
+        });
+
+        //this is for the progress bar
+        var xValues = ["Java", "Python", "SQL","CSS", "Android", "HTML","Java", "Python", "SQL"];
+        var yValues = [0, 49, 44, 29, 35, 15,20,0,100];
+        var barColors = 
+          "#ad2eb3"
+        ;
+
+        new Chart("progressbar", {
+        type: "horizontalBar",
+        data: {
+            labels: xValues,
+            datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            title: {
+            // text: "World Wine Production 2018"
+            },
+            
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100,
+                    stepSize: 20,
+                    callback: function (value) {
+                      return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+                      },
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }]
+            }
+        }}
+            
+        );
+
+        // AJAX
+
+        </script> -->
+
+        
+
+        <script th:inline="javascript">
+            var chartDatas = /*[[${chartDatas}]]*/ [];
+        </script>
+
+
+        
+
+        <script th:src="@{/js/chart.js}"></script>
+
+</body>
+<footer>
+    <div th:replace="fragments/layout.html :: footer" />
+</footer>
+
